@@ -21,9 +21,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class CrearEventoActivity extends AppCompatActivity {
-
-
+public class activity_crear extends AppCompatActivity {
     EditText campo1, campo2, campoFecha, campoHora;
     DatePickerDialog.OnDateSetListener setListener;
     TimePickerDialog.OnTimeSetListener setListenerTime;
@@ -35,8 +33,7 @@ public class CrearEventoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_crear);
         spinner = (Spinner) findViewById(R.id.spinner_tipos);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
@@ -100,7 +97,7 @@ public class CrearEventoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TimePickerDialog timePicker = new TimePickerDialog(
-                        CrearEventoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,setListenerTime,hour,minute,true);
+                        activity_crear.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,setListenerTime,hour,minute,true);
                 timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePicker.show();
             }
@@ -119,7 +116,7 @@ public class CrearEventoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        CrearEventoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                        activity_crear.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth
                         ,setListener,year,month,day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -171,7 +168,5 @@ public class CrearEventoActivity extends AppCompatActivity {
         }
         return retorno;
     }
-
-
 
 }
