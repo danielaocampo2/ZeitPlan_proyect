@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">ZeitPlan_proyect</string>
     <string name="label">correo</string>
+    <string-array name="TipoEventos">
+        <item>Otro</item>
+        <item>Evento</item>
+        <item>Examen</item>
+        <item>Trabajo</item>
+        <item>Entrega</item>
+    </string-array>
 </resources>
