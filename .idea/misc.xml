@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/btn_bg.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_check_circle_24dp.xml" value="0.122" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_google.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/layout/activity_crear_evento.xml" value="0.14356884057971014" />
       </map>
