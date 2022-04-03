@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class activity_login extends AppCompatActivity {
@@ -57,7 +58,7 @@ public class activity_login extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Inicializar Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance(); // para controlar el estado del usuario
 
     }
 
@@ -119,6 +120,19 @@ public class activity_login extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    //Evitamos que vuelva a login_activity con el botón atrás si ya esta logeado.
+    @Override protected void onStart() {
+        FirebaseUser user = mAuth.getCurrentUser();  //Variable fitebaseUser, almacena el usuario actual
+        if(user!=null){
+            //si no es null el usuario ya esta logueado
+            // mover al usuario al dashboard
+            Intent dashboardActivity = new Intent(activity_login.this, MainActivity.class);
+            startActivity(dashboardActivity);
+        }
+        super.onStart();
     }
 
 

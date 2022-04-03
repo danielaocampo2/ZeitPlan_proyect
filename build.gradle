@@ -2,6 +2,7 @@ buildscript {
 
     repositories {
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
@@ -10,11 +11,11 @@ buildscript {
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 
+
 plugins {
     id 'com.android.application' version '7.1.1' apply false
     id 'com.android.library' version '7.1.1' apply false
 }
-
 
 
 task clean(type: Delete) {
