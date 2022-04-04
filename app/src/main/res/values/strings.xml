@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">ZeitPlan_proyect</string>
-    <string name="Correo" >Correo</string>
+    <string name="Correo">Correo</string>
     <string name="Password">Contraseña</string>
     <string name="desc">Logo</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="registarse">Registarse</string>
     <string-array name="TipoEventos">
         <item>Otro</item>
         <item>Evento</item>

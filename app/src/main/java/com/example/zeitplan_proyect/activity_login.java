@@ -32,7 +32,7 @@ public class activity_login extends AppCompatActivity {
 
     //Variable para gestionar FirebaseAuth
     private FirebaseAuth mAuth;
-    Button btnGoogle;
+    Button btnGoogle, btnRegistrarseLogin;
     //Agregar cliente de inicio de sesión de Google
     private GoogleSignInClient mGoogleSignInClient;
     //int RC_SIGN_IN=1; // constante
@@ -47,7 +47,15 @@ public class activity_login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         btnGoogle = findViewById(R.id.btnGoogle); // referencia boton google
+        btnRegistrarseLogin=findViewById(R.id.btnRegistrarseLogin);
 
+        btnRegistrarseLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity_login.this, registroActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnGoogle.setOnClickListener(new View.OnClickListener(){
             @Override
