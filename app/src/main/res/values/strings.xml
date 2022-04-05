@@ -3,6 +3,8 @@
     <string name="Correo">Correo</string>
     <string name="Password">Contraseña</string>
     <string name="desc">Logo</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="registarse">Registarse</string>
     <string-array name="TipoEventos">
         <item>Otro</item>
         <item>Evento</item>
@@ -10,4 +12,6 @@
         <item>Trabajo</item>
         <item>Entrega</item>
     </string-array>
+
+
 </resources>
