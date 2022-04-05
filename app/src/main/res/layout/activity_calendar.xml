@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="←"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/darkGreen"
             android:background="@color/white"
             android:textStyle="bold"
             android:onClick="prevMonthAction"
@@ -33,13 +33,13 @@
             android:text="Apr 2022"
             android:textSize="20dp"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/colorLogo" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="→"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/darkGreen"
             android:background="@color/white"
             android:textStyle="bold"
             android:onClick="nextMonthAction"
