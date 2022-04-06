@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Menu que muestra información al
+    Usuario para añadir una nota-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/add_note" android:title="Añadir nota"></item>
+
+</menu>
