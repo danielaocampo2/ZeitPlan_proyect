@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "675066042731-0l48r9a8elb4emsq279q8i4co9sjhg4s.apps.googleusercontent.com",
+          "client_id": "675066042731-0sirc4eva8ir13qatvsodbr15sfilpg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zeitplan_proyect",
+            "certificate_hash": "a66de0be7e70f545248fd5f8bbf747794cc394d6"
+          }
+        },
+        {
+          "client_id": "675066042731-9ghck4rh5sl7igjc6r8g55j50r0t6m9o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.zeitplan_proyect",
