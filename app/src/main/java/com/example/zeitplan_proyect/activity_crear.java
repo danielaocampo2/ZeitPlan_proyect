@@ -22,7 +22,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class activity_crear extends AppCompatActivity {
-    EditText campo1, campo2, campoFecha, campoHora;
+    EditText campo1, campo2;
+    TextView campoFecha, campoHora;
     DatePickerDialog.OnDateSetListener setListener;
     TimePickerDialog.OnTimeSetListener setListenerTime;
     Spinner spinner;
@@ -105,7 +106,7 @@ public class activity_crear extends AppCompatActivity {
         setListenerTime = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                String hour_time = hour+":"+minute;
+                String hour_time = timePicker.getHour()+":"+timePicker.getMinute();
                 campoHora.setText(hour_time);
 
             }
@@ -120,6 +121,7 @@ public class activity_crear extends AppCompatActivity {
                         ,setListener,year,month,day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
+                datePickerDialog.getDatePicker();
 
 
             }
@@ -129,8 +131,7 @@ public class activity_crear extends AppCompatActivity {
 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
-                String date = day+"/"+month+"/"+year;
+                String date = view.getMonth()+"/"+view.getDayOfMonth()+"/"+view.getYear();
                 campoFecha.setText(date);
 
             }
@@ -168,5 +169,6 @@ public class activity_crear extends AppCompatActivity {
         }
         return retorno;
     }
+
 
 }
