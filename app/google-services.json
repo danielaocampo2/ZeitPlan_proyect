@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "675066042731-nq5c51ijnmpkqig8ql56blkihijpla5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zeitplan_proyect",
+            "certificate_hash": "f986618ba3eec765991b146526ee750d66797ed3"
+          }
+        },
+        {
           "client_id": "675066042731-gl22jsk53evt9sm4sa23n87qelkcppfs.apps.googleusercontent.com",
           "client_type": 3
         }

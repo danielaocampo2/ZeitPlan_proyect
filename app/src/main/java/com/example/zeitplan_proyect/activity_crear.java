@@ -165,7 +165,7 @@ public class activity_crear extends AppCompatActivity {
             campoHora.setError("Este campo no puede quedar vacio");
             retorno = false;
         }else{
-            campoFecha.setText("");
+            campoHora.setText("");
         }
         return retorno;
     }
