@@ -99,14 +99,14 @@ public class activity_login extends AppCompatActivity {
                     //Se verifica que el usuario obtenga una cuenta de google y se la envie al metodo firebaseA..
                     // Google Sign In was successful, authenticate with Firebase
                     GoogleSignInAccount account = task.getResult(ApiException.class);
-                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                    Log.d(TAG, "hOOOOOOOOOOOOOOOOOOOOOOOOOLAAAAAAAAAA firebaseAuthWithGoogle:" + account.getId());
                     firebaseAuthWithGoogle(account.getIdToken());
                 } catch (ApiException e) {
                     // Google Sign In fallido, actualizar GUI
-                    Log.w(TAG, "Google sign in failed", e);
+                    Log.w(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRR Google sign in failed", e);
                 }
                 }else{
-                    Log.d(TAG, "Error, login no exitoso:" + task.getException().toString());
+                    Log.d(TAG, "Error, ERROOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRR login no exitoso:" + task.getException().toString());
                     //PARA LOS ERRORES-- Usuario se sale del menu de elegir cuenta de google
                   //  Toast.makeText(this,"Ocurrio un error."+task.getException().toString(),Toast.LENGTH_LONG).show();
                 }

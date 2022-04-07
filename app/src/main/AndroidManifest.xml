@@ -12,13 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeitPlan_proyect">
         <activity
+            android:name=".activity_crear"
+            android:exported="false" />
+        <activity
             android:name=".NoteEditorActivity"
             android:exported="false" />
         <activity
             android:name=".NoteActivity"
             android:exported="true" />
         <activity
-            android:name=".calendarActivity"
+            android:name=".activity_add_asignatura"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +33,7 @@
             android:name=".activity_login"
             android:exported="false" />
         <activity
-            android:name=".activity_crear"
+            android:name=".calendarActivity"
             android:exported="false" />
         <activity
             android:name=".registroActivity"

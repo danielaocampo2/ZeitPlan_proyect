@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="SpeakableTextPresentCheck"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activity_añadir_asignatura">
+
+        <EditText
+            android:id="@+id/editTextNombreAsignatura"
+            android:layout_width="322dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="52dp"
+            android:background="@android:color/holo_green_dark"
+            android:backgroundTint="#DAD9D9"
+            android:ems="10"
+            android:hint="Nombre de la Asignatura"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_horario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Configuración del horario:"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.213"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNombreAsignatura" />
+
+        <TextView
+            android:id="@+id/textView_Inicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Inicio"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.562"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+
+        <TextView
+            android:id="@+id/textView_Final"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Final"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toEndOf="@+id/textView_Inicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Lunes"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.135"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Martes"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_Lunes" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Miércoles"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_Martes" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Jueves"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_Miercoles" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Viernes"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_Jueves" />
+
+        <TextView
+            android:id="@+id/textView_horarioLunesInicio"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="60dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Lunes"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+
+        <TextView
+            android:id="@+id/textView_horarioMartesInicio"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Martes"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioLunesInicio" />
+
+        <TextView
+            android:id="@+id/textView_horarioMiercolesInicio"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Miercoles"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioMartesInicio" />
+
+        <TextView
+            android:id="@+id/textView_horarioJuevesInicio"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Jueves"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioMiercolesInicio" />
+
+        <TextView
+            android:id="@+id/textView_horarioViernesInicio"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Viernes"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioJuevesInicio" />
+
+        <TextView
+            android:id="@+id/textView_horarioLunesFinal"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="60dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_horarioLunesInicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+
+        <TextView
+            android:id="@+id/textView_horarioMartesFinal"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_horarioMartesInicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioLunesFinal" />
+
+        <TextView
+            android:id="@+id/textView_horarioMiercolesFinal"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_horarioMiercolesInicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioMartesFinal" />
+
+        <TextView
+            android:id="@+id/textView_horarioJuevesFinal"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_horarioJuevesInicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioMiercolesFinal" />
+
+        <TextView
+            android:id="@+id/textView_horarioViernesFinal"
+            android:layout_width="77dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:background="#DAD9D9"
+            android:hint="00:00"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/textView_horarioViernesInicio"
+            app:layout_constraintTop_toBottomOf="@+id/textView_horarioJuevesFinal" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
+
