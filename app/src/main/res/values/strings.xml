@@ -5,6 +5,7 @@
     <string name="desc">Logo</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
     <string name="registarse">Registarse</string>
+    <string name="btn_add">botón añadir</string>
     <string-array name="TipoEventos">
         <item>Otro</item>
         <item>Evento</item>

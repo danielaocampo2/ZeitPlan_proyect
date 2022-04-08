@@ -13,6 +13,11 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_registro.xml" value="0.25" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.11775362318840579" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.16822916666666668" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_note.xml" value="0.1" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_registro.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.3236196319018405" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/casella_calendari.xml" value="0.25" />
@@ -31,5 +36,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.264" />
+      </ProjectState>
+    </option>
   </component>
 </project>
