@@ -13,10 +13,10 @@
         android:theme="@style/Theme.ZeitPlan_proyect">
         <activity
             android:name=".activity_add_asignatura"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".NoteEditorActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".NoteActivity"
             android:exported="true" />
@@ -34,13 +34,13 @@
             android:exported="true" />
         <activity
             android:name=".calendarActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".registroActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

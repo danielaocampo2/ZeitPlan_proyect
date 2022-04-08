@@ -7,24 +7,34 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class activity_add_asignatura extends AppCompatActivity {
 
+    EditText campo1;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
     TextView inicio_lunes, inicio_martes, inicio_miercoles, inicio_jueves, inicio_viernes,
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_asignatura);
+        spinner = (Spinner) findViewById(R.id.spinner_descripcion);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
+
+        campo1 = findViewById(R.id.editTextNombreAsignatura);
 
         inicio_lunes = findViewById(R.id.textView_horarioLunesInicio);
         inicio_martes = findViewById(R.id.textView_horarioMartesInicio);
@@ -280,14 +290,20 @@ public class activity_add_asignatura extends AppCompatActivity {
             }
         };
 
+    }
 
-
-
-
-
-
-
-
-
+    public void agregarAs(View v){
+        if(validarAs()){
+            Toast.makeText(this, "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public boolean validarAs(){
+        boolean retorno = true;
+        String c1 = campo1.getText().toString();
+        if (c1.isEmpty()){
+            campo1.setError("Este campo no puede quedar vacio");
+            retorno = false;
+        }
+        return retorno;
     }
 }

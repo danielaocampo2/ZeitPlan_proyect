@@ -12,6 +12,11 @@
         <item>Trabajo</item>
         <item>Entrega</item>
     </string-array>
+    <string-array name="TipoDescripcion">
+        <item>Aula</item>
+        <item>Profesor</item>
+        <item>Otro</item>
+    </string-array>
 
 
 </resources>
