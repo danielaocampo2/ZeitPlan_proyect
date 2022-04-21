@@ -49,6 +49,6 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
-    </application>
+   
 
 </manifest>
