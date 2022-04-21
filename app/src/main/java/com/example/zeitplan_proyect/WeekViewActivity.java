@@ -4,10 +4,12 @@ import static com.example.zeitplan_proyect.CalendarUtils.daysInMonthArray;
 import static com.example.zeitplan_proyect.CalendarUtils.daysInWeekArray;
 import static com.example.zeitplan_proyect.CalendarUtils.monthYearFromDate;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
     private TextView monthYearText;
     private RecyclerView calendarRV;
