@@ -11,11 +11,11 @@
         <item
             android:id="@+id/nav_add_activity"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Añadir Actividad" />
+            android:title="Añadir Asignatura" />
         <item
             android:id="@+id/nav_add_subj"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Añadir Asignatura" />
+            android:title="Añadir Actividad" />
         <item
             android:id="@+id/nav_notes"
             android:icon="@android:drawable/ic_menu_edit"
