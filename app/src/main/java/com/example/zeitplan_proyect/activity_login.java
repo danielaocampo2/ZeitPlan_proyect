@@ -11,8 +11,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -22,17 +24,31 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.regex.Pattern;
+
 public class activity_login extends AppCompatActivity {
+
+    EditText txtEmail, txtPassword;
+    TextInputLayout inputEmail,inputPassword;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[@#$%^&+=])" +     // at least 1 special character
+                    "(?=\\S+$)" +            // no white spaces
+                    ".{4,}" +                // at least 4 characters
+                    "$");
+
 
     //Variable para gestionar FirebaseAuth
     private FirebaseAuth mAuth;
-    Button btnGoogle, btnRegistrarseLogin;
+    Button btnGoogle, btnRegistrarseLogin, btnLogin;
     //Agregar cliente de inicio de sesión de Google
     private GoogleSignInClient mGoogleSignInClient;
     //int RC_SIGN_IN=1; // constante
@@ -46,14 +62,32 @@ public class activity_login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txtEmail = findViewById(R.id.userName);
+        txtPassword = findViewById(R.id.password);
+        inputPassword=findViewById(R.id.titPassword);
+        inputEmail=findViewById(R.id.titUserName);
+
         btnGoogle = findViewById(R.id.btnGoogle); // referencia boton google
         btnRegistrarseLogin=findViewById(R.id.btnRegistrarseLogin);
+        btnLogin = findViewById((R.id.btnLogin));
 
         btnRegistrarseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity_login.this, registroActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!validateEmail() | !validatePassword()) {
+                    return;
+                }
+
+
             }
         });
 
@@ -99,14 +133,14 @@ public class activity_login extends AppCompatActivity {
                     //Se verifica que el usuario obtenga una cuenta de google y se la envie al metodo firebaseA..
                     // Google Sign In was successful, authenticate with Firebase
                     GoogleSignInAccount account = task.getResult(ApiException.class);
-                    Log.d(TAG, "hOOOOOOOOOOOOOOOOOOOOOOOOOLAAAAAAAAAA firebaseAuthWithGoogle:" + account.getId());
+                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                     firebaseAuthWithGoogle(account.getIdToken());
                 } catch (ApiException e) {
                     // Google Sign In fallido, actualizar GUI
-                    Log.w(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRR Google sign in failed", e);
+                    Log.w(TAG, "Google sign in failed", e);
                 }
                 }else{
-                    Log.d(TAG, "Error, ERROOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRR login no exitoso:" + task.getException().toString());
+                    Log.d(TAG, "Error,login no exitoso:" + task.getException().toString());
                     //PARA LOS ERRORES-- Usuario se sale del menu de elegir cuenta de google
                   //  Toast.makeText(this,"Ocurrio un error."+task.getException().toString(),Toast.LENGTH_LONG).show();
                 }
@@ -114,33 +148,7 @@ public class activity_login extends AppCompatActivity {
             }
         }
     });
-    /*
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Resultado devuelto al iniciar el Intent de GoogleSignInApi.getSignInIntent (...);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
 
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            // si esto es verdadero lo de elegir la cuenta
-            if(task.isSuccessful()){ try {
-                //Se verifica que el usuario obtenga una cuenta de google y se la envie al metodo firebaseA..
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In fallido, actualizar GUI
-                Log.w(TAG, "Google sign in failed", e);
-            }
-            }else{
-                Log.d(TAG, "Error, login no exitoso:" + task.getException().toString());
-                //PARA LOS ERRORES-- Usuario se sale del menu de elegir cuenta de google
-                Toast.makeText(this, "Ocurrio un error. "+task.getException().toString(),
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-    }*/
 
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -168,11 +176,41 @@ public class activity_login extends AppCompatActivity {
                     }});
     }
 
-    /* LLama a un metodo llamado startActivity.. para recibir un resultado
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }*/
+    private boolean validateEmail() {
+        if (Patterns.EMAIL_ADDRESS.matcher(txtEmail.getText().toString()).matches()==false){
+            if(txtEmail.getText().toString().isEmpty()){
+                inputEmail.setError("Campo obligatorio");
+                return false;
+            }else{
+                inputEmail.setError("Correo invalido");
+                return false;}
+        }
+        else{
+            inputEmail.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String passwordInput = inputPassword.getEditText().getText().toString().trim(); // trim elimina espacios en blanco de ambos ectremos del string
+        // if password field is empty
+        // it will display error message "Field can not be empty"
+        if (passwordInput.isEmpty()) {
+            inputPassword.setError("Campo obligatorio");
+            return false;
+        }
+
+        // if password does not matches to the pattern
+        // it will display an error message "Password is too weak"
+        else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            inputPassword.setError("La contraseña es débil.");
+            Toast.makeText(this, "La contraseña debe incluir al MENOS un carácter especial y mínimo 4 caracteres. ", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            inputPassword.setError(null);
+            return true;
+        }
+    }
 
 
     //Evitamos que vuelva a login_activity con el botón atrás si ya esta logeado.

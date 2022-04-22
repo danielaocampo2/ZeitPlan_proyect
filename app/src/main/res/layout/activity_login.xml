@@ -44,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.044"
-        app:startIconDrawable="@android:drawable/ic_dialog_email">
+        app:startIconDrawable="@android:drawable/ic_dialog_email"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userName"
@@ -70,13 +71,14 @@
         app:counterMaxLength="30"
         app:endIconMode="password_toggle"
         app:endIconTint="#315512"
+        app:errorEnabled="true"
         app:helperText="Requerido"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:hintTextColor="#315512"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.285"
+        app:layout_constraintVertical_bias="0.334"
         app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -103,17 +105,18 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGoogle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titPassword"
-        app:layout_constraintVertical_bias="0.24"
-        app:strokeColor="@color/colorLogo"/>
+        app:layout_constraintVertical_bias="0.188"
+        app:strokeColor="@color/colorLogo" />
 
     <Button
         android:id="@+id/btnRegistrarseLogin"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="152dp"
         android:layout_height="68dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
         android:backgroundTint="#BEF48F"
         android:text="@string/registarse"
@@ -149,7 +152,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titPassword"
-        app:layout_constraintVertical_bias="0.961"
+        app:layout_constraintVertical_bias="0.956"
         app:strokeColor="@color/black" />
 
     <TextView
@@ -159,12 +162,12 @@
         android:text="Autenticarse con:"
         android:textColor="#050505"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoogle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintHorizontal_bias="0.174"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titPassword"
-        app:layout_constraintVertical_bias="0.503" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintVertical_bias="0.731" />
 
     <TextView
         android:id="@+id/textView2"
@@ -176,10 +179,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegistrarseLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.638" />
+        app:layout_constraintVertical_bias="0.666" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
