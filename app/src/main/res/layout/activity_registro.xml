@@ -18,13 +18,12 @@
         app:srcCompat="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/titUserName"
+        android:id="@+id/titUserName2"
 
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="340dp"
         android:layout_height="78dp"
 
-        android:layout_marginTop="16dp"
         android:hint="Nombre Completo"
         app:boxStrokeColor="#315512"
         app:counterEnabled="true"
@@ -34,14 +33,16 @@
         app:helperText="Requerido"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:hintTextColor="#315512"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.315"
         app:startIconDrawable="@drawable/account">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userName"
+            android:id="@+id/userName2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName|textEmailAddress"
@@ -70,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/titUserName"
         app:layout_constraintVertical_bias="0.431"
         app:startIconDrawable="@android:drawable/ic_dialog_email">
 
@@ -106,7 +107,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titPassword"
         app:layout_constraintVertical_bias="0.081"
-        app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
+        app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+        app:errorIconDrawable="@null">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password2"
@@ -140,7 +142,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.588"
-        app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
+        app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+        app:errorIconDrawable="@null">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"

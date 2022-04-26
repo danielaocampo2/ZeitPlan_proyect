@@ -38,12 +38,7 @@ public class activity_login extends AppCompatActivity {
     EditText txtEmail, txtPassword;
     TextInputLayout inputEmail,inputPassword;
 
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^" +
-                    "(?=.*[@#$%^&+=])" +     // at least 1 special character
-                    "(?=\\S+$)" +            // no white spaces
-                    ".{4,}" +                // at least 4 characters
-                    "$");
+
 
 
     //Variable para gestionar FirebaseAuth
@@ -199,14 +194,7 @@ public class activity_login extends AppCompatActivity {
             inputPassword.setError("Campo obligatorio");
             return false;
         }
-
-        // if password does not matches to the pattern
-        // it will display an error message "Password is too weak"
-        else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            inputPassword.setError("La contraseña es débil.");
-            Toast.makeText(this, "La contraseña debe incluir al MENOS un carácter especial y mínimo 4 caracteres. ", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
+        else {
             inputPassword.setError(null);
             return true;
         }
