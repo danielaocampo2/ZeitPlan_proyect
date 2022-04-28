@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity2  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+   // TextView textView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,9 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+       // textView1.findViewById(R.id.textView1);
+
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -38,6 +44,18 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
+        //inflate header layout
+        View navView =  navigationView.inflateHeaderView(R.layout.nav_header);
+
+        //reference to views
+        ImageView imgvw = (ImageView)navView.findViewById(R.id.imageView);
+        TextView tv = (TextView)navView.findViewById(R.id.textView1);
+        //set views
+        //  imgvw.setImageResource(R.drawable.your_image);
+        tv.setText("TEXT");
+
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -55,6 +73,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+       // textView1.setText("hola daniela");
         getMenuInflater().inflate(R.menu.main_2, menu);
         return true;
     }

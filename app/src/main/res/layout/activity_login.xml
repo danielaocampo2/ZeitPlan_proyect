@@ -96,10 +96,10 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:backgroundTint="#BEF48F"
+        android:backgroundTint="@color/colorLogo"
         android:text="@string/iniciar_sesi_n"
         android:textAllCaps="false"
-        android:textColor="#050505"
+        android:textColor="#F8F4F4"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
@@ -114,21 +114,21 @@
     <Button
         android:id="@+id/btnRegistrarseLogin"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="152dp"
-        android:layout_height="68dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="181dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="40dp"
-        android:backgroundTint="#BEF48F"
-        android:text="@string/registarse"
+        android:backgroundTint="@color/colorLogo"
+        android:text="Registrarse"
         android:textAllCaps="false"
-        android:textColor="#050505"
+        android:textColor="#FFFEFE"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titPassword"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.988"
         app:strokeColor="@color/colorLogo" />
 
     <Button
@@ -145,7 +145,7 @@
         android:textAllCaps="false"
         android:textColor="#090909"
         android:textSize="26sp"
-        app:cornerRadius="90dp"
+        app:cornerRadius="20dp"
         app:drawableLeftCompat="@drawable/ic_google"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnRegistrarseLogin"
@@ -153,7 +153,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titPassword"
         app:layout_constraintVertical_bias="0.956"
-        app:strokeColor="@color/black" />
+        app:strokeColor="@color/colorLogo" />
 
     <TextView
         android:id="@+id/textView"
