@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView userNombre,userEmail,userID;
     private CircleImageView userImg;
-    Button btnCerrarSession;
+    Button btnCerrarSession; // Falta pasarlo
 
     //Variables opcionales para cerrar sesión en  de google
     private GoogleSignInClient mGoogleSignInClient;

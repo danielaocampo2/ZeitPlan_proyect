@@ -8,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,14 +19,30 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity2  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-   // TextView textView1;
+    //Variable para gestionar FirebaseAuth
+    private FirebaseAuth mAuth;
+
+    //Variables opcionales para cerrar sesión en  de google
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +50,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       // textView1.findViewById(R.id.textView1);
+
 
 
 
@@ -50,13 +68,26 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         View navView =  navigationView.inflateHeaderView(R.layout.nav_header);
 
         //reference to views
-        ImageView imgvw = (ImageView)navView.findViewById(R.id.imageView);
-        TextView tv = (TextView)navView.findViewById(R.id.textView1);
+        CircleImageView imgvw = (CircleImageView)navView.findViewById(R.id.imageView);
+        TextView userName = (TextView)navView.findViewById(R.id.textView1);
         //set views
         //  imgvw.setImageResource(R.drawable.your_image);
-        tv.setText("TEXT");
+
+        //Iniciar firebase Auth
+        mAuth=FirebaseAuth.getInstance();
+        FirebaseUser currentUser= mAuth.getCurrentUser();
+        userName.setText(currentUser.getDisplayName());
+
+        Glide.with(this).load(currentUser.getPhotoUrl()).into(imgvw);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Configurar las gso para google signIn con el fin de luego desloguear de google
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
 
@@ -99,7 +130,22 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.nav_notes) {
             intent = new Intent(getApplicationContext(), NoteActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_conf) {
+        } else if (id == R.id.nav_out) {
+            mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
+            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    //
+                    if(task.isSuccessful()){
+                        Intent activity_login=new Intent(getApplicationContext(), com.example.zeitplan_proyect.activity_login.class);
+                        startActivity(activity_login);
+                        MainActivity2.this.finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"no se puede cerrar sesión con google",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 
         } else if (id == R.id.nav_help) {
 

@@ -109,7 +109,7 @@ public class activity_login extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){ //si no es null redirigir
-                     Intent intentDashboard = new Intent(getApplicationContext(), MainActivity.class);
+                     Intent intentDashboard = new Intent(getApplicationContext(), MainActivity2.class);
                      intentDashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                      startActivity(intentDashboard);
                 }
@@ -161,7 +161,7 @@ public class activity_login extends AppCompatActivity {
                             // FirebaseUser user = mAuth.getCurrentUser();
                             //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
                             //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
-                            Intent dashboardActivity = new Intent(activity_login.this, MainActivity.class);
+                            Intent dashboardActivity = new Intent(activity_login.this, MainActivity2.class);
                             startActivity(dashboardActivity);
                             activity_login.this.finish();
                         } else {
