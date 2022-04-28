@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeitPlan_proyect">
         <activity
+            android:name=".EventEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".WeekViewActivity"
             android:exported="false" />
         <activity
@@ -44,11 +47,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-         <activity
+        <activity
             android:name=".MainActivity2"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
-   
 
 </manifest>

@@ -8,52 +8,65 @@
     android:orientation="vertical"
     tools:context=".calendarActivity"
     >
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Week"
-        android:textColor="@color/darkGreen"
-        android:background="@color/white"
-        android:textStyle="bold"
-        android:onClick="weeklyAction"
-        android:textSize="20sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp">
+        android:orientation="horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="←"
-            android:textColor="@color/darkGreen"
-            android:background="@color/white"
-            android:textStyle="bold"
-            android:onClick="prevMonthAction"
-            android:textSize="20sp"/>
+
         <TextView
             android:id="@+id/monthYearTV"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Apr 2022"
-            android:textSize="20dp"
             android:textAlignment="center"
-            android:textColor="@color/colorLogo" />
+            android:textColor="@color/colorLogo"
+            android:textSize="20dp" />
+
         <Button
-            android:layout_width="0dp"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="→"
-            android:textColor="@color/darkGreen"
             android:background="@color/white"
-            android:textStyle="bold"
+            android:onClick="prevMonthAction"
+            android:text="←"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1" />
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
             android:onClick="nextMonthAction"
-            android:textSize="20sp"/>
+            android:text="→"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="20dp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:onClick="weeklyAction"
+            android:text="Week"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+
+
 
 
     </LinearLayout>
