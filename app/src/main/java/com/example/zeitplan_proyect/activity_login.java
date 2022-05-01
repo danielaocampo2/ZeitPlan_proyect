@@ -114,6 +114,10 @@ public class activity_login extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){ //si no es null redirigir
+                   /*  finish();
+                    startActivity(new Intent(activity_login.this,MainActivity2.class));*/
+
+
                      Intent intentDashboard = new Intent(getApplicationContext(), MainActivity2.class);
                      intentDashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                      startActivity(intentDashboard);

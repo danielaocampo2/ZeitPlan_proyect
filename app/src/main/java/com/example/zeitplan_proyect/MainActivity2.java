@@ -1,5 +1,7 @@
 package com.example.zeitplan_proyect;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
@@ -51,7 +53,9 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     private GoogleSignInOptions gso;
     //private static final String TAG = "MainActivity2";
 
-
+    private FirebaseFirestore mFirestore;
+    private TextView userName;
+    private CircleImageView imgvw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +64,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
 
-        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,32 +80,17 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         //reference to views
 
 
-        CircleImageView imgvw = (CircleImageView) navView.findViewById(R.id.imageView);
+        imgvw = (CircleImageView) navView.findViewById(R.id.imageView);
 
-        TextView userName = (TextView)navView.findViewById(R.id.textView1);
+        userName = (TextView)navView.findViewById(R.id.textView1);
         //set views
         //  imgvw.setImageResource(R.drawable.your_image);
 
         //Iniciar firebase Auth
         mAuth=FirebaseAuth.getInstance();
-        String id = mAuth.getCurrentUser().getUid();
         FirebaseUser currentUser= mAuth.getCurrentUser();
+        verifyPro();
 
-
-        if(mAuth.getCurrentUser().getProviderData().get(1).getProviderId()=="google.com") {
-            userName.setText(currentUser.getDisplayName());
-            Glide.with(this).load(currentUser.getPhotoUrl()).into(imgvw);
-        }else{
-            mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if(documentSnapshot.exists()){
-                        userName.setText(documentSnapshot.getString("name"));
-                    }
-                }
-            });
-
-        }
         navigationView.setNavigationItemSelectedListener(this);
 
         //Configurar las gso para google signIn con el fin de luego desloguear de google
@@ -130,7 +119,30 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    public void verifyPro(){
+        String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
+        String id = mAuth.getCurrentUser().getUid();
+        switch (providerID) {
+            case "google.com":
+                userName.setText(mAuth.getCurrentUser().getDisplayName());
+                Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
+                break;
+            case "password":
+                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            userName.setText(documentSnapshot.getString("name"));
+                        }
+                    }
+                });
+                Log.i(TAG, "no funcionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+mAuth.getCurrentUser().getProviderData().get(1).getProviderId());
+                break;
+            default:
+                 break;
+            }
 
+    }
 
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -171,15 +183,15 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
           //  }
 
         } else if (id == R.id.nav_help) {
-            /*
+
             String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
             String google="google.com";
-            if(providerID!=google) {
+            if(providerID!=google) { // no se porque lo lee al contrario
                 Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
 
-            }*/
+            }
         }else if (id == R.id.nav_share) {
 
         }
