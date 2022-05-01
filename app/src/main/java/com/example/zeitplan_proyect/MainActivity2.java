@@ -1,6 +1,7 @@
 package com.example.zeitplan_proyect;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,8 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     //Variables opcionales para cerrar sesión en  de google
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
+    //private static final String TAG = "MainActivity2";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,6 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
 
@@ -104,7 +106,6 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-       // textView1.setText("hola daniela");
         getMenuInflater().inflate(R.menu.main_2, menu);
         return true;
     }
@@ -131,24 +132,34 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
             intent = new Intent(getApplicationContext(), NoteActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_out) {
+
             mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
+
             mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     //
-                    if(task.isSuccessful()){
-                        Intent activity_login=new Intent(getApplicationContext(), com.example.zeitplan_proyect.activity_login.class);
+                    if (task.isSuccessful()) {
+                        Intent activity_login = new Intent(getApplicationContext(), com.example.zeitplan_proyect.activity_login.class);
                         startActivity(activity_login);
                         MainActivity2.this.finish();
-                    }else{
-                        Toast.makeText(getApplicationContext(),"no se puede cerrar sesión con google",
-                                Toast.LENGTH_LONG).show();
-                    }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "no se puede cerrar sesión con google",
+                                Toast.LENGTH_LONG).show(); }
                 }
             });
+          //  }
 
         } else if (id == R.id.nav_help) {
+            /*
+            String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
+            String google="google.com";
+            if(providerID!=google) {
+                Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
 
+            }*/
         }else if (id == R.id.nav_share) {
 
         }

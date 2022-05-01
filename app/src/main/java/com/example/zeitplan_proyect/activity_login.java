@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
@@ -39,10 +40,10 @@ public class activity_login extends AppCompatActivity {
     TextInputLayout inputEmail,inputPassword;
 
 
-
+    FirebaseAuth mAuth;
 
     //Variable para gestionar FirebaseAuth
-    private FirebaseAuth mAuth;
+
     Button btnGoogle, btnRegistrarseLogin, btnLogin;
     //Agregar cliente de inicio de sesión de Google
     private GoogleSignInClient mGoogleSignInClient;
@@ -80,6 +81,10 @@ public class activity_login extends AppCompatActivity {
 
                 if (!validateEmail() | !validatePassword()) {
                     return;
+                }else{
+                    String emailUser=txtEmail.getText().toString().trim();
+                    String passwordUser=txtPassword.getText().toString().trim();
+                    loginUser(emailUser,passwordUser);
                 }
 
 
@@ -208,7 +213,23 @@ public class activity_login extends AppCompatActivity {
     }
 
 
-
+    private void loginUser(String emailUser, String passwordUser){
+        mAuth.signInWithEmailAndPassword(emailUser,passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    finish();
+                    startActivity(new Intent(activity_login.this,MainActivity2.class));
+                    Toast.makeText(activity_login.this,"Bienvenido",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(activity_login.this,"Error al iniciar sesión",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 }
