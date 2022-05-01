@@ -170,7 +170,6 @@ public class registroActivity extends AppCompatActivity {
                 }*/
 
                 String id = mAuth.getCurrentUser().getUid();
-                Log.i(TAG, "hola entre + string " + id);
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", id);

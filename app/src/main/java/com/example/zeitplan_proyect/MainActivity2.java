@@ -25,12 +25,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -55,8 +60,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
 
-
-
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -70,18 +74,34 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         View navView =  navigationView.inflateHeaderView(R.layout.nav_header);
 
         //reference to views
-        CircleImageView imgvw = (CircleImageView)navView.findViewById(R.id.imageView);
+
+
+        CircleImageView imgvw = (CircleImageView) navView.findViewById(R.id.imageView);
+
         TextView userName = (TextView)navView.findViewById(R.id.textView1);
         //set views
         //  imgvw.setImageResource(R.drawable.your_image);
 
         //Iniciar firebase Auth
         mAuth=FirebaseAuth.getInstance();
+        String id = mAuth.getCurrentUser().getUid();
         FirebaseUser currentUser= mAuth.getCurrentUser();
-        userName.setText(currentUser.getDisplayName());
 
-        Glide.with(this).load(currentUser.getPhotoUrl()).into(imgvw);
 
+        if(mAuth.getCurrentUser().getProviderData().get(1).getProviderId()=="google.com") {
+            userName.setText(currentUser.getDisplayName());
+            Glide.with(this).load(currentUser.getPhotoUrl()).into(imgvw);
+        }else{
+            mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        userName.setText(documentSnapshot.getString("name"));
+                    }
+                }
+            });
+
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         //Configurar las gso para google signIn con el fin de luego desloguear de google
