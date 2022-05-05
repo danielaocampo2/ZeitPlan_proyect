@@ -25,10 +25,6 @@
     <item android:title="Ajustes">
         <menu>
             <item
-                android:id="@+id/nav_out"
-                android:icon="@drawable/ic_logout"
-                android:title="Cerrar sesión" />
-            <item
                 android:id="@+id/nav_help"
                 android:icon="@android:drawable/ic_menu_help"
                 android:title="Ayuda" />
@@ -36,6 +32,10 @@
                 android:id="@+id/nav_share"
                 android:icon="@android:drawable/ic_menu_share"
                 android:title="Compartir" />
+            <item
+                android:id="@+id/nav_out"
+                android:icon="@drawable/ic_logout"
+                android:title="Cerrar sesión" />
         </menu>
     </item>
 

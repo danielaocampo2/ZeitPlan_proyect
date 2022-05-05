@@ -18,7 +18,7 @@
             android:id="@+id/editTextNombreAsignatura"
             android:layout_width="322dp"
             android:layout_height="48dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="60dp"
             android:background="@android:color/holo_green_dark"
             android:backgroundTint="#DAD9D9"
             android:ems="10"

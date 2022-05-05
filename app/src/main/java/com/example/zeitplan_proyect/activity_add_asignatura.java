@@ -1,12 +1,15 @@
 package com.example.zeitplan_proyect;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,9 +18,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.Calendar;
 
-public class activity_add_asignatura extends AppCompatActivity {
+public class activity_add_asignatura extends Fragment {
 
     EditText campo1;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
@@ -25,40 +31,49 @@ public class activity_add_asignatura extends AppCompatActivity {
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
     Spinner spinner;
+    NavigationView navigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_asignatura);
-        spinner = (Spinner) findViewById(R.id.spinner_descripcion);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        final View view = inflater.inflate(R.layout.activity_add_asignatura, container, false);
+        ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Asignatura");
+        FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+        spinner = (Spinner) view.findViewById(R.id.spinner_descripcion);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
-        campo1 = findViewById(R.id.editTextNombreAsignatura);
+        campo1 = view.findViewById(R.id.editTextNombreAsignatura);
 
-        inicio_lunes = findViewById(R.id.textView_horarioLunesInicio);
-        inicio_martes = findViewById(R.id.textView_horarioMartesInicio);
-        inicio_miercoles = findViewById(R.id.textView_horarioMiercolesInicio);
-        inicio_jueves = findViewById(R.id.textView_horarioJuevesInicio);
-        inicio_viernes = findViewById(R.id.textView_horarioViernesInicio);
+        inicio_lunes = view.findViewById(R.id.textView_horarioLunesInicio);
+        inicio_martes = view.findViewById(R.id.textView_horarioMartesInicio);
+        inicio_miercoles = view.findViewById(R.id.textView_horarioMiercolesInicio);
+        inicio_jueves = view.findViewById(R.id.textView_horarioJuevesInicio);
+        inicio_viernes = view.findViewById(R.id.textView_horarioViernesInicio);
 
 
-        final_lunes = findViewById(R.id.textView_horarioLunesFinal);
-        final_martes = findViewById(R.id.textView_horarioMartesFinal);
-        final_miercoles = findViewById(R.id.textView_horarioMiercolesFinal);
-        final_jueves = findViewById(R.id.textView_horarioJuevesFinal);
-        final_viernes = findViewById(R.id.textView_horarioViernesFinal);
+        final_lunes = view.findViewById(R.id.textView_horarioLunesFinal);
+        final_martes = view.findViewById(R.id.textView_horarioMartesFinal);
+        final_miercoles = view.findViewById(R.id.textView_horarioMiercolesFinal);
+        final_jueves = view.findViewById(R.id.textView_horarioJuevesFinal);
+        final_viernes = view.findViewById(R.id.textView_horarioViernesFinal);
 
-        checkBox_lunes = findViewById(R.id.checkBox_Lunes);
-        checkBox_martes = findViewById(R.id.checkBox_Martes);
-        checkBox_miercoles = findViewById(R.id.checkBox_Miercoles);
-        checkBox_jueves = findViewById(R.id.checkBox_Jueves);
-        checkBox_viernes = findViewById(R.id.checkBox_Viernes);
+        checkBox_lunes = view.findViewById(R.id.checkBox_Lunes);
+        checkBox_martes = view.findViewById(R.id.checkBox_Martes);
+        checkBox_miercoles = view.findViewById(R.id.checkBox_Miercoles);
+        checkBox_jueves = view.findViewById(R.id.checkBox_Jueves);
+        checkBox_viernes = view.findViewById(R.id.checkBox_Viernes);
 
 
         Calendar calendar = Calendar.getInstance();
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
+
+        navigationView = ((MainActivity2) getActivity()).getNavigationView();
+
+        ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
+        //Hide share button
+        shareBtn.setVisibility(View.GONE);
 
         //Lunes
         inicio_lunes.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +81,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_lunes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeLunes, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeLunes, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -88,7 +103,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_lunes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeLunesFinal, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeLunesFinal, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -112,7 +127,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_martes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMartes, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMartes, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -134,7 +149,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_martes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMartesFinal, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMartesFinal, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -158,7 +173,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_miercoles.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMiercoles, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMiercoles, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -180,7 +195,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_miercoles.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMiercolesFinal, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeMiercolesFinal, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -204,7 +219,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_jueves.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeJueves, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeJueves, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -226,7 +241,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_jueves.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeJuevesFinal, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeJuevesFinal, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -250,7 +265,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_viernes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeViernes, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeViernes, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -272,7 +287,7 @@ public class activity_add_asignatura extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkBox_viernes.isChecked()){
                     TimePickerDialog timePicker = new TimePickerDialog(
-                            activity_add_asignatura.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeViernesFinal, hour, minute, true);
+                            getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeViernesFinal, hour, minute, true);
                     timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     timePicker.show();
                 }else{
@@ -289,12 +304,12 @@ public class activity_add_asignatura extends AppCompatActivity {
 
             }
         };
-
+     return view;
     }
 
     public void agregarAs(View v){
         if(validarAs()){
-            Toast.makeText(this, "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
         }
     }
     public boolean validarAs(){

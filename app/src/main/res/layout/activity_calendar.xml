@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="57dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
@@ -28,6 +28,7 @@
             android:textSize="20dp" />
 
         <Button
+            android:id="@+id/prevMonth"
             android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.05" />
         <Button
+            android:id="@+id/nextMonth"
             android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1" />
         <Button
+            android:id="@+id/weeklyAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
