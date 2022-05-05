@@ -98,7 +98,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         //Iniciar firebase Auth
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //verifyPro();
+        verifyPro();
 
         navigationView.setNavigationItemSelectedListener(this);
 
