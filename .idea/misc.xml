@@ -26,7 +26,7 @@
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_main_2.xml" value="0.1" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_menu.xml" value="0.11865942028985507" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_menu_desplegable.xml" value="0.2" />
-        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_note.xml" value="0.2" />
+        <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_note.xml" value="0.264" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_note_editor.xml" value="0.2" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_registro.xml" value="0.264" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_toolbar_calendario.xml" value="0.10190217391304347" />
@@ -57,9 +57,6 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1160081053698075" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/casella_calendari.xml" value="0.23854166666666668" />
-        <entry key="app/src/main/res/layout/dialog_nuevocampo.xml" value="0.24895833333333334" />
-        <entry key="app/src/main/res/layout/dialogo_camponuevo.xml" value="0.4070587158203125" />
-        <entry key="app/src/main/res/layout/fragment_camponuevo.xml" value="0.23489583333333333" />
       </map>
     </option>
   </component>

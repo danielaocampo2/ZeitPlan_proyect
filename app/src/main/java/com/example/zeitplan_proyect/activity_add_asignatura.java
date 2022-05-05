@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -312,13 +313,71 @@ public class activity_add_asignatura extends Fragment {
             Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
         }
     }
+
     public boolean validarAs(){
         boolean retorno = true;
         String c1 = campo1.getText().toString();
         if (c1.isEmpty()){
             campo1.setError("Este campo no puede quedar vacio");
             retorno = false;
+        }if(checkBox_lunes.isChecked()){
+            if(inicio_lunes.getText().toString().isEmpty()||final_lunes.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                retorno = false;
+            }else{
+                retorno = validarCampo(inicio_lunes.getText().toString(), final_lunes.getText().toString());
+            }
+        }if(checkBox_martes.isChecked()){
+            if(inicio_martes.getText().toString().isEmpty()||final_martes.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                retorno = false;
+            }else{
+                retorno = validarCampo(inicio_martes.getText().toString(), final_martes.getText().toString());
+            }
+        }if(checkBox_miercoles.isChecked()){
+            if(inicio_miercoles.getText().toString().isEmpty()||final_miercoles.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                retorno = false;
+            }else{
+                retorno = validarCampo(inicio_miercoles.getText().toString(), final_miercoles.getText().toString());
+            }
+        }if(checkBox_jueves.isChecked()){
+            if(inicio_jueves.getText().toString().isEmpty()||final_jueves.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                retorno = false;
+            }else{
+                retorno = validarCampo(inicio_jueves.getText().toString(), final_jueves.getText().toString());
+            }
+        }if(checkBox_viernes.isChecked()){
+            if(inicio_viernes.getText().toString().isEmpty()||final_viernes.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                retorno = false;
+            }else{
+                retorno = validarCampo(inicio_viernes.getText().toString(), final_viernes.getText().toString());
+            }
         }
+        return retorno;
+    }
+
+    public boolean validarCampo(String inicio, String fin){
+        boolean retorno = true;
+
+        int hora_inicio = Integer.parseInt(inicio.substring(0,2));
+        int hora_final = Integer.parseInt(fin.substring(0,2));
+
+        int min_inicio = Integer.parseInt(inicio.substring(3,inicio.length()));
+        int min_final = Integer.parseInt(fin.substring(3,fin.length()));
+
+        if (hora_inicio > hora_final) {
+            Toast.makeText(getContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
+            retorno = false;
+        } else if (hora_inicio == hora_final) {
+                if (min_inicio > min_final) {
+                    Toast.makeText(getContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
+                    retorno = false;
+                }
+        }
+
         return retorno;
     }
 }
