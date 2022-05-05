@@ -24,7 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 
-public class activity_add_asignatura extends AppCompatActivity {
+public class activity_add_asignatura extends Fragment {
 
     EditText campo1;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
