@@ -153,6 +153,7 @@ public class CalculadoraActivity extends AppCompatActivity {
             }
         });
 
+
         remove_campo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +161,6 @@ public class CalculadoraActivity extends AppCompatActivity {
                 lista_final_porcentajes.remove(porcentaje_campo1);
             }
         });
-
 
         boton_add3.setOnClickListener(new View.OnClickListener(){
             @Override

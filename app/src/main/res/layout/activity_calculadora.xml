@@ -34,15 +34,15 @@
             app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
             app:hintTextColor="#315512"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.416"
-            app:layout_constraintStart_toEndOf="@+id/textView_Teoria"
+            app:layout_constraintHorizontal_bias="0.69"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textField_AñadeTantoPorCiento00"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,8 +174,8 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:hintTextColor="#315512"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.416"
-                    app:layout_constraintStart_toEndOf="@+id/textView_Teoria2"
+                    app:layout_constraintHorizontal_bias="0.69"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -328,8 +328,8 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:hintTextColor="#315512"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.416"
-                    app:layout_constraintStart_toEndOf="@+id/textView_Teoria3"
+                    app:layout_constraintHorizontal_bias="0.69"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -482,8 +482,8 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:hintTextColor="#315512"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.416"
-                    app:layout_constraintStart_toEndOf="@+id/textView_Teoria4"
+                    app:layout_constraintHorizontal_bias="0.69"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -636,8 +636,8 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:hintTextColor="#315512"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.416"
-                    app:layout_constraintStart_toEndOf="@+id/textView_Teoria5"
+                    app:layout_constraintHorizontal_bias="0.69"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -810,6 +810,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_Nota_final">
 
         </Button>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

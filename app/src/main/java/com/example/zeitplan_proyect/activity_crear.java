@@ -54,7 +54,6 @@ public class activity_crear extends AppCompatActivity {
 
         recuerdame_check.setOnCheckedChangeListener(
                 new CheckBox.OnCheckedChangeListener(){
-
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean apretado) {
                         if (apretado==true){
@@ -108,12 +107,10 @@ public class activity_crear extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 String hour_time = timePicker.getHour()+":"+timePicker.getMinute();
                 campoHora.setText(hour_time);
-
             }
         };
 
         campoFecha.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -127,13 +124,10 @@ public class activity_crear extends AppCompatActivity {
             }
         });
         setListener = new DatePickerDialog.OnDateSetListener(){
-
-
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String date = view.getMonth()+"/"+view.getDayOfMonth()+"/"+view.getYear();
                 campoFecha.setText(date);
-
             }
         };
 
@@ -142,11 +136,9 @@ public class activity_crear extends AppCompatActivity {
 
     //Falta que vuelva el boton a la ultima vista visitada
     public void agregar(View v){
-
         if(validar()){
             Toast.makeText(this, "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public boolean validar(){
@@ -158,14 +150,10 @@ public class activity_crear extends AppCompatActivity {
         } if (c2.isEmpty()){
             campoFecha.setError("Este campo no puede quedar vacio");
             retorno = false;
-        } else{
-            campoFecha.setText("");
         }
         if (c3.isEmpty()){
             campoHora.setError("Este campo no puede quedar vacio");
             retorno = false;
-        }else{
-            campoHora.setText("");
         }
         return retorno;
     }
