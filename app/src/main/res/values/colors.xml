@@ -11,4 +11,5 @@
     <color name="colorLogo">#558b2f</color>
     <color name="darkGreen">#003A07</color>
     <color name="gray"> #888 </color>
+    <color name="lightGray"> #EEE </color>
 </resources>

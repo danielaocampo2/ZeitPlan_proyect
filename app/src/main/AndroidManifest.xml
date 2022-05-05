@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeitPlan_proyect">
         <activity
+            android:name=".DailyCalendarActivity"
+            android:exported="false" />
+        <activity
             android:name=".EventEditActivity"
             android:exported="false" />
         <activity

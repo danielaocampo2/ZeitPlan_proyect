@@ -1,9 +1,14 @@
 package com.example.zeitplan_proyect;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class Event {
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
@@ -14,6 +19,19 @@ public class Event {
         for(Event event : eventsList)
         {
             if(event.getDate().equals(date))
+                events.add(event);
+        }
+        return  events;
+    }
+
+    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time){
+
+        ArrayList<Event> events= new ArrayList<>();
+        for(Event event : eventsList)
+        {
+            int eventHour = event.time.getHour();
+            int cellHour = time.getHour();
+            if(event.getDate().equals(date) && eventHour == cellHour)
                 events.add(event);
         }
         return  events;

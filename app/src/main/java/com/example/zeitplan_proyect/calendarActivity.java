@@ -46,7 +46,7 @@ public class calendarActivity extends AppCompatActivity implements CalendarAdapt
     private void setMonthView()
     {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysMonth = daysInMonthArray(CalendarUtils.selectedDate);
+        ArrayList<LocalDate> daysMonth = daysInMonthArray();
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
