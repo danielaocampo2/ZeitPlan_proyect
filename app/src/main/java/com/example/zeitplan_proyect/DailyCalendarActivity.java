@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -49,10 +50,23 @@ public class DailyCalendarActivity extends AppCompatActivity {
     private void setDayView()
     {
         monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
-        String dayOfWeek = selectedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
-        dayOfWeekTV.setText(dayOfWeek);
+        dayOfWeekTV.setText(StringDayOfWeek(selectedDate.getDayOfWeek()));
         setHourAdapter();
     }
+
+    public String StringDayOfWeek(DayOfWeek dayOfWeek) {
+        switch(dayOfWeek){
+            case MONDAY: return "Lunes";
+            case TUESDAY: return "Martes";
+            case WEDNESDAY: return "Miercoles";
+            case THURSDAY: return "Jueves";
+            case FRIDAY: return "Viernes";
+            case SATURDAY: return "Sabado";
+            case SUNDAY: return "Domingo";
+        }
+        return " ";
+    }
+
 
     private void setHourAdapter() {
         HourAdapter hourAdapter = new HourAdapter(getApplicationContext(), hourEventList());

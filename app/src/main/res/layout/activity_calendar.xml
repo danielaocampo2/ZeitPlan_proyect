@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/monthYearTV"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Apr 2022"
@@ -39,7 +39,7 @@
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.05" />
         <Button
             android:layout_width="25dp"
             android:layout_height="wrap_content"
@@ -53,14 +53,14 @@
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.1" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/white"
             android:onClick="weeklyAction"
-            android:text="Week"
+            android:text="Setmana"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DL"
+            android:text="LU"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -88,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DM"
+            android:text="MA"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DX"
+            android:text="MI"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DJ"
+            android:text="JU"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -112,7 +112,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DV"
+            android:text="VI"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -120,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DS"
+            android:text="SA"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -128,7 +128,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DG"
+            android:text="DO"
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>

@@ -66,7 +66,7 @@
         android:background="@color/white"
         android:layout_gravity="center"
         android:onClick="newEventAction"
-        android:text="New Event"
+        android:text="Nuevo Evento"
         android:textSize="20sp"
         android:textStyle="bold" />
 

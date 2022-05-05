@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,8 +18,7 @@ public class CalendarUtils {
 
     public static String formattedDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-        return date.format(formatter);
+        return date.getDayOfMonth() + " " + MonthToString(date.getMonth())+ " " + date.getYear();
     }
 
     public static String formattedTime(LocalTime time)
@@ -64,14 +64,30 @@ public class CalendarUtils {
 
     public static String monthYearFromDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
+        return MonthToString(date.getMonth()) + " " + date.getYear();
     }
 
     public static String monthDayFromDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d");
-        return date.format(formatter);
+        return date.getDayOfMonth() + " " + MonthToString(date.getMonth());
+    }
+
+    public static String MonthToString(Month month){
+        switch(month){
+            case JANUARY: return "Enero";
+            case FEBRUARY: return "Febrero";
+            case MARCH: return "Marzo";
+            case APRIL: return "Abril";
+            case MAY: return "Mayo";
+            case JUNE: return "Junio";
+            case JULY: return "Julio";
+            case AUGUST: return "Agosto";
+            case SEPTEMBER: return "Septiembre";
+            case OCTOBER: return "Octubre";
+            case NOVEMBER: return "Noviembre";
+            case DECEMBER: return "Diciembre";
+        }
+        return " ";
     }
 
 
