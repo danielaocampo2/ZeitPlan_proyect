@@ -25,11 +25,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titUserName"
-
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="340dp"
         android:layout_height="78dp"
-
         android:layout_marginEnd="24dp"
         android:hint="@string/Correo"
         app:boxStrokeColor="#315512"
