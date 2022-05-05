@@ -330,10 +330,12 @@ public class CalculadoraActivity extends AppCompatActivity {
                             lista_porcentajes2 = new ArrayList<>();
                             lista_notas2.add(nota2);
                             lista_porcentajes2.add(porcentaje2);
-                            lista_final_porcentajes.add(porcentaje_campo1); //falta borarr cuando se elimina el campo
+                            lista_final_porcentajes.add(porcentaje_campo1);
 
 
                         }else if (campo2.getVisibility()==View.GONE){
+                            TextView titulo = findViewById(R.id.textView_Teoria3);
+                            titulo.setText(nombre);
                             campo2.setVisibility(View.VISIBLE);
                             nota3 = (EditText) findViewById(R.id.textField_AñadeNota3);
                             porcentaje3 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento3);
@@ -345,6 +347,8 @@ public class CalculadoraActivity extends AppCompatActivity {
                             lista_final_porcentajes.add(porcentaje_campo2);
                         }
                         else if(campo3.getVisibility()==View.GONE){
+                            TextView titulo = findViewById(R.id.textView_Teoria4);
+                            titulo.setText(nombre);
                             campo3.setVisibility(View.VISIBLE);
                             nota4 = (EditText) findViewById(R.id.textField_AñadeNota4);
                             porcentaje4 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento4);
@@ -357,6 +361,8 @@ public class CalculadoraActivity extends AppCompatActivity {
 
                         }
                         else if(campo4.getVisibility()==View.GONE){
+                            TextView titulo = findViewById(R.id.textView_Teoria5);
+                            titulo.setText(nombre);
                             campo4.setVisibility(View.VISIBLE);
                             nota5 = (EditText) findViewById(R.id.textField_AñadeNota5);
                             porcentaje5 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento5);
