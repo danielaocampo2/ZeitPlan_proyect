@@ -50,6 +50,9 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1160081053698075" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/casella_calendari.xml" value="0.23854166666666668" />
+        <entry key="app/src/main/res/layout/dialog_nuevocampo.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/dialogo_camponuevo.xml" value="0.4070587158203125" />
+        <entry key="app/src/main/res/layout/fragment_camponuevo.xml" value="0.23489583333333333" />
       </map>
     </option>
   </component>

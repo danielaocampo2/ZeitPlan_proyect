@@ -1,18 +1,22 @@
 package com.example.zeitplan_proyect;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -303,55 +307,81 @@ public class CalculadoraActivity extends AppCompatActivity {
         boton_campoNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(campo1.getVisibility()==View.GONE){
-                    campo1.setVisibility(View.VISIBLE);
-                    nota2 = (EditText) findViewById(R.id.textField_AñadeNota2);
-                    porcentaje2 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento2);
-                    porcentaje_campo1 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento002);
-                    lista_notas2= new ArrayList<>();
-                    lista_porcentajes2 = new ArrayList<>();
-                    lista_notas2.add(nota2);
-                    lista_porcentajes2.add(porcentaje2);
-                    lista_final_porcentajes.add(porcentaje_campo1); //falta borarr cuando se elimina el campo
+
+                LayoutInflater inflater = getLayoutInflater();
+                View vista = inflater.inflate(R.layout.dialogo_camponuevo, (ViewGroup)findViewById(R.id.dialog_campoNuevo));
+
+                EditText nombre_nuevo = (EditText) vista.findViewById(R.id.editText_nuevo);
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(CalculadoraActivity.this);
+                dialog.setView(vista).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String nombre = nombre_nuevo.getText().toString();
+
+                        if(campo1.getVisibility()==View.GONE){
+                            campo1.setVisibility(View.VISIBLE);
+                            TextView titulo = findViewById(R.id.textView_Teoria2);
+                            titulo.setText(nombre);
+                            nota2 = (EditText) findViewById(R.id.textField_AñadeNota2);
+                            porcentaje2 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento2);
+                            porcentaje_campo1 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento002);
+                            lista_notas2= new ArrayList<>();
+                            lista_porcentajes2 = new ArrayList<>();
+                            lista_notas2.add(nota2);
+                            lista_porcentajes2.add(porcentaje2);
+                            lista_final_porcentajes.add(porcentaje_campo1); //falta borarr cuando se elimina el campo
 
 
-                }else if (campo2.getVisibility()==View.GONE){
-                    campo2.setVisibility(View.VISIBLE);
-                    nota3 = (EditText) findViewById(R.id.textField_AñadeNota3);
-                    porcentaje3 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento3);
-                    porcentaje_campo2 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento003);
-                    lista_notas3= new ArrayList<>();
-                    lista_porcentajes3 = new ArrayList<>();
-                    lista_notas3.add(nota3);
-                    lista_porcentajes3.add(porcentaje3);
-                    lista_final_porcentajes.add(porcentaje_campo2);
-                }
-                else if(campo3.getVisibility()==View.GONE){
-                    campo3.setVisibility(View.VISIBLE);
-                    nota4 = (EditText) findViewById(R.id.textField_AñadeNota4);
-                    porcentaje4 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento4);
-                    porcentaje_campo3 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento004);
-                    lista_notas4= new ArrayList<>();
-                    lista_porcentajes4 = new ArrayList<>();
-                    lista_notas4.add(nota4);
-                    lista_porcentajes4.add(porcentaje4);
-                    lista_final_porcentajes.add(porcentaje_campo3);
+                        }else if (campo2.getVisibility()==View.GONE){
+                            campo2.setVisibility(View.VISIBLE);
+                            nota3 = (EditText) findViewById(R.id.textField_AñadeNota3);
+                            porcentaje3 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento3);
+                            porcentaje_campo2 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento003);
+                            lista_notas3= new ArrayList<>();
+                            lista_porcentajes3 = new ArrayList<>();
+                            lista_notas3.add(nota3);
+                            lista_porcentajes3.add(porcentaje3);
+                            lista_final_porcentajes.add(porcentaje_campo2);
+                        }
+                        else if(campo3.getVisibility()==View.GONE){
+                            campo3.setVisibility(View.VISIBLE);
+                            nota4 = (EditText) findViewById(R.id.textField_AñadeNota4);
+                            porcentaje4 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento4);
+                            porcentaje_campo3 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento004);
+                            lista_notas4= new ArrayList<>();
+                            lista_porcentajes4 = new ArrayList<>();
+                            lista_notas4.add(nota4);
+                            lista_porcentajes4.add(porcentaje4);
+                            lista_final_porcentajes.add(porcentaje_campo3);
 
-                }
-                else if(campo4.getVisibility()==View.GONE){
-                    campo4.setVisibility(View.VISIBLE);
-                    nota5 = (EditText) findViewById(R.id.textField_AñadeNota5);
-                    porcentaje5 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento5);
-                    porcentaje_campo4 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento005);
-                    lista_notas5= new ArrayList<>();
-                    lista_porcentajes5 = new ArrayList<>();
-                    lista_notas5.add(nota5);
-                    lista_porcentajes5.add(porcentaje5);
-                    lista_final_porcentajes.add(porcentaje_campo4);
+                        }
+                        else if(campo4.getVisibility()==View.GONE){
+                            campo4.setVisibility(View.VISIBLE);
+                            nota5 = (EditText) findViewById(R.id.textField_AñadeNota5);
+                            porcentaje5 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento5);
+                            porcentaje_campo4 = (EditText) findViewById(R.id.textField_AñadeTantoPorCiento005);
+                            lista_notas5= new ArrayList<>();
+                            lista_porcentajes5 = new ArrayList<>();
+                            lista_notas5.add(nota5);
+                            lista_porcentajes5.add(porcentaje5);
+                            lista_final_porcentajes.add(porcentaje_campo4);
 
-                }else{
-                    maxCampos();
-                }
+                        }else{
+                            maxCampos();
+                        }
+
+                    }
+                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                dialog.show();
+
+
             }
         });
 
