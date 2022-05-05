@@ -49,6 +49,19 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:cornerRadius="20dp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:onClick="dailyAction"
+            android:text="Daily"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
 
@@ -115,6 +128,7 @@
             android:textColor="@color/gray"
             android:textAlignment="center"
             android:textSize="16sp"/>
+
 
 
     </LinearLayout>

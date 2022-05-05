@@ -1,16 +1,19 @@
 package com.example.zeitplan_proyect;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
     private final ArrayList<LocalDate> days;
@@ -40,13 +43,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position)
     {
         LocalDate date = days.get(position);
-        if(date==null)
-            holder.dayMonth.setText("");
-        else{
-            holder.dayMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if(date.equals(CalendarUtils.selectedDate)){
-                holder.parentView.setBackgroundColor(Color.LTGRAY);
-            }
+
+        holder.dayMonth.setText(String.valueOf(date.getDayOfMonth()));
+        if(date.equals(CalendarUtils.selectedDate)){
+            holder.parentView.setBackgroundColor(Color.LTGRAY);
+        }
+
+        if(date.getMonth().equals(CalendarUtils.selectedDate.getMonth())){
+            holder.dayMonth.setTextColor(Color.BLACK);
+        }else{
+            holder.dayMonth.setTextColor(Color.LTGRAY);
         }
 
     }
