@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Calendar;
 
 public class activity_add_asignatura extends AppCompatActivity {
@@ -25,6 +27,9 @@ public class activity_add_asignatura extends AppCompatActivity {
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
     Spinner spinner;
+
+    //Base de datos
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

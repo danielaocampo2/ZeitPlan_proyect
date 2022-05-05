@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 
+
 public class registroActivity extends AppCompatActivity {
 
     TextView goLogin;

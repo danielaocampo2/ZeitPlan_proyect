@@ -183,7 +183,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
           //  }
 
         } else if (id == R.id.nav_help) {
-
+/*
             String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
             String google="google.com";
             if(providerID!=google) { // no se porque lo lee al contrario
@@ -191,7 +191,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
             }else{
                 Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
 
-            }
+            }*/
         }else if (id == R.id.nav_share) {
 
         }

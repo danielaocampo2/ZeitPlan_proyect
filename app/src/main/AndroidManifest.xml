@@ -19,7 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".activity_add_asignatura"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".NoteEditorActivity"
             android:exported="false" />
