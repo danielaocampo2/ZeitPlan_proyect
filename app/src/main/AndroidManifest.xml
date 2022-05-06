@@ -13,8 +13,10 @@
         android:theme="@style/Theme.ZeitPlan_proyect">
 
         <activity
-            android:name=".EventEditActivity"
-            android:exported="false" />
+            android:name=".vista.RegistroActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
 
         <activity

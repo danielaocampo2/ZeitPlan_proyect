@@ -39,7 +39,7 @@ public class Activity_login extends AppCompatActivity {
     EditText txtEmail, txtPassword;
     TextInputLayout inputEmail, inputPassword;
 
-
+    PresenterLogin presentadorLogin;
     FirebaseAuth mAuth;
 
     //Variable para gestionar FirebaseAuth
@@ -70,7 +70,8 @@ public class Activity_login extends AppCompatActivity {
         btnRegistrarseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Activity_login.this, RegistroActivity.class);
+
+                Intent intent = new Intent(Activity_login.this,RegistroActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,7 +95,7 @@ public class Activity_login extends AppCompatActivity {
 
         // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance(); // para controlar el estado del usuario
-        PresenterLogin presentadorLogin = new PresenterLogin(this, mAuth);
+        presentadorLogin = new PresenterLogin(this, mAuth);
 
         //Controlar el estado del usuario
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -112,15 +113,13 @@ public class Activity_login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!validateEmail() | !validatePassword()) {
+                if (!presentadorLogin.validateEmail(txtEmail ,inputEmail) | !presentadorLogin.validatePassword(inputPassword)) {
                     return;
                 } else {
                     String emailUser = txtEmail.getText().toString().trim();
                     String passwordUser = txtPassword.getText().toString().trim();
                     presentadorLogin.loginUser(emailUser, passwordUser);
-
                 }
-
 
             }
         });
@@ -140,20 +139,19 @@ public class Activity_login extends AppCompatActivity {
                         GoogleSignInAccount account = task.getResult(ApiException.class);
                         Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                         firebaseAuthWithGoogle(account.getIdToken());
+
                     } catch (ApiException e) {
                         // Google Sign In fallido, actualizar GUI
                         Log.w(TAG, "Google sign in failed", e);
                     }
                 } else {
                     Log.d(TAG, "Error,login no exitoso:" + task.getException().toString());
-                    //PARA LOS ERRORES-- Usuario se sale del menu de elegir cuenta de google
-                    //  Toast.makeText(this,"Ocurrio un error."+task.getException().toString(),Toast.LENGTH_LONG).show();
+
                 }
 
             }
         }
     });
-
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -181,35 +179,6 @@ public class Activity_login extends AppCompatActivity {
                 });
     }
 
-    private boolean validateEmail() {
-        if (Patterns.EMAIL_ADDRESS.matcher(txtEmail.getText().toString()).matches() == false) {
-            if (txtEmail.getText().toString().isEmpty()) {
-                inputEmail.setError("Campo obligatorio");
-                return false;
-            } else {
-                inputEmail.setError("Correo invalido");
-                return false;
-            }
-        } else {
-            inputEmail.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        String passwordInput = inputPassword.getEditText().getText().toString().trim(); // trim elimina espacios en blanco de ambos ectremos del string
-        // if password field is empty
-        // it will display error message "Field can not be empty"
-        if (passwordInput.isEmpty()) {
-            inputPassword.setError("Campo obligatorio");
-            return false;
-        } else {
-            inputPassword.setError(null);
-            return true;
-        }
-    }
-
-
     //Evitamos que vuelva a login_activity con el botón atrás si ya esta logeado.
     @Override
     protected void onStart() {
@@ -218,23 +187,6 @@ public class Activity_login extends AppCompatActivity {
     }
 
 
-    private void loginUser(String emailUser, String passwordUser) {
-        mAuth.signInWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    finish();
-                    startActivity(new Intent(Activity_login.this, MainActivity2.class));
-                    Toast.makeText(Activity_login.this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Activity_login.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 
 }
