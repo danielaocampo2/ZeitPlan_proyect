@@ -180,6 +180,11 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 setFragment(3);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
+                            case R.id.nav_calculadora:
+                                menuItem.setChecked(true);
+                                setFragment(5);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
                             case R.id.nav_out:
                                 menuItem.setChecked(true);
                                 mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
@@ -253,6 +258,13 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                 fragmentTransaction = fragmentManager.beginTransaction();
                 NoteActivity noteActivity= new NoteActivity();
                 fragmentTransaction.replace(R.id.fragment,noteActivity);
+                fragmentTransaction.commit();
+                break;
+            case 5:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                CalculadoraActivity calculadoraActivity= new CalculadoraActivity();
+                fragmentTransaction.replace(R.id.fragment,calculadoraActivity);
                 fragmentTransaction.commit();
                 break;
 

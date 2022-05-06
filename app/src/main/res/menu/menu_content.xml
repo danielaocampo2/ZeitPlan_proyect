@@ -20,6 +20,10 @@
             android:id="@+id/nav_notes"
             android:icon="@android:drawable/ic_menu_edit"
             android:title="Notas" />
+        <item
+            android:id="@+id/nav_calculadora"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="Calculadora" />
     </group>
 
     <item android:title="Ajustes">
