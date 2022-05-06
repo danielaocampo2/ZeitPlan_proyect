@@ -16,11 +16,9 @@
             android:name=".EventEditActivity"
             android:exported="false" />
 
+
         <activity
-            android:name=".activity_login"
-            android:exported="true" />
-        <activity
-            android:name=".registroActivity"
+            android:name=".vista.activity_login"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

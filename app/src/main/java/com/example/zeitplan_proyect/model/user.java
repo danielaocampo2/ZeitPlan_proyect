@@ -1,11 +1,8 @@
 package com.example.zeitplan_proyect.model;
 
-import com.example.zeitplan_proyect.userAdapter.userAdapter;
-
 public class user {
     String name, id, password, email;
-    private final userAdapter adapter = userAdapter.userAdapter;
-
+    public user(){}
     public user(String name, String id, String password, String email) {
         this.name = name;
         this.id = id;
