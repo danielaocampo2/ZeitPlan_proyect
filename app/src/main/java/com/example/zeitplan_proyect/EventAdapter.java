@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)

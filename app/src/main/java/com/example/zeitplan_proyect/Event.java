@@ -39,13 +39,20 @@ public class Event {
 
 
     private String name;
+    private String description;
     private LocalDate date;
     private LocalTime time;
+    private String type;
+    private int priority;
+    private boolean remember;
 
-    public Event(String name, LocalDate date, LocalTime time) {
+    public Event(String name, String description, LocalDate date, LocalTime time, int priority, boolean remember) {
         this.name = name;
+        this.description = description;
         this.date = date;
         this.time = time;
+        this.priority = priority;
+        this.remember = remember;
     }
 
     public String getName() {
@@ -54,6 +61,14 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getDate() {
@@ -71,6 +86,38 @@ public class Event {
     public void setTime(LocalTime time) {
         this.time = time;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public boolean isRemember() {
+        return remember;
+    }
+
+    public void setRemember(boolean remember) {
+        this.remember = remember;
+    }
+
+
+
+
+
+
+
+
 
 
 

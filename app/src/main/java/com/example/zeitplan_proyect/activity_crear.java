@@ -1,12 +1,13 @@
 package com.example.zeitplan_proyect;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +27,22 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class activity_crear extends Fragment {
-    EditText campo1, campo2;
-    EditText campoFecha, campoHora;
-    DatePickerDialog.OnDateSetListener setListener;
-    TimePickerDialog.OnTimeSetListener setListenerTime;
+
+    EditText eventNameET, eventDescrET;
+    EditText eventDateTV, eventTimeTV;
+    TimePickerDialog.OnTimeSetListener setListenerTimeEvent;
+    DatePickerDialog.OnDateSetListener setListenerDateEvent;
+
+    private LocalTime time;
+    private LocalDate date;
+    private int prioridad;
+    private boolean remember;
+
     Spinner spinner;
     SeekBar seekBar;
     TextView resultado_seekBar;
@@ -51,11 +61,11 @@ public class activity_crear extends Fragment {
         spinner.setAdapter(adapter);
         acpetar = view.findViewById(R.id.button_aceptar);
 
-        campo1 = (EditText) view.findViewById(R.id.editText_Titulo);
-        campo2 = (EditText) view.findViewById(R.id.editText_descripcion);
+        eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
+        eventDescrET = (EditText) view.findViewById(R.id.editText_descripcion);
 
-        campoFecha = view.findViewById(R.id.editTextDate);
-        campoHora = view.findViewById(R.id.editTextHour);
+        eventDateTV = view.findViewById(R.id.editTextDate);
+        eventTimeTV = view.findViewById(R.id.editTextHour);
 
         resultado_seekBar = view.findViewById(R.id.textView_resultadoPrioridad);
         seekBar = view.findViewById(R.id.seekBar_prioridad);
@@ -72,10 +82,7 @@ public class activity_crear extends Fragment {
                 new CheckBox.OnCheckedChangeListener(){
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean apretado) {
-                        if (apretado==true){
-                            //crear alarma
-
-                        }
+                        remember = apretado;
                     }
                 }
         );
@@ -85,7 +92,7 @@ public class activity_crear extends Fragment {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         resultado_seekBar.setText(String.valueOf(progress)+"%");
-
+                        prioridad = progress;
                     }
 
                     @Override
@@ -101,50 +108,45 @@ public class activity_crear extends Fragment {
         );
 
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        time = LocalTime.now();
+        eventTimeTV.setText(CalendarUtils.formattedShortTime(time));
+        date = CalendarUtils.selectedDate;
+        eventDateTV.setText(date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear());
 
-        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        final int minute = calendar.get(Calendar.MINUTE);
-
-        campoHora.setOnClickListener(new View.OnClickListener() {
+        eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePicker = new TimePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,setListenerTime,hour,minute,true);
-                timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                timePicker.show();
-                campoHora.setText("");
+                DatePickerDialog datePicker = new DatePickerDialog(
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
+                datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePicker.show();
+
             }
         });
-        setListenerTime = new TimePickerDialog.OnTimeSetListener() {
+        setListenerDateEvent = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                String hour_time = timePicker.getHour()+":"+timePicker.getMinute();
-                campoHora.setText(hour_time);
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                String day_month_year = datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear();
+                eventDateTV.setText(day_month_year);
+                date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
             }
         };
 
-        campoFecha.setOnClickListener(new View.OnClickListener() {
+        eventTimeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                        ,setListener,year,month,day);
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-                datePickerDialog.getDatePicker();
-
-
+                TimePickerDialog timePicker = new TimePickerDialog(
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeEvent, time.getHour(), time.getMinute(), true);
+                timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePicker.show();
             }
         });
-        setListener = new DatePickerDialog.OnDateSetListener(){
+        setListenerTimeEvent = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = view.getMonth()+"/"+view.getDayOfMonth()+"/"+view.getYear();
-                campoFecha.setText(date);
+            public void onTimeSet(TimePicker timePicker, int i, int e) {
+                String hour_time = timePicker.getHour() + ":" + timePicker.getMinute();
+                eventTimeTV.setText(hour_time);
+                time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
             }
         };
 
@@ -164,22 +166,26 @@ public class activity_crear extends Fragment {
 
     public void agregar(View v){
         if(validar()){
+            String eventName = eventNameET.getText().toString();
+            String eventDescription = eventDescrET.getText().toString();
+            Event newEvent = new Event(eventName, eventDescription, date, time, prioridad, remember);
+            Event.eventsList.add(newEvent);
             Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
         }
     }
 
     public boolean validar(){
         boolean retorno = true;
-        String c1 = campo1.getText().toString(), c2 = campoFecha.getText().toString(), c3 = campoHora.getText().toString();
+        String c1 = eventNameET.getText().toString(), c2 = eventDateTV.getText().toString(), c3 = eventTimeTV.getText().toString();
         if (c1.isEmpty()){
-            campo1.setError("Este campo no puede quedar vacio");
+            eventNameET.setError("Este campo no puede quedar vacio");
             retorno = false;
         } if (c2.isEmpty()){
-            campoFecha.setError("Este campo no puede quedar vacio");
+            eventDateTV.setError("Este campo no puede quedar vacio");
             retorno = false;
         }
         if (c3.isEmpty()){
-            campoHora.setError("Este campo no puede quedar vacio");
+            eventTimeTV.setError("Este campo no puede quedar vacio");
             retorno = false;
         }
         return retorno;
