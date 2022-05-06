@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 
 
-public class registroActivity extends AppCompatActivity {
+public class RegistroActivity extends AppCompatActivity {
 
     TextView goLogin;
     Button btnRegistro;
@@ -39,7 +39,7 @@ public class registroActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    private static final String TAG = "registroActivity";
+    private static final String TAG = "RegistroActivity";
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -90,7 +90,7 @@ public class registroActivity extends AppCompatActivity {
         goLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(registroActivity.this, activity_login.class);
+                Intent intent = new Intent(RegistroActivity.this, Activity_login.class);
                 startActivity(intent);
             }
         });
@@ -159,13 +159,13 @@ public class registroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
               /*  if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
+                    // Sign in success, update UI with the signed-in User's information
                     Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                    FirebaseUser User = mAuth.getCurrentUser();
                 } else {
-                    // If sign in fails, display a message to the user.
+                    // If sign in fails, display a message to the User.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(registroActivity.this, "Authentication failed.",
+                    Toast.makeText(RegistroActivity.this, "Authentication failed.",
                             Toast.LENGTH_SHORT).show();
                    // updateUI(null);
                 }*/
@@ -178,17 +178,17 @@ public class registroActivity extends AppCompatActivity {
                 map.put("email", emailUser);
                 map.put("password", passwordUser);
                 //Crea una collection llamada User y recibe un evento andOn..
-                mFirestore.collection("user").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                mFirestore.collection("User").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         finish(); //Finalizamos esta actividad
-                        startActivity(new Intent(registroActivity.this, MainActivity2.class));
-                        Toast.makeText(registroActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegistroActivity.this, MainActivity2.class));
+                        Toast.makeText(RegistroActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(registroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -196,7 +196,7 @@ public class registroActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(registroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
 
             }
         });/*

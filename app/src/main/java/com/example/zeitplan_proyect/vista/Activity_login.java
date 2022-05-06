@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.presenter.presenterLogin;
+import com.example.zeitplan_proyect.presenter.PresenterLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,7 +34,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class activity_login extends AppCompatActivity {
+public class Activity_login extends AppCompatActivity {
 
     EditText txtEmail, txtPassword;
     TextInputLayout inputEmail, inputPassword;
@@ -70,7 +70,7 @@ public class activity_login extends AppCompatActivity {
         btnRegistrarseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity_login.this, registroActivity.class);
+                Intent intent = new Intent(Activity_login.this, RegistroActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,7 +94,7 @@ public class activity_login extends AppCompatActivity {
 
         // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance(); // para controlar el estado del usuario
-        presenterLogin presentadorLogin = new presenterLogin(this, mAuth);
+        PresenterLogin presentadorLogin = new PresenterLogin(this, mAuth);
 
         //Controlar el estado del usuario
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -165,16 +165,16 @@ public class activity_login extends AppCompatActivity {
                     //variable task de tipo autresult, que controla si es o no exitoso el login
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Sign in success, update UI with the signed-in User's information
                             Log.d(TAG, "signInWithCredential:success");
-                            // FirebaseUser user = mAuth.getCurrentUser();
+                            // FirebaseUser User = mAuth.getCurrentUser();
                             //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
                             //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
-                            Intent dashboardActivity = new Intent(activity_login.this, MainActivity2.class);
+                            Intent dashboardActivity = new Intent(Activity_login.this, MainActivity2.class);
                             startActivity(dashboardActivity);
-                            activity_login.this.finish();
+                            Activity_login.this.finish();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a message to the User.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
                     }
@@ -224,14 +224,14 @@ public class activity_login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     finish();
-                    startActivity(new Intent(activity_login.this, MainActivity2.class));
-                    Toast.makeText(activity_login.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Activity_login.this, MainActivity2.class));
+                    Toast.makeText(Activity_login.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(activity_login.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_login.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
             }
         });
     }

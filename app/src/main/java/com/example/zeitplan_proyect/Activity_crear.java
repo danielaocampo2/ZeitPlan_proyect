@@ -31,7 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class activity_crear extends Fragment {
+public class Activity_crear extends Fragment {
 
     EditText eventNameET, eventDescrET;
     EditText eventDateTV, eventTimeTV;

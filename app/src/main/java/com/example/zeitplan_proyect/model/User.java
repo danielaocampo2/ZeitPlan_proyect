@@ -1,9 +1,9 @@
 package com.example.zeitplan_proyect.model;
 
-public class user {
+public class User {
     String name, id, password, email;
-    public user(){}
-    public user(String name, String id, String password, String email) {
+    public User(){}
+    public User(String name, String id, String password, String email) {
         this.name = name;
         this.id = id;
         this.password = password;

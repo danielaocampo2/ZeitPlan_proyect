@@ -31,7 +31,7 @@ import com.example.zeitplan_proyect.R;
 import com.google.android.material.navigation.NavigationView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class calendarActivity extends Fragment implements CalendarAdapter.OnItemListener {
+public class CalendarActivity extends Fragment implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRV;
     private Button prevMonth, nextMonth, weeklyAction;

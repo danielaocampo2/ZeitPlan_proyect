@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.zeitplan_proyect.vista.Activity_login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -128,7 +129,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                 Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
                 break;
             case "password":
-                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                mFirestore.collection("User").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
@@ -185,7 +186,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                     public void onComplete(@NonNull Task<Void> task) {
                                         //
                                         if (task.isSuccessful()) {
-                                            Intent activity_login = new Intent(getApplicationContext(), com.example.zeitplan_proyect.vista.activity_login.class);
+                                            Intent activity_login = new Intent(getApplicationContext(), Activity_login.class);
                                             startActivity(activity_login);
                                             MainActivity2.this.finish();
                                         } else {
@@ -226,21 +227,21 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
             case 0:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                calendarActivity calendar = new calendarActivity();
+                CalendarActivity calendar = new CalendarActivity();
                 fragmentTransaction.replace(R.id.fragment, calendar);
                 fragmentTransaction.commit();
                 break;
             case 1:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                activity_add_asignatura activity_add_asignatura = new activity_add_asignatura();
+                Activity_add_asignatura activity_add_asignatura = new Activity_add_asignatura();
                 fragmentTransaction.replace(R.id.fragment,activity_add_asignatura);
                 fragmentTransaction.commit();
                 break;
             case 2:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                activity_crear crear_activity = new activity_crear();
+                Activity_crear crear_activity = new Activity_crear();
                 fragmentTransaction.replace(R.id.fragment,crear_activity);
                 fragmentTransaction.commit();
                 break;

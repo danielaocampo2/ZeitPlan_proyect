@@ -18,7 +18,7 @@
 
 
         <activity
-            android:name=".vista.activity_login"
+            android:name=".vista.Activity_login"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
