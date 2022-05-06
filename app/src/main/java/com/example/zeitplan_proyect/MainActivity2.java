@@ -41,6 +41,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,6 +57,8 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     private FirebaseFirestore mFirestore;
     private TextView userName;
     private CircleImageView imgvw;
+    private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,30 +68,36 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
 
 
         mFirestore = FirebaseFirestore.getInstance();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupNavigationDrawerContent(navigationView);
+        }
+
+        setupNavigationDrawerContent(navigationView);
+        setFragment(0);
 
 
         //inflate header layout
-        View navView =  navigationView.inflateHeaderView(R.layout.nav_header);
+        View navView = navigationView.inflateHeaderView(R.layout.nav_header);
 
         //reference to views
 
 
         imgvw = (CircleImageView) navView.findViewById(R.id.imageView);
 
-        userName = (TextView)navView.findViewById(R.id.textView1);
+        userName = (TextView) navView.findViewById(R.id.textView1);
         //set views
         //  imgvw.setImageResource(R.drawable.your_image);
 
         //Iniciar firebase Auth
-        mAuth=FirebaseAuth.getInstance();
-        FirebaseUser currentUser= mAuth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         verifyPro();
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -119,7 +128,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    public void verifyPro(){
+    public void verifyPro() {
         String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
         String id = mAuth.getCurrentUser().getUid();
         switch (providerID) {
@@ -131,73 +140,131 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                 mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
+                        if (documentSnapshot.exists()) {
                             userName.setText(documentSnapshot.getString("name"));
                         }
                     }
                 });
-                Log.i(TAG, "no funcionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+mAuth.getCurrentUser().getProviderData().get(1).getProviderId());
+                Log.i(TAG, "no funcionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + mAuth.getCurrentUser().getProviderData().get(1).getProviderId());
                 break;
             default:
-                 break;
-            }
+                break;
+        }
 
     }
 
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        Intent intent = null;
+    protected void setupNavigationDrawerContent(@NonNull NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_calendar:
+                                menuItem.setChecked(true);
+                                setFragment(0);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                            case R.id.nav_add_activity:
+                                menuItem.setChecked(true);
+                                setFragment(1);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                            case R.id.nav_add_subj:
+                                menuItem.setChecked(true);
+                                setFragment(2);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                            case R.id.nav_notes:
+                                menuItem.setChecked(true);
+                                setFragment(3);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                            case R.id.nav_out:
+                                menuItem.setChecked(true);
+                                mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
 
+                                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        //
+                                        if (task.isSuccessful()) {
+                                            Intent activity_login = new Intent(getApplicationContext(), com.example.zeitplan_proyect.activity_login.class);
+                                            startActivity(activity_login);
+                                            MainActivity2.this.finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "no se puede cerrar sesión con google",
+                                                    Toast.LENGTH_LONG).show(); }
+                                    }
+                                });
+                                setFragment(4);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                            case R.id.nav_share:
+                                menuItem.setChecked(true);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
 
-        if (id == R.id.nav_calendar) {
-            intent = new Intent(getApplicationContext(), calendarActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_add_activity) {
-            intent = new Intent(getApplicationContext(), activity_add_asignatura.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_add_subj) {
-            intent = new Intent(getApplicationContext(), activity_crear.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_notes) {
-            intent = new Intent(getApplicationContext(), NoteActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_out) {
+                            case R.id.nav_help:
+                                menuItem.setChecked(true);
+                                String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
+                                String google="google.com";
+                                if(providerID!=google) { // no se porque lo lee al contrario
+                                    Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
 
-            mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
+                                }
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+    }
 
-            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    //
-                    if (task.isSuccessful()) {
-                        Intent activity_login = new Intent(getApplicationContext(), com.example.zeitplan_proyect.activity_login.class);
-                        startActivity(activity_login);
-                        MainActivity2.this.finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "no se puede cerrar sesión con google",
-                                Toast.LENGTH_LONG).show(); }
-                }
-            });
-          //  }
-
-        } else if (id == R.id.nav_help) {
-/*
-            String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
-            String google="google.com";
-            if(providerID!=google) { // no se porque lo lee al contrario
-                Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
-
-            }*/
-        }else if (id == R.id.nav_share) {
+    public void setFragment(int position) {
+        FragmentManager fragmentManager;
+        FragmentTransaction fragmentTransaction;
+        switch (position) {
+            case 0:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                calendarActivity calendar = new calendarActivity();
+                fragmentTransaction.replace(R.id.fragment, calendar);
+                fragmentTransaction.commit();
+                break;
+            case 1:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                activity_add_asignatura activity_add_asignatura = new activity_add_asignatura();
+                fragmentTransaction.replace(R.id.fragment,activity_add_asignatura);
+                fragmentTransaction.commit();
+                break;
+            case 2:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                activity_crear crear_activity = new activity_crear();
+                fragmentTransaction.replace(R.id.fragment,crear_activity);
+                fragmentTransaction.commit();
+                break;
+            case 3:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                NoteActivity noteActivity= new NoteActivity();
+                fragmentTransaction.replace(R.id.fragment,noteActivity);
+                fragmentTransaction.commit();
+                break;
 
         }
+    }
+    public NavigationView getNavigationView(){
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        return navView;
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

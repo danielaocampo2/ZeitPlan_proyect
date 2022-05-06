@@ -4,15 +4,20 @@ import static com.example.zeitplan_proyect.CalendarUtils.selectedDate;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -20,27 +25,47 @@ import java.util.List;
 import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class DailyCalendarActivity extends AppCompatActivity {
+public class DailyCalendarActivity extends Fragment {
 
     private TextView monthDayText;
     private TextView dayOfWeekTV;
     private ListView hourListView;
+    private Button prevDayAction,nextDayAction,nuevoEvento;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_calendar);
-        initWidget();
-    }
-
-    private void initWidget()
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        monthDayText = findViewById(R.id.monthDayTV);
-        dayOfWeekTV = findViewById(R.id.dayOfWeekTV);
-        hourListView = findViewById(R.id.hourListView);
+        final View view = inflater.inflate(R.layout.activity_daily_calendar, container, false);
+        ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Calendario");
+        monthDayText = view.findViewById(R.id.monthDayTV);
+        dayOfWeekTV = view.findViewById(R.id.dayOfWeekTV);
+        hourListView = view.findViewById(R.id.hourListView);
+        prevDayAction = view.findViewById(R.id.prevDayAction);
+        nextDayAction = view.findViewById(R.id.nextDayAction);
+        nuevoEvento = view.findViewById(R.id.nuevo_evento);
+
+        prevDayAction.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                prevDayAction(view);
+            }
+        });
+        nextDayAction.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                nextDayAction(view);
+            }
+        });
+        nuevoEvento.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                newEventAction(view);
+            }
+        });
+        return view;
     }
     @Override
-    protected void onResume()
+    public void onResume()
     {
         super.onResume();
         setDayView();
@@ -49,13 +74,26 @@ public class DailyCalendarActivity extends AppCompatActivity {
     private void setDayView()
     {
         monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
-        String dayOfWeek = selectedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
-        dayOfWeekTV.setText(dayOfWeek);
+        dayOfWeekTV.setText(StringDayOfWeek(selectedDate.getDayOfWeek()));
         setHourAdapter();
     }
 
+    public String StringDayOfWeek(DayOfWeek dayOfWeek) {
+        switch(dayOfWeek){
+            case MONDAY: return "Lunes";
+            case TUESDAY: return "Martes";
+            case WEDNESDAY: return "Miercoles";
+            case THURSDAY: return "Jueves";
+            case FRIDAY: return "Viernes";
+            case SATURDAY: return "Sabado";
+            case SUNDAY: return "Domingo";
+        }
+        return " ";
+    }
+
+
     private void setHourAdapter() {
-        HourAdapter hourAdapter = new HourAdapter(getApplicationContext(), hourEventList());
+        HourAdapter hourAdapter = new HourAdapter(getContext(), hourEventList());
         hourListView.setAdapter(hourAdapter);
 
     }
@@ -88,6 +126,6 @@ public class DailyCalendarActivity extends AppCompatActivity {
 
     public void newEventAction(View view)
     {
-        startActivity(new Intent(this, EventEditActivity.class));
+        startActivity(new Intent(getActivity(), EventEditActivity.class));
     }
 }

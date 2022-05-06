@@ -26,5 +26,11 @@
 
     <style name="AppTheme">ActionBar</style>
 
+    <style name="AppTheme.text" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+    </style>
+
+
+
 
 </resources>
