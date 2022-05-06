@@ -42,7 +42,6 @@ public class DailyCalendarActivity extends Fragment {
         hourListView = view.findViewById(R.id.hourListView);
         prevDayAction = view.findViewById(R.id.prevDayAction);
         nextDayAction = view.findViewById(R.id.nextDayAction);
-        nuevoEvento = view.findViewById(R.id.nuevo_evento);
 
         prevDayAction.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,12 +53,6 @@ public class DailyCalendarActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 nextDayAction(view);
-            }
-        });
-        nuevoEvento.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                newEventAction(view);
             }
         });
         return view;
@@ -124,8 +117,4 @@ public class DailyCalendarActivity extends Fragment {
         setDayView();
     }
 
-    public void newEventAction(View view)
-    {
-        startActivity(new Intent(getActivity(), EventEditActivity.class));
-    }
 }

@@ -37,13 +37,14 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     {
         final View view = inflater.inflate(R.layout.activity_week_view, container, false);
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Calendario");
+
         calendarRV = view.findViewById(R.id.calendarRV);
         monthYearText = view.findViewById(R.id.monthYearTV);
         eventListView = view.findViewById(R.id.eventListView);
         prevWeekAction = view.findViewById(R.id.prevWeekAction);
         nextWeekAction = view.findViewById(R.id.nextWeekAction);
         dailyAction = view.findViewById(R.id.dailyAction);
-        nuevoEvento = view.findViewById(R.id.nuevo_evento);
+
         setWeekView();
 
         prevWeekAction.setOnClickListener(new View.OnClickListener(){
@@ -62,12 +63,6 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
             @Override
             public void onClick(View view) {
                 dailyAction(view);
-            }
-        });
-        nuevoEvento.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                newEventAction(view);
             }
         });
 
@@ -117,11 +112,6 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
-    }
-
-    public void newEventAction(View view)
-    {
-        startActivity(new Intent(getActivity(), EventEditActivity.class));
     }
 
     public void dailyAction(View view) {

@@ -61,18 +61,6 @@
         android:textColor="@color/gray"
         android:textAlignment="center"
         android:textSize="18sp"/>
-    <Button
-        android:id="@+id/nuevo_evento"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_gravity="center"
-        android:onClick="newEventAction"
-        android:text="Nuevo Evento"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/hourListView"
