@@ -30,7 +30,7 @@ import java.util.Calendar;
 
 public class activity_crear extends Fragment {
     EditText campo1, campo2;
-    TextView campoFecha, campoHora;
+    EditText campoFecha, campoHora;
     DatePickerDialog.OnDateSetListener setListener;
     TimePickerDialog.OnTimeSetListener setListenerTime;
     Spinner spinner;
@@ -38,6 +38,7 @@ public class activity_crear extends Fragment {
     TextView resultado_seekBar;
     CheckBox recuerdame_check;
     NavigationView navigationView;
+    Button acpetar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -48,6 +49,7 @@ public class activity_crear extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
+        acpetar = view.findViewById(R.id.button_aceptar);
 
         campo1 = (EditText) view.findViewById(R.id.editText_Titulo);
         campo2 = (EditText) view.findViewById(R.id.editText_descripcion);
@@ -114,6 +116,7 @@ public class activity_crear extends Fragment {
                         getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,setListenerTime,hour,minute,true);
                 timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePicker.show();
+                campoHora.setText("");
             }
         });
         setListenerTime = new TimePickerDialog.OnTimeSetListener() {
@@ -145,12 +148,20 @@ public class activity_crear extends Fragment {
             }
         };
 
+        acpetar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregar(view);
+            }
+        });
+
         //Hide share button
         shareBtn.setVisibility(View.GONE);
     return view;
     }
 
     //Falta que vuelva el boton a la ultima vista visitada
+
     public void agregar(View v){
         if(validar()){
             Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();

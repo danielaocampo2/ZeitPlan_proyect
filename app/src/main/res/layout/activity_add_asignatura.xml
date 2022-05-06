@@ -18,7 +18,7 @@
             android:id="@+id/editTextNombreAsignatura"
             android:layout_width="322dp"
             android:layout_height="48dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="88dp"
             android:background="@android:color/holo_green_dark"
             android:backgroundTint="#DAD9D9"
             android:ems="10"
@@ -26,7 +26,7 @@
             android:inputType="textPersonName"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -293,7 +293,6 @@
             android:id="@+id/Guardar"
             android:layout_width="119dp"
             android:layout_height="51dp"
-            android:onClick="agregarAs"
             android:text="Guardar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

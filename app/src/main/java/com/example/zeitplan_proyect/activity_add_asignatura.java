@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,6 +34,7 @@ public class activity_add_asignatura extends Fragment {
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
     Spinner spinner;
     NavigationView navigationView;
+    Button guardar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,10 +42,12 @@ public class activity_add_asignatura extends Fragment {
         final View view = inflater.inflate(R.layout.activity_add_asignatura, container, false);
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Asignatura");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+
         spinner = (Spinner) view.findViewById(R.id.spinner_descripcion);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
+        guardar = view.findViewById(R.id.Guardar);
         campo1 = view.findViewById(R.id.editTextNombreAsignatura);
 
         inicio_lunes = view.findViewById(R.id.textView_horarioLunesInicio);
@@ -305,7 +309,14 @@ public class activity_add_asignatura extends Fragment {
 
             }
         };
-     return view;
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregarAs(view);
+            }
+        });
+
+        return view;
     }
 
     public void agregarAs(View v){
@@ -362,11 +373,11 @@ public class activity_add_asignatura extends Fragment {
     public boolean validarCampo(String inicio, String fin){
         boolean retorno = true;
 
-        int hora_inicio = Integer.parseInt(inicio.substring(0,2));
-        int hora_final = Integer.parseInt(fin.substring(0,2));
+        int hora_inicio = Integer.parseInt(inicio.substring(0,inicio.indexOf(':')));
+        int hora_final = Integer.parseInt(fin.substring(0,fin.indexOf(':')));
 
-        int min_inicio = Integer.parseInt(inicio.substring(3,inicio.length()));
-        int min_final = Integer.parseInt(fin.substring(3,fin.length()));
+        int min_inicio = Integer.parseInt(inicio.substring(inicio.indexOf(':')+1,inicio.length()));
+        int min_final = Integer.parseInt(fin.substring(fin.indexOf(':')+1,fin.length()));
 
         if (hora_inicio > hora_final) {
             Toast.makeText(getContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
