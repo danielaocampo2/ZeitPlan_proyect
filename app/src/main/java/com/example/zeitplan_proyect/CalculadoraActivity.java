@@ -319,7 +319,7 @@ public class CalculadoraActivity extends Fragment {
 
         boton_campoNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
                 LayoutInflater inflater = getLayoutInflater();
                 View vista = inflater.inflate(R.layout.dialogo_camponuevo, (ViewGroup)view.findViewById(R.id.dialog_campoNuevo));
