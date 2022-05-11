@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect.vista;
+package com.example.zeitplan_proyect;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.vista.Activity_login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -90,8 +89,8 @@ public class RegistroActivity extends AppCompatActivity {
         goLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistroActivity.this, Activity_login.class);
-                startActivity(intent);
+             //   Intent intent = new Intent(RegistroActivity.this, Activity_login.class);
+              //  startActivity(intent);
             }
         });
 
@@ -154,6 +153,7 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void registerUser(String nameUser, String emailUser, String passwordUser) {
+        Toast.makeText(RegistroActivity.this, "HOLAAAAA", Toast.LENGTH_SHORT).show();
 
         mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -181,8 +181,8 @@ public class RegistroActivity extends AppCompatActivity {
                 mFirestore.collection("User").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        finish(); //Finalizamos esta actividad
-                        startActivity(new Intent(RegistroActivity.this, MainActivity2.class));
+                        //finish(); //Finalizamos esta actividad
+                       // startActivity(new Intent(RegistroActivity.this, Activity_login.class));
                         Toast.makeText(RegistroActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error

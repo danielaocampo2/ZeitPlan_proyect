@@ -131,6 +131,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
             case "password":
                 mFirestore.collection("User").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
+
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             userName.setText(documentSnapshot.getString("name"));
