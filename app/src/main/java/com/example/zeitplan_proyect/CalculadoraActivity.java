@@ -1,13 +1,12 @@
 package com.example.zeitplan_proyect;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.model.Calcular;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -56,6 +56,7 @@ public class CalculadoraActivity extends Fragment {
         final  View view = inflater.inflate(R.layout.activity_calculadora, container, false);
         ((MainActivity2)getActivity()).getSupportActionBar().setTitle("Calculadora");
         FloatingActionButton shareBtn = ((MainActivity2)getActivity()).findViewById(R.id.share);
+        Toast.makeText(getActivity().getApplicationContext(), "hola",Toast.LENGTH_SHORT).show();
 
         //LISTAS DE CALCULO
         lista_notas1= new ArrayList<>();
@@ -309,9 +310,10 @@ public class CalculadoraActivity extends Fragment {
                     lista_porcentajes_general.add(lista_porcentajes5);
                 }
 
-                if(validar(lista_notas_general,lista_porcentajes_general,lista_final_porcentajes)){
+                if(calcular.validar(lista_notas_general,lista_porcentajes_general,lista_final_porcentajes)){
                     nota_final.setText(calcular.calcular_notaFinal(lista_notas_general,lista_porcentajes_general,lista_final_porcentajes).toString());
                 }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Porcentajes incorrectos, el total es distinto de 100 en el campo ", Toast.LENGTH_SHORT).show();
                     nota_final.setText("");
                 }
             }
@@ -410,50 +412,5 @@ public class CalculadoraActivity extends Fragment {
         Toast.makeText(getContext(), "Se ha alcanzado el máximo de campos permitidos", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean validar(ArrayList<ArrayList> lista_notas_general, ArrayList<ArrayList> lista_porcentajes_general, ArrayList<EditText> lista_porcentajes_final){
-        boolean retorno = true;
-        float porcentaje_global=0;
 
-        for(int i = 0; i<lista_notas_general.size(); i++){
-            ArrayList<EditText> lista_n= lista_notas_general.get(i);
-            ArrayList<EditText> lista_p= lista_porcentajes_general.get(i);
-            float porcentaje_campo = 0;
-
-            for(int j = 0; j<lista_n.size(); j++){
-
-                if(lista_n.get(j).getText().toString().isEmpty()){
-                    lista_n.get(j).setError("Este campo no puede quedar vacio");
-                    retorno = false;
-                }
-                if(lista_p.get(j).getText().toString().isEmpty()){
-                    lista_p.get(j).setError("Este campo no puede quedar vacio");
-                    retorno = false;
-                }else{
-                    porcentaje_campo+=Float.parseFloat(lista_p.get(j).getText().toString());
-                }
-            }
-            if(porcentaje_campo!=100){
-                retorno = false;
-                Toast.makeText(getContext(), "Porcentajes incorrectos, el total es distinto de 100 en el campo "+i, Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        for(int i = 0; i<lista_porcentajes_final.size(); i++){
-
-            if(lista_porcentajes_final.get(i).getText().toString().isEmpty()){
-                lista_porcentajes_final.get(i).setError("Este campo no puede quedar vacio");
-                retorno = false;
-            }else{
-                porcentaje_global+=Float.parseFloat(lista_porcentajes_final.get(i).getText().toString());
-            }
-        }
-
-
-        if(porcentaje_global!=100){
-            retorno = false;
-            Toast.makeText(getContext(), "Porcentajes incorrectos, el total es distinto de 100", Toast.LENGTH_SHORT).show();
-        }
-
-        return retorno;
-    }
 }
