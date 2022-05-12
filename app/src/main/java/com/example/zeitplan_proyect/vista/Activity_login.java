@@ -17,19 +17,17 @@ import android.widget.EditText;
 
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Login;
 import com.example.zeitplan_proyect.presenter.PresenterLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
 
 public class Activity_login extends AppCompatActivity {
 
@@ -92,7 +90,7 @@ public class Activity_login extends AppCompatActivity {
 
         // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance(); // para controlar el estado del usuario
-        presentadorLogin = new PresenterLogin(this, mAuth);
+        presentadorLogin = new PresenterLogin(this, new Login()) ;
 
         //Controlar el estado del usuario
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
