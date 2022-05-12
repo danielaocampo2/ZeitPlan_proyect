@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.RegistroActivity;
 import com.example.zeitplan_proyect.presenter.PresenterLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -135,8 +134,8 @@ public class Activity_login extends AppCompatActivity {
                         //Se verifica que el usuario obtenga una cuenta de google y se la envie al metodo firebaseA..
                         // Google Sign In was successful, authenticate with Firebase
                         GoogleSignInAccount account = task.getResult(ApiException.class);
-                        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                        firebaseAuthWithGoogle(account.getIdToken());
+                        Log.d(TAG, "Genial, firebaseAuthWithGoogle:" + account.getId());
+                        presentadorLogin.firebaseAuthWithGoogle(account.getIdToken(),TAG);
 
                     } catch (ApiException e) {
                         // Google Sign In fallido, actualizar GUI
@@ -144,38 +143,12 @@ public class Activity_login extends AppCompatActivity {
                     }
                 } else {
                     Log.d(TAG, "Error,login no exitoso:" + task.getException().toString());
-
                 }
-
             }
         }
     });
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
 
-        //Cuando se envian las credenciales, llamamos a addOnComplete..
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    //variable task de tipo autresult, que controla si es o no exitoso el login
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in User's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            // FirebaseUser User = mAuth.getCurrentUser();
-                            //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
-                            //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
-                            Intent dashboardActivity = new Intent(Activity_login.this, MainActivity2.class);
-                            startActivity(dashboardActivity);
-                            Activity_login.this.finish();
-                        } else {
-                            // If sign in fails, display a message to the User.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        }
-                    }
-                });
-    }
 
     //Evitamos que vuelva a login_activity con el botón atrás si ya esta logeado.
     @Override

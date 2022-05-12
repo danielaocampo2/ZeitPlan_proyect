@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zeitplan_proyect.vista.Activity_login;
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +45,7 @@ public class RegistroActivity extends AppCompatActivity {
             Pattern.compile("^" +
                     //"(?=.*[@#$%^&+=])" +     // at least 1 special character
                     "(?=\\S+$)" +            // no white spaces
-                    ".{4,}");/* +                // at least 4 characters
+                    ".{7,}");/* +                // at least 7 characters
                     "$");*/
 
     @Override
@@ -89,8 +90,8 @@ public class RegistroActivity extends AppCompatActivity {
         goLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   Intent intent = new Intent(RegistroActivity.this, Activity_login.class);
-              //  startActivity(intent);
+                   Intent intent = new Intent(RegistroActivity.this, Activity_login.class);
+                   startActivity(intent);
             }
         });
 
@@ -154,21 +155,28 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void registerUser(String nameUser, String emailUser, String passwordUser) {
         Toast.makeText(RegistroActivity.this, "HOLAAAAA", Toast.LENGTH_SHORT).show();
+/*
+        mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                    Toast.makeText(RegistroActivity.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                    // updateUI(null);
+                }
+            }
+        });*/
 
         mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-              /*  if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in User's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser User = mAuth.getCurrentUser();
-                } else {
-                    // If sign in fails, display a message to the User.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(RegistroActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                   // updateUI(null);
-                }*/
+
 
                 String id = mAuth.getCurrentUser().getUid();
 
@@ -178,11 +186,11 @@ public class RegistroActivity extends AppCompatActivity {
                 map.put("email", emailUser);
                 map.put("password", passwordUser);
                 //Crea una collection llamada User y recibe un evento andOn..
-                mFirestore.collection("User").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                mFirestore.collection("user").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        //finish(); //Finalizamos esta actividad
-                       // startActivity(new Intent(RegistroActivity.this, Activity_login.class));
+                        finish(); //Finalizamos esta actividad
+                        startActivity(new Intent(RegistroActivity.this, MainActivity2.class));
                         Toast.makeText(RegistroActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
@@ -199,9 +207,9 @@ public class RegistroActivity extends AppCompatActivity {
                 Toast.makeText(RegistroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
 
             }
-        });/*
-            }
-        });*/
-        }
+        });
+
+    }
+
 
     }

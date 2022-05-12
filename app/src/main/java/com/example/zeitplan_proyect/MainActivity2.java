@@ -129,7 +129,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                 Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
                 break;
             case "password":
-                mFirestore.collection("User").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
 
                     public void onSuccess(DocumentSnapshot documentSnapshot) {

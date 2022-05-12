@@ -2,6 +2,7 @@ package com.example.zeitplan_proyect.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.Credential;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
@@ -80,27 +81,30 @@ public class PresenterLogin {
     }
 
     public void firebaseAuthWithGoogle(String idToken,String TAG) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
 
-        //Cuando se envian las credenciales, llamamos a addOnComplete..
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    //variable task de tipo autresult, que controla si es o no exitoso el login
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in User's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            // FirebaseUser User = mAuth.getCurrentUser();
-                            //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
-                            //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
-                            Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
-                            mContext.startActivity(dashboardActivity);
-                        } else {
-                            // If sign in fails, display a message to the User.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in User's information
+                    Log.d(TAG, "signInWithCredential:success");
+                    // FirebaseUser User = mAuth.getCurrentUser();
+                    //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
+                    //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
+                    Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
+                    mContext.startActivity(dashboardActivity);
+                    ((Activity_login)mContext).finish();
+
+                } else {
+                    // If sign in fails, display a message to the User.
+                    Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
-                    }
-                });
+
+            }
+        });
+
     }
 }
