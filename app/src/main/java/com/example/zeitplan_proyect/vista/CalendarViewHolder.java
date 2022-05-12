@@ -1,14 +1,18 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
+import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.zeitplan_proyect.R;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
     private final ArrayList<LocalDate> days;
@@ -24,6 +28,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         itemView.setOnClickListener(this);
         this.days = days;
     }
+
 
     @Override
     public void onClick(View view)

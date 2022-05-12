@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.model;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

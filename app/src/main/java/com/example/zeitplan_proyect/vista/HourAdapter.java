@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import android.content.Context;
 import android.os.Build;
@@ -12,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import org.w3c.dom.Text;
+import com.example.zeitplan_proyect.model.CalendarUtils;
+import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.HourEvent;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

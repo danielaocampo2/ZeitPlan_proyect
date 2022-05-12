@@ -20,7 +20,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.zeitplan_proyect.vista.Activity_crear;
 import com.example.zeitplan_proyect.vista.Activity_login;
+import com.example.zeitplan_proyect.vista.CalendarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
