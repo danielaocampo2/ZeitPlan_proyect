@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi;
 import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.model.HourEvent;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
