@@ -90,7 +90,7 @@ public class Activity_login extends AppCompatActivity {
 
         // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance(); // para controlar el estado del usuario
-        presentadorLogin = new PresenterLogin(this, new Login()) ;
+        presentadorLogin = new PresenterLogin(this, new Login(this)) ;
 
         //Controlar el estado del usuario
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {

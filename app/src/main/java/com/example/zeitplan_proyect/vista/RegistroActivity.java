@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Register;
+import com.example.zeitplan_proyect.presenter.PresenterLogin;
+import com.example.zeitplan_proyect.presenter.PresenterRegister;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,22 +34,19 @@ import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
 
+    PresenterRegister presentadorRegister;
+
+
     TextView goLogin;
     Button btnRegistro;
     EditText txtuserName2, txtuserName, txtpassword, txtpassword2;
     TextInputLayout titUserName2, titUserName, titPassword, titPassword2;
-    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
     FirebaseAuth mAuth;
 
     private static final String TAG = "RegistroActivity";
 
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^" +
-                    //"(?=.*[@#$%^&+=])" +     // at least 1 special character
-                    "(?=\\S+$)" +            // no white spaces
-                    ".{7,}");/* +                // at least 7 characters
-                    "$");*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,9 @@ public class RegistroActivity extends AppCompatActivity {
         goLogin = findViewById(R.id.goLogin);
 
         //mFirestore = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
 
-
+        presentadorRegister =new PresenterRegister(this, new Register(this));
         txtuserName2 = findViewById(R.id.userName2);
         txtuserName = findViewById(R.id.userName);
         txtpassword = findViewById(R.id.password);
@@ -69,6 +69,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         btnRegistro = findViewById(R.id.btnRegistro);
 
+
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,11 +77,13 @@ public class RegistroActivity extends AppCompatActivity {
                 String password = titPassword.getEditText().getText().toString().trim();
                 String name = txtuserName2.getText().toString().trim();
                 String correo = txtuserName.getText().toString().trim();
-                if (verifyEmpty() | !validateEmail() | !validatePassword()) {
+                presentadorRegister.inicializaVariable( titUserName2,  txtuserName2,  txtuserName,  titUserName,  txtpassword2,
+                        titPassword2, txtpassword,  titPassword);
+                if (presentadorRegister.verifyEmpty() | !presentadorRegister.validateEmail() | !presentadorRegister.validatePassword()) {
                     return;
                 } else {
 
-                    registerUser(name, correo, password);
+                    presentadorRegister.registerUser(name, correo, password);
                 }
 
 
@@ -97,119 +100,6 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
-    private boolean verifyEmpty() {
-        boolean empty = false;
-        if (txtuserName2.getText().toString().isEmpty()) {
-            titUserName2.setError("Campo obligatorio");
-            titUserName2.setError("Campo obligatorio");
-            empty = true;
-        } else {
-            titUserName2.setError(null);
-        }
-        if (txtuserName.getText().toString().isEmpty()) {
-            titUserName.setError("Campo obligatorio");
-            empty = true;
-        }
-        if (txtpassword2.getText().toString().isEmpty()) {
-            titPassword2.setError("Campo obligatorio");
-            empty = true;
-        }
-        if (txtpassword.getText().toString().isEmpty()) {
-            titPassword.setError("Campo obligatorio");
-            empty = true;
-        }
-
-        return empty;
-    }
-
-    private boolean validateEmail() {
-        if (Patterns.EMAIL_ADDRESS.matcher(txtuserName.getText().toString()).matches() == false) {
-            titUserName.setError("Correo invalido");
-            return false;
-        } else {
-            titUserName.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        String password = titPassword.getEditText().getText().toString().trim(); // trim elimina espacios en blanco de ambos ectremos del string
-
-        String password2 = titPassword2.getEditText().getText().toString().trim(); // trim elimina espacios en blanco de ambos ectremos del string
-
-        // if password does not matches to the pattern
-        // it will display an error message "Password is too weak"
-        if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            titPassword.setError("La contraseña es débil.");
-            Toast.makeText(this, "La contraseña NO admite espacios y debe incluir al mínimo 4 caracteres. ", Toast.LENGTH_LONG).show();
-            return false;
-        } else if (!password.equals(password2)) {
-            titPassword2.setError("Las contraseña no coincide con la primera");
-            return false;
-        } else {
-            titPassword.setError(null);
-            titPassword2.setError(null);
-            return true;
-        }
-    }
-
-    private void registerUser(String nameUser, String emailUser, String passwordUser) {
-        Toast.makeText(RegistroActivity.this, "HOLAAAAA", Toast.LENGTH_SHORT).show();
-/*
-        mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(RegistroActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    // updateUI(null);
-                }
-            }
-        });*/
-
-        mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-
-                String id = mAuth.getCurrentUser().getUid();
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("id", id);
-                map.put("name", nameUser);
-                map.put("email", emailUser);
-                map.put("password", passwordUser);
-                //Crea una collection llamada User y recibe un evento andOn..
-                mFirestore.collection("user").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        finish(); //Finalizamos esta actividad
-                        startActivity(new Intent(RegistroActivity.this, MainActivity2.class));
-                        Toast.makeText(RegistroActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegistroActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegistroActivity.this, "Error al registrar", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
 
 
     }

@@ -2,13 +2,26 @@ package com.example.zeitplan_proyect.model;
 
 public class User {
     String name, id, password, email;
-    public User(){}
-    public User(String name, String id, String password, String email) {
+    public static User instance;
+    public User(String name, String id,  String email, String password) {
         this.name = name;
         this.id = id;
         this.password = password;
         this.email = email;
     }
+
+    public static User getInstance(String name, String id, String email, String password){
+        if(instance == null){
+            instance = new User(name, id , email, password);
+        }
+        return instance;
+    }
+    public static User getInstance(){
+
+        return instance;
+
+    }
+
 
     public String getName() {
         return name;

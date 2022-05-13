@@ -23,10 +23,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login {
 
     private Context mContext;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     //FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
 
+    public Login(Context mContext) {
+        this.mContext = mContext;
+
+    }
 
     public void loginUser(String emailUser, String passwordUser){
         mAuth.signInWithEmailAndPassword(emailUser,passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
