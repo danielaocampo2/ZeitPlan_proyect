@@ -1,13 +1,23 @@
 package com.example.zeitplan_proyect.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class User {
     String name, id, password, email;
     public static User instance;
-    public User(String name, String id,  String email, String password) {
+    ArrayList<String> notes;
+
+
+    public User(){
+        notes = new ArrayList<>();
+    }
+    public User(String name, String id, String password, String email) {
         this.name = name;
         this.id = id;
         this.password = password;
         this.email = email;
+        notes = new ArrayList<>();
     }
 
     public static User getInstance(String name, String id, String email, String password){
@@ -17,7 +27,9 @@ public class User {
         return instance;
     }
     public static User getInstance(){
-
+        if(instance == null){
+            instance = new User();
+        }
         return instance;
 
     }
@@ -53,5 +65,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<String> getNotes(){
+        return notes;
+    }
+    public void setNotes(HashSet<String> list){
+        notes = new ArrayList<>(list);
+    }
+    public String getNoteId(int id){
+        return notes.get(id);
     }
 }
