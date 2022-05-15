@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.zeitplan_proyect.Fragments.FragmentHelper;
 import com.example.zeitplan_proyect.vista.Activity_crear;
 import com.example.zeitplan_proyect.vista.Activity_login;
 import com.example.zeitplan_proyect.vista.CalendarActivity;
@@ -53,12 +54,16 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     private CircleImageView imgvw;
     private DrawerLayout drawer;
 
+    //Variable para cambiar de fragments
+    FragmentHelper fragmentHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fragmentHelper = new FragmentHelper(this);
 
 
         mFirestore = FirebaseFirestore.getInstance();
@@ -74,7 +79,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         }
 
         setupNavigationDrawerContent(navigationView);
-        setFragment(0);
+        fragmentHelper.setFragment(0);
 
 
         //inflate header layout
@@ -149,7 +154,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     }
 
 
-    protected void setupNavigationDrawerContent(@NonNull NavigationView navigationView) {
+    public void setupNavigationDrawerContent(@NonNull NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -157,27 +162,27 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                         switch (menuItem.getItemId()) {
                             case R.id.nav_calendar:
                                 menuItem.setChecked(true);
-                                setFragment(0);
+                                fragmentHelper.setFragment(0);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_add_activity:
                                 menuItem.setChecked(true);
-                                setFragment(1);
+                                fragmentHelper.setFragment(1);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_add_subj:
                                 menuItem.setChecked(true);
-                                setFragment(2);
+                                fragmentHelper.setFragment(2);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_notes:
                                 menuItem.setChecked(true);
-                                setFragment(3);
+                                fragmentHelper.setFragment(3);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_calculadora:
                                 menuItem.setChecked(true);
-                                setFragment(5);
+                                fragmentHelper.setFragment(5);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_out:
@@ -197,7 +202,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                                     Toast.LENGTH_LONG).show(); }
                                     }
                                 });
-                                setFragment(4);
+                                fragmentHelper.setFragment(4);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_share:
@@ -221,49 +226,6 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                         return true;
                     }
                 });
-    }
-
-    public void setFragment(int position) {
-        FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction;
-        switch (position) {
-            case 0:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                CalendarActivity calendar = new CalendarActivity();
-                fragmentTransaction.replace(R.id.fragment, calendar);
-                fragmentTransaction.commit();
-                break;
-            case 1:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                Activity_add_asignatura activity_add_asignatura = new Activity_add_asignatura();
-                fragmentTransaction.replace(R.id.fragment,activity_add_asignatura);
-                fragmentTransaction.commit();
-                break;
-            case 2:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                Activity_crear crear_activity = new Activity_crear();
-                fragmentTransaction.replace(R.id.fragment,crear_activity);
-                fragmentTransaction.commit();
-                break;
-            case 3:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                NoteActivity noteActivity= new NoteActivity();
-                fragmentTransaction.replace(R.id.fragment,noteActivity);
-                fragmentTransaction.commit();
-                break;
-            case 5:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                CalculadoraActivity calculadoraActivity= new CalculadoraActivity();
-                fragmentTransaction.replace(R.id.fragment,calculadoraActivity);
-                fragmentTransaction.commit();
-                break;
-
-        }
     }
     public NavigationView getNavigationView(){
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
