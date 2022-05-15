@@ -1,27 +1,28 @@
 package com.example.zeitplan_proyect.presenter;
 
 import com.example.zeitplan_proyect.model.CalendarUtils;
+import com.example.zeitplan_proyect.model.Notes;
 import com.example.zeitplan_proyect.model.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PresenterNotes {
-    User user;
+    Notes notes;
 
     public PresenterNotes(){
-        user = User.getInstance();
+        notes = Notes.getInstance();
     }
     public ArrayList<String> getUserNotes(){
-        return user.getNotes();
+        return notes.getNotes();
     }
     public void addNote(String sequence){
-        user.getNotes().add(sequence);
+        notes.getNotes().add(sequence);
     }
     public void setNotes(HashSet<String> list){
-        user.setNotes(list);
+        notes.setNotes(list);
     }
     public String getNoteId(int id){
-        return user.getNoteId(id);
+        return notes.getNoteId(id);
     }
 }
