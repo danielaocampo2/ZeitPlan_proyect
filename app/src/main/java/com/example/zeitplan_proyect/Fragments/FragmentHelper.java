@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.zeitplan_proyect.Activity_add_asignatura;
 import com.example.zeitplan_proyect.CalculadoraActivity;
-import com.example.zeitplan_proyect.NoteActivity;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.vista.Activity_crear;
 import com.example.zeitplan_proyect.vista.CalendarActivity;
+import com.example.zeitplan_proyect.vista.HourAdapter;
 
 /**
  * Clase para cambiar de fragmentos con el menu desplegable.
@@ -58,7 +58,7 @@ public class FragmentHelper extends FragmentActivity {
             case NOTAS:
 
                 fragmentTransaction = fragmentManager.beginTransaction();
-                NoteActivity noteActivity = new NoteActivity();
+                HourAdapter.NoteActivity noteActivity = new HourAdapter.NoteActivity();
                 fragmentTransaction.replace(R.id.fragment, noteActivity);
                 fragmentTransaction.commit();
                 break;
