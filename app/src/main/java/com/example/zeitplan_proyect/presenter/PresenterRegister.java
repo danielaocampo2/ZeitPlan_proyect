@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class PresenterRegister {
 
+
     private RegistroActivity registerActivity;
     private Register register;
 

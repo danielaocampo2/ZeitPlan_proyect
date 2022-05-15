@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.vista.Activity_login;
 import com.example.zeitplan_proyect.vista.RegistroActivity;
@@ -27,9 +28,8 @@ import java.util.regex.Pattern;
 public class Register {
 
     private Context mContext;
-    private FirebaseAuth mAuth= FirebaseAuth.getInstance();;
-    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
+    private Firebase db = Firebase.getInstance();
 
     public Register(Context mContext) {
         this.mContext = mContext;
@@ -115,66 +115,12 @@ public class Register {
     }
 
     public void registerUser(String nameUser, String emailUser, String passwordUser) {
-/*
-        mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(RegistroActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    // updateUI(null);
-                }
-            }
-        });*/
-
-        mAuth.createUserWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
 
 
-                String id = mAuth.getCurrentUser().getUid();
-                Toast.makeText(mContext, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+        db.registerUser(nameUser,emailUser,passwordUser,mContext);
 
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("id", id);
-                map.put("name", nameUser);
-                map.put("email", emailUser);
-                map.put("password", passwordUser);
-                //Crea una collection llamada User y recibe un evento andOn..
-                mFirestore.collection("user").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //Toast.makeText(mContext, "Bienvenid@", Toast.LENGTH_SHORT).show();
-                        //((RegistroActivity)mContext).finish(); //Finalizamos esta actividad
-                        //mContext.startActivity(new Intent(mContext, MainActivity2.class));
-                        Toast.makeText(mContext, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
-                        Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
-                        mContext.startActivity(dashboardActivity);
-                        ((RegistroActivity)mContext).finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(mContext, "Error al guardar", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mContext, "Error al registrar", Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
     }
+
 
 }
