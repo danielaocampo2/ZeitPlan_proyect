@@ -1,35 +1,19 @@
 package com.example.zeitplan_proyect.vista;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Register;
-import com.example.zeitplan_proyect.presenter.PresenterLogin;
 import com.example.zeitplan_proyect.presenter.PresenterRegister;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 
 
 public class RegistroActivity extends AppCompatActivity {

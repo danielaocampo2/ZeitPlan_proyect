@@ -5,16 +5,22 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import androidx.annotation.NonNull;
 
-import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.model.Register;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.vista.MainActivity2;
 import com.example.zeitplan_proyect.model.User;
 import com.example.zeitplan_proyect.vista.Activity_login;
 import com.example.zeitplan_proyect.vista.RegistroActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,18 +28,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Firebase {
+
+    //Variable para gestionar FirebaseAuth
 
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private User usuario;
+
+    //Variables opcionales para cerrar sesión en  de google
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
 
     private static Firebase instance;
 
@@ -52,6 +66,12 @@ public class Firebase {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 String id = mAuth.getCurrentUser().getUid();
+                usuario = User.getInstance();
+                usuario.setName(nameUser);
+
+                Log.i(TAG, "onComplete: "+ usuario);
+                Log.i(TAG, "NAME: "+ usuario.name);
+
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", id);
                 map.put("name", nameUser);
@@ -131,22 +151,81 @@ public class Firebase {
     }
 
 //Ensayo con implementacion en Main activity 2
-    public void cierraSession(Context mContent){
-        Log.i(TAG, "cierraSession: 222222222222222222222222222222");
+    public void cierraSession(Context mContext){
+        configuraGSO( mContext);
+
         mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
-        Log.i(TAG, "cierraSession: ");/*
         mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //
                 if (task.isSuccessful()) {
-                    Intent activity_login = new Intent(mContent, Activity_login.class);
-                    mContent.startActivity(activity_login);
-                    ((MainActivity2)mContent).finish();
+                    Intent activity_login = new Intent(mContext, Activity_login.class);
+                    mContext.startActivity(activity_login);
+                    ((MainActivity2)mContext).finish();
                 } else {
-                    Toast.makeText(mContent, "no se puede cerrar sesión con google",
-                            Toast.LENGTH_LONG).show(); }
+                    Toast.makeText(mContext, "no se puede cerrar sesión con google",
+                    Toast.LENGTH_LONG).show(); }
             }
-        });*/
+        });
     }
+
+    private void configuraGSO(Context mContext){
+
+        //Configurar las gso para google signIn con el fin de luego desloguear de google
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(mContext.getResources().getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(mContext, gso);
+    }
+
+
+    public void asignarImgNom(Context mContext , TextView userName, CircleImageView imgvw) {
+        String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
+        String id = getIdUser();
+        switch (providerID) {
+            case "google.com":
+                userName.setText(mAuth.getCurrentUser().getDisplayName());
+                Glide.with(mContext).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
+                break;
+            case "password":
+                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            userName.setText(documentSnapshot.getString("name"));
+                        }
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    // retorna Id de usuario actual y null si no hay usuario actual
+
+    public String getIdUser(){
+        String id;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user==null){
+            id=null;
+        }else{
+            id=mAuth.getCurrentUser().getUid();
+        }
+        return id;
+    }
+
+
+
+
+
+
+
+
+
 }
+
+

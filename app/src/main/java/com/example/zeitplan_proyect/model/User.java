@@ -1,35 +1,25 @@
 package com.example.zeitplan_proyect.model;
 
 public class User {
-    String name, id, password, email;
-    public static User instance;
-    public User(String name, String id,  String email, String password) {
-        this.name = name;
-        this.id = id;
-        this.password = password;
-        this.email = email;
+    public String id,name, email;
+    private static User instance = null;
+    private User() {
+
     }
 
-    public static User getInstance(String name, String id, String email, String password){
-        if(instance == null){
-            instance = new User(name, id , email, password);
+    private synchronized static void createInstance() {
+        if (instance == null) {
+            instance = new User();
         }
-        return instance;
     }
+
     public static User getInstance(){
 
+        if (instance == null) createInstance();
         return instance;
 
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getId() {
         return id;
@@ -39,12 +29,12 @@ public class User {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

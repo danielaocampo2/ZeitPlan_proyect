@@ -1,28 +1,13 @@
 package com.example.zeitplan_proyect.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.zeitplan_proyect.DataBase.Firebase;
-import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.vista.Activity_login;
-import com.example.zeitplan_proyect.vista.RegistroActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Register {

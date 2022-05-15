@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import static android.content.ContentValues.TAG;
 
@@ -17,13 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.zeitplan_proyect.Fragments.FragmentHelper;
-import com.example.zeitplan_proyect.vista.Activity_crear;
-import com.example.zeitplan_proyect.vista.Activity_login;
-import com.example.zeitplan_proyect.vista.CalendarActivity;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.User;
+import com.example.zeitplan_proyect.presenter.PresenterMenu;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -36,23 +35,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.fragment.app.FragmentTransaction;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity2  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    //Variable para gestionar FirebaseAuth
-    private FirebaseAuth mAuth;
 
-    //Variables opcionales para cerrar sesión en  de google
-    private GoogleSignInClient mGoogleSignInClient;
-    private GoogleSignInOptions gso;
-    //private static final String TAG = "MainActivity2";
 
-    private FirebaseFirestore mFirestore;
+    private User usuario;
     private TextView userName;
     private CircleImageView imgvw;
     private DrawerLayout drawer;
+    PresenterMenu presenterMenu;
 
     //Variable para cambiar de fragments
     FragmentHelper fragmentHelper;
@@ -66,7 +58,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         fragmentHelper = new FragmentHelper(this);
 
 
-        mFirestore = FirebaseFirestore.getInstance();
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,7 +72,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
 
         setupNavigationDrawerContent(navigationView);
         fragmentHelper.setFragment(0);
-
+        presenterMenu=new PresenterMenu(this);
 
         //inflate header layout
         View navView = navigationView.inflateHeaderView(R.layout.nav_header);
@@ -95,18 +87,9 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         //  imgvw.setImageResource(R.drawable.your_image);
 
         //Iniciar firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        verifyPro();
-
+        presenterMenu.asignarImgNom(userName, imgvw);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Configurar las gso para google signIn con el fin de luego desloguear de google
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
 
@@ -125,32 +108,6 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_2, menu);
         return true;
-    }
-
-    public void verifyPro() {
-        String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
-        String id = mAuth.getCurrentUser().getUid();
-        switch (providerID) {
-            case "google.com":
-                userName.setText(mAuth.getCurrentUser().getDisplayName());
-                Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
-                break;
-            case "password":
-                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            userName.setText(documentSnapshot.getString("name"));
-                        }
-                    }
-                });
-                Log.i(TAG, "no funcionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + mAuth.getCurrentUser().getProviderData().get(1).getProviderId());
-                break;
-            default:
-                break;
-        }
-
     }
 
 
@@ -187,21 +144,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 return true;
                             case R.id.nav_out:
                                 menuItem.setChecked(true);
-                                mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
-
-                                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        //
-                                        if (task.isSuccessful()) {
-                                            Intent activity_login = new Intent(getApplicationContext(), Activity_login.class);
-                                            startActivity(activity_login);
-                                            MainActivity2.this.finish();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "no se puede cerrar sesión con google",
-                                                    Toast.LENGTH_LONG).show(); }
-                                    }
-                                });
+                                presenterMenu.cierraSession();
                                 fragmentHelper.setFragment(4);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
@@ -212,14 +155,11 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
 
                             case R.id.nav_help:
                                 menuItem.setChecked(true);
-                                String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
-                                String google="google.com";
-                                if(providerID!=google) { // no se porque lo lee al contrario
-                                    Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
+                                usuario=User.getInstance();
 
-                                }
+                                Log.i(TAG, "NAME22: "+ usuario.name);
+
+
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                         }
