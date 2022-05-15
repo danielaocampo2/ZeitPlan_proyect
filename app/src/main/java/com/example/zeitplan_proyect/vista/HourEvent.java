@@ -1,4 +1,6 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
+
+import com.example.zeitplan_proyect.model.Event;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

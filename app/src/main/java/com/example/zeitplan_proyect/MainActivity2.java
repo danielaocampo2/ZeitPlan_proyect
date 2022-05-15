@@ -2,7 +2,6 @@ package com.example.zeitplan_proyect;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,8 +20,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.example.zeitplan_proyect.Fragments.FragmentHelper;
+import com.example.zeitplan_proyect.vista.Activity_crear;
 import com.example.zeitplan_proyect.vista.Activity_login;
+import com.example.zeitplan_proyect.vista.CalendarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,8 +43,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity2  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //Variable para gestionar FirebaseAuth
     private FirebaseAuth mAuth;
-    private Firebase db = new Firebase();
-
 
     //Variables opcionales para cerrar sesión en  de google
     private GoogleSignInClient mGoogleSignInClient;
@@ -55,12 +54,16 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     private CircleImageView imgvw;
     private DrawerLayout drawer;
 
+    //Variable para cambiar de fragments
+    FragmentHelper fragmentHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fragmentHelper = new FragmentHelper(this);
 
 
         mFirestore = FirebaseFirestore.getInstance();
@@ -76,7 +79,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
         }
 
         setupNavigationDrawerContent(navigationView);
-        setFragment(0);
+        fragmentHelper.setFragment(0);
 
 
         //inflate header layout
@@ -151,7 +154,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     }
 
 
-    protected void setupNavigationDrawerContent(@NonNull NavigationView navigationView) {
+    public void setupNavigationDrawerContent(@NonNull NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -159,37 +162,47 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                         switch (menuItem.getItemId()) {
                             case R.id.nav_calendar:
                                 menuItem.setChecked(true);
-                                setFragment(0);
+                                fragmentHelper.setFragment(0);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_add_activity:
                                 menuItem.setChecked(true);
-                                setFragment(1);
+                                fragmentHelper.setFragment(1);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_add_subj:
                                 menuItem.setChecked(true);
-                                setFragment(2);
+                                fragmentHelper.setFragment(2);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_notes:
                                 menuItem.setChecked(true);
-                                setFragment(3);
+                                fragmentHelper.setFragment(3);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_calculadora:
                                 menuItem.setChecked(true);
-                                setFragment(5);
+                                fragmentHelper.setFragment(5);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_out:
                                 menuItem.setChecked(true);
-                                Log.i(TAG, "intenta cerrar 222222222222222222: ");
+                                mAuth.signOut(); // Cierra la sesión pero no completamente, solo con firebase
 
-                                Context mContext=getApplicationContext();
-                                Log.i(TAG, "intenta cerrar: "+mContext);
-                                db.cierraSession(mContext);
-                                setFragment(4);
+                                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        //
+                                        if (task.isSuccessful()) {
+                                            Intent activity_login = new Intent(getApplicationContext(), Activity_login.class);
+                                            startActivity(activity_login);
+                                            MainActivity2.this.finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "no se puede cerrar sesión con google",
+                                                    Toast.LENGTH_LONG).show(); }
+                                    }
+                                });
+                                fragmentHelper.setFragment(4);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.nav_share:
@@ -199,55 +212,20 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
 
                             case R.id.nav_help:
                                 menuItem.setChecked(true);
+                                String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId(); //"password"
+                                String google="google.com";
+                                if(providerID!=google) { // no se porque lo lee al contrario
+                                    Toast.makeText(MainActivity2.this, "SOY AUTENTICACION  " + providerID, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(MainActivity2.this, "SOY GOOGLE  " + providerID, Toast.LENGTH_SHORT).show();
+
+                                }
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
                         }
                         return true;
                     }
                 });
-    }
-
-    public void setFragment(int position) {
-        FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction;
-        switch (position) {
-            case 0:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                CalendarActivity calendar = new CalendarActivity();
-                fragmentTransaction.replace(R.id.fragment, calendar);
-                fragmentTransaction.commit();
-                break;
-            case 1:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                Activity_add_asignatura activity_add_asignatura = new Activity_add_asignatura();
-                fragmentTransaction.replace(R.id.fragment,activity_add_asignatura);
-                fragmentTransaction.commit();
-                break;
-            case 2:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                Activity_crear crear_activity = new Activity_crear();
-                fragmentTransaction.replace(R.id.fragment,crear_activity);
-                fragmentTransaction.commit();
-                break;
-            case 3:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                NoteActivity noteActivity= new NoteActivity();
-                fragmentTransaction.replace(R.id.fragment,noteActivity);
-                fragmentTransaction.commit();
-                break;
-            case 5:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                CalculadoraActivity calculadoraActivity= new CalculadoraActivity();
-                fragmentTransaction.replace(R.id.fragment,calculadoraActivity);
-                fragmentTransaction.commit();
-                break;
-
-        }
     }
     public NavigationView getNavigationView(){
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);

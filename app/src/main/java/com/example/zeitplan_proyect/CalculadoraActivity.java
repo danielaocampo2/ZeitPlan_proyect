@@ -56,7 +56,6 @@ public class CalculadoraActivity extends Fragment {
         final  View view = inflater.inflate(R.layout.activity_calculadora, container, false);
         ((MainActivity2)getActivity()).getSupportActionBar().setTitle("Calculadora");
         FloatingActionButton shareBtn = ((MainActivity2)getActivity()).findViewById(R.id.share);
-        Toast.makeText(getActivity().getApplicationContext(), "hola",Toast.LENGTH_SHORT).show();
 
         //LISTAS DE CALCULO
         lista_notas1= new ArrayList<>();

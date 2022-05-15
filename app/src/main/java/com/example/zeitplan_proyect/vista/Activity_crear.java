@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -24,6 +24,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.model.CalendarUtils;
+import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,6 +47,8 @@ public class Activity_crear extends Fragment {
     private LocalDate date;
     private int prioridad;
     private boolean remember;
+
+    PresenterCrearEvent PreCreEvent;
 
     Spinner spinner;
     SeekBar seekBar;
@@ -78,6 +85,8 @@ public class Activity_crear extends Fragment {
 
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
 
+        PreCreEvent = new PresenterCrearEvent();
+
         recuerdame_check.setOnCheckedChangeListener(
                 new CheckBox.OnCheckedChangeListener(){
                     @Override
@@ -110,7 +119,7 @@ public class Activity_crear extends Fragment {
 
         time = LocalTime.now();
         eventTimeTV.setText(CalendarUtils.formattedShortTime(time));
-        date = CalendarUtils.selectedDate;
+        date = PreCreEvent.getSelectedDate();
         eventDateTV.setText(date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear());
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {

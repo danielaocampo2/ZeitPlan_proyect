@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -18,10 +21,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
     private final ArrayList<LocalDate> days;
     private final OnItemListener onItemListener;
+    private final PresenterCalendarUtils PresCal;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
+    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener, PresenterCalendarUtils PresCal) {
         this.days = days;
         this.onItemListener = onItemListener;
+        this.PresCal = PresCal;
     }
 
     @NonNull
@@ -45,11 +50,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         LocalDate date = days.get(position);
 
         holder.dayMonth.setText(String.valueOf(date.getDayOfMonth()));
-        if(date.equals(CalendarUtils.selectedDate)){
+        if(date.equals(PresCal.getSelectedDate())){
             holder.parentView.setBackgroundColor(Color.LTGRAY);
         }
 
-        if(date.getMonth().equals(CalendarUtils.selectedDate.getMonth())){
+        if(date.getMonth().equals(PresCal.SelDateMonth())){
             holder.dayMonth.setTextColor(Color.BLACK);
         }else{
             holder.dayMonth.setTextColor(Color.LTGRAY);

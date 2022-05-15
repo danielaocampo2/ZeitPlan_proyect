@@ -1,13 +1,8 @@
-package com.example.zeitplan_proyect;
-
-import static com.example.zeitplan_proyect.CalendarUtils.selectedDate;
+package com.example.zeitplan_proyect.vista;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,12 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.time.DayOfWeek;
+import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+
 import java.time.LocalTime;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DailyCalendarActivity extends Fragment {
@@ -30,7 +26,13 @@ public class DailyCalendarActivity extends Fragment {
     private TextView monthDayText;
     private TextView dayOfWeekTV;
     private ListView hourListView;
-    private Button prevDayAction,nextDayAction,nuevoEvento;
+    private Button prevDayAction,nextDayAction;
+
+    PresenterCalendarUtils PresCal;
+
+    public DailyCalendarActivity(PresenterCalendarUtils PresCal) {
+        this.PresCal = PresCal;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -66,23 +68,12 @@ public class DailyCalendarActivity extends Fragment {
 
     private void setDayView()
     {
-        monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
-        dayOfWeekTV.setText(StringDayOfWeek(selectedDate.getDayOfWeek()));
+        monthDayText.setText(PresCal.monthDayFromSelDay());
+        dayOfWeekTV.setText(PresCal.SelDateDayOfWeek());
         setHourAdapter();
     }
 
-    public String StringDayOfWeek(DayOfWeek dayOfWeek) {
-        switch(dayOfWeek){
-            case MONDAY: return "Lunes";
-            case TUESDAY: return "Martes";
-            case WEDNESDAY: return "Miercoles";
-            case THURSDAY: return "Jueves";
-            case FRIDAY: return "Viernes";
-            case SATURDAY: return "Sabado";
-            case SUNDAY: return "Domingo";
-        }
-        return " ";
-    }
+
 
 
     private void setHourAdapter() {
@@ -97,7 +88,7 @@ public class DailyCalendarActivity extends Fragment {
 
         for(int hour = 0; hour<24; hour++){
             LocalTime time = LocalTime.of(hour, 0);
-            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate, time);
+            ArrayList<Event> events = Event.eventsForDateAndTime(PresCal.getSelectedDate(), time);
             HourEvent hourEvent = new HourEvent(time, events);
             list.add(hourEvent);
         }
@@ -107,13 +98,13 @@ public class DailyCalendarActivity extends Fragment {
 
     public void prevDayAction(View view)
     {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusDays(1);
+        PresCal.SelDateMoveDay(-1);
         setDayView();
     }
 
     public void nextDayAction(View view)
     {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
+        PresCal.SelDateMoveDay(1);
         setDayView();
     }
 

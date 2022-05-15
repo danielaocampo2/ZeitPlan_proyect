@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.model;
 
 import android.os.Build;
 
@@ -14,7 +14,27 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarUtils {
-    public static LocalDate selectedDate;
+
+    private static CalendarUtils instance;
+    private static LocalDate selectedDate;
+
+    public CalendarUtils() {
+    }
+
+    public static CalendarUtils getInstance() {
+        if (instance == null) {
+            instance = new CalendarUtils();
+        }
+        return instance;
+    }
+
+    public static LocalDate getSelectedDate() {
+        return selectedDate;
+    }
+
+    public static void setSelectedDate(LocalDate selectedDate) {
+        CalendarUtils.selectedDate = selectedDate;
+    }
 
     public static String formattedDate(LocalDate date)
     {
@@ -91,7 +111,7 @@ public class CalendarUtils {
     }
 
 
-    public static ArrayList<LocalDate> daysInWeekArray(LocalDate selectedDate) {
+    public static ArrayList<LocalDate> daysInWeekArray() {
         ArrayList<LocalDate> days = new ArrayList<>();
         LocalDate current = mondayForDate(selectedDate);
         LocalDate endDate = current.plusWeeks(1);
@@ -115,5 +135,54 @@ public class CalendarUtils {
         return null;
     }
 
+
+    public void SelDateMoveMonth(int i) {
+        if(i>0){
+            selectedDate = selectedDate.plusMonths(i);
+        }else if(i<0) {
+            selectedDate = selectedDate.minusMonths(-i);
+        }
+    }
+    public void SelDateMoveWeek(int i) {
+        if(i>0){
+            selectedDate = selectedDate.plusWeeks(i);
+        }else if(i<0) {
+            selectedDate = selectedDate.minusWeeks(-i);
+        }
+    }
+
+    public void SelDateMoveDay(int i) {
+        if(i>0){
+            selectedDate = selectedDate.plusDays(i);
+        }else if(i<0) {
+            selectedDate = selectedDate.minusDays(-i);
+        }
+    }
+
+    public String monthYearFromSelDay(){
+        return monthYearFromDate(selectedDate);
+    }
+
+    public String monthDayFromSelDay(){
+        return monthDayFromDate(selectedDate);
+    }
+
+
+    public Month SelDateMonth() {
+        return selectedDate.getMonth();
+    }
+
+    public String SelDateDayOfWeek() {
+        switch(selectedDate.getDayOfWeek()){
+            case MONDAY: return "Lunes";
+            case TUESDAY: return "Martes";
+            case WEDNESDAY: return "Miercoles";
+            case THURSDAY: return "Jueves";
+            case FRIDAY: return "Viernes";
+            case SATURDAY: return "Sabado";
+            case SUNDAY: return "Domingo";
+        }
+        return " ";
+    }
 
 }
