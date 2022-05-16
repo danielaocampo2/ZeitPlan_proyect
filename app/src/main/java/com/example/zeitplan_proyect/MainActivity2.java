@@ -158,7 +158,8 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 usuario=User.getInstance();
 
                                 Log.i(TAG, "NAME22: "+ usuario.name);
-
+                                Log.i(TAG, "EMAIL22: "+ usuario.email);
+                                Log.i(TAG, "ID22: "+ usuario.id);
 
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;

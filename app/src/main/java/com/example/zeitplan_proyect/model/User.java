@@ -1,6 +1,9 @@
 package com.example.zeitplan_proyect.model;
 
+import android.util.Log;
+
 public class User {
+    private static final String TAG = "User";
     public String id,name, email;
     private static User instance = null;
     private User() {
@@ -31,10 +34,12 @@ public class User {
 
     public String getName() {
         return name;
+
     }
 
     public void setName(String name) {
         this.name = name;
+        Log.i(TAG, "setName: " +name);
     }
 
     public String getEmail() {
@@ -42,6 +47,8 @@ public class User {
     }
 
     public void setEmail(String email) {
+
         this.email = email;
+        Log.i(TAG, "setEmail: " +email);
     }
 }

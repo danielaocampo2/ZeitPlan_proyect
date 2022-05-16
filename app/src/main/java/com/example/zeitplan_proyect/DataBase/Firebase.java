@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +45,8 @@ public class Firebase {
 
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    private User usuario;
+    private User usuario=User.getInstance();;
+    //CollectionReference user = mFirestore.collection("user");
 
     //Variables opcionales para cerrar sesión en  de google
     private GoogleSignInClient mGoogleSignInClient;
@@ -66,11 +69,10 @@ public class Firebase {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 String id = mAuth.getCurrentUser().getUid();
-                usuario = User.getInstance();
-                usuario.setName(nameUser);
 
-                Log.i(TAG, "onComplete: "+ usuario);
-                Log.i(TAG, "NAME: "+ usuario.name);
+                usuario.setName(nameUser);
+                usuario.setEmail(emailUser);
+                usuario.setId(id);
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", id);
@@ -110,9 +112,24 @@ public class Firebase {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(mContext,"Bienvenido",Toast.LENGTH_SHORT).show();
-                    Intent intent =new Intent(mContext, MainActivity2.class);
-                    mContext.startActivity(intent);
+                    String id= getIdUser();
+                    usuario.setEmail(emailUser);
+                    usuario.setId(id);
+                    mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                usuario.setName(documentSnapshot.getString("name"));
+                                Toast.makeText(mContext,"Bienvenido",Toast.LENGTH_SHORT).show();
+                                Intent intent =new Intent(mContext, MainActivity2.class);
+                                mContext.startActivity(intent);
+                            }
+                        }
+                    });
+
+
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -136,6 +153,9 @@ public class Firebase {
                     // FirebaseUser User = mAuth.getCurrentUser();
                     //Iniciar DASHBOARD u otra actividad luego del SigIn Exitoso
                     //ESTO LO PODEMOS MODIFICAR: Estamos en loginActivity y lo mandamos a mainActivity y terminamos la actividad en loginActivity
+                    usuario.setName(mAuth.getCurrentUser().getDisplayName());
+                    usuario.setEmail(mAuth.getCurrentUser().getEmail());
+                    usuario.setId(getIdUser());
                     Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
                     mContext.startActivity(dashboardActivity);
                     ((Activity_login)mContext).finish();
@@ -183,27 +203,13 @@ public class Firebase {
 
     public void asignarImgNom(Context mContext , TextView userName, CircleImageView imgvw) {
         String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
-        String id = getIdUser();
-        switch (providerID) {
-            case "google.com":
-                userName.setText(mAuth.getCurrentUser().getDisplayName());
-                Glide.with(mContext).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
-                break;
-            case "password":
-                mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            userName.setText(documentSnapshot.getString("name"));
-                        }
-                    }
-                });
-                break;
-            default:
-                break;
+        userName.setText(usuario.name);
+        if (providerID.equals("google.com")) {
+            //userName.setText(mAuth.getCurrentUser().getDisplayName());
+            Glide.with(mContext).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
         }
     }
+
 
     // retorna Id de usuario actual y null si no hay usuario actual
 
