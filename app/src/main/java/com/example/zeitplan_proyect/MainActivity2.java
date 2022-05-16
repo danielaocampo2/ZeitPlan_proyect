@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect.vista;
+package com.example.zeitplan_proyect;
 
 import static android.content.ContentValues.TAG;
 

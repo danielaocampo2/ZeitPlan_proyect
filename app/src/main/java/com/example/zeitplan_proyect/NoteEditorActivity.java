@@ -13,7 +13,6 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.zeitplan_proyect.vista.MainActivity2;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashSet;

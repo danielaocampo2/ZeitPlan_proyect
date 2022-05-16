@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".vista.MainActivity2"
+            android:name=".MainActivity2"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

@@ -14,7 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import androidx.annotation.NonNull;
 
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.vista.MainActivity2;
+import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.model.User;
 import com.example.zeitplan_proyect.vista.Activity_login;
 import com.example.zeitplan_proyect.vista.RegistroActivity;
