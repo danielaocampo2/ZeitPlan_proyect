@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.zeitplan_proyect.Activity_add_asignatura;
 import com.example.zeitplan_proyect.CalculadoraActivity;
-import com.example.zeitplan_proyect.NoteActivity;
+import com.example.zeitplan_proyect.vista.NoteActivity;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.vista.Activity_crear;
 import com.example.zeitplan_proyect.vista.CalendarActivity;

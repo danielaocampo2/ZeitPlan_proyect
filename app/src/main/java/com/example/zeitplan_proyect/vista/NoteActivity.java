@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,15 +21,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.presenter.PresenterNotes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 
 public class NoteActivity extends Fragment {
 
-    static ArrayList<String> notes = new ArrayList<>();
+    public PresenterNotes presenterNotes = new PresenterNotes();;
     static ArrayAdapter arrayAdapter;
 
 
@@ -61,13 +63,13 @@ public class NoteActivity extends Fragment {
 
         if (set == null) {
 
-            notes.add("Example note");
+            presenterNotes.addNote("Example note");
         } else {
-            notes = new ArrayList(set);
+            presenterNotes.setNotes(set);
         }
 
         // Usando el listView ArrayAdapter para mostrar el contenido de la nota.
-        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, notes);
+        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, presenterNotes.getUserNotes());
 
         listView.setAdapter(arrayAdapter);
 
@@ -75,8 +77,8 @@ public class NoteActivity extends Fragment {
             public void onClick(View v) {
                 NoteEditorActivity noteEditorActivity = new NoteEditorActivity();
                 Bundle bundle = new Bundle();
-                bundle.putInt("my_key", notes.size());
-                notes.add("");
+                bundle.putInt("my_key", presenterNotes.getUserNotes().size());
+                presenterNotes.addNote("");
                 noteEditorActivity.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -117,10 +119,10 @@ public class NoteActivity extends Fragment {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                notes.remove(itemToDelete);
+                                presenterNotes.getUserNotes().remove(itemToDelete);
                                 arrayAdapter.notifyDataSetChanged();
                                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
-                                HashSet<String> set = new HashSet(NoteActivity.notes);
+                                HashSet<String> set = new HashSet(presenterNotes.getUserNotes());
                                 sharedPreferences.edit().putStringSet("notes", set).apply();
                                 Toast.makeText(getContext(), "Nota Eliminada", Toast.LENGTH_SHORT).show();
                             }

@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +13,16 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.vista.NoteActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashSet;
 
 public class NoteEditorActivity extends Fragment {
     int noteId;
+    NoteActivity noteActivity = new NoteActivity();;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -36,12 +40,12 @@ public class NoteEditorActivity extends Fragment {
         // Accessing the data using key and value
         noteId = getArguments().getInt("my_key");
         if (noteId != -1) {
-            editText.setText(NoteActivity.notes.get(noteId));
+            editText.setText(noteActivity.presenterNotes.getNoteId(noteId));
         } else {
 
-            NoteActivity.notes.add("");
-            noteId = NoteActivity.notes.size() - 1;
-            NoteActivity.arrayAdapter.notifyDataSetChanged();
+            noteActivity.presenterNotes.addNote("");
+            noteId = noteActivity.presenterNotes.getUserNotes().size() - 1;
+            noteActivity.arrayAdapter.notifyDataSetChanged();
 
         }
 
@@ -52,11 +56,11 @@ public class NoteEditorActivity extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                NoteActivity.notes.set(noteId, String.valueOf(charSequence));
+                noteActivity.presenterNotes.getUserNotes().set(noteId, String.valueOf(charSequence));
                 NoteActivity.arrayAdapter.notifyDataSetChanged();
                 // Creamos un objeto SharedPreferences para almacenar el texto de las notas cuando se cierre la app.
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
-                HashSet<String> set = new HashSet(NoteActivity.notes);
+                HashSet<String> set = new HashSet(noteActivity.presenterNotes.getUserNotes());
                 sharedPreferences.edit().putStringSet("notes", set).apply();
             }
 
