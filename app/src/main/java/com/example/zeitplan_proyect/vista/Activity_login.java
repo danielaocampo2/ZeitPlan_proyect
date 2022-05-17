@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Login;
@@ -36,7 +35,7 @@ public class Activity_login extends AppCompatActivity {
     TextInputLayout inputEmail, inputPassword;
 
     PresenterLogin presentadorLogin;
-    Firebase db = new Firebase();
+
     FirebaseAuth mAuth;
 
     //Variable para gestionar FirebaseAuth
@@ -100,6 +99,7 @@ public class Activity_login extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) { //si no es null redirigir
+
                     Intent intentDashboard = new Intent(getApplicationContext(), MainActivity2.class);
                     intentDashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentDashboard);

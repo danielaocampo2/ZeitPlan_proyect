@@ -19,6 +19,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.Fragments.FragmentHelper;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.User;
@@ -45,6 +46,8 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
     private CircleImageView imgvw;
     private DrawerLayout drawer;
     PresenterMenu presenterMenu;
+    Firebase db=Firebase.getInstance();
+
 
     //Variable para cambiar de fragments
     FragmentHelper fragmentHelper;
@@ -157,7 +160,7 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 menuItem.setChecked(true);
                                 usuario=User.getInstance();
 
-                                Log.i(TAG, "NAME22: "+ usuario.name);
+                                Log.i(TAG, "NAME:  "+ usuario.name);
                                 Log.i(TAG, "EMAIL22: "+ usuario.email);
                                 Log.i(TAG, "ID22: "+ usuario.id);
 

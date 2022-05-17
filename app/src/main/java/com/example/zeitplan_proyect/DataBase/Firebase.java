@@ -78,7 +78,7 @@ public class Firebase {
                 map.put("id", id);
                 map.put("name", nameUser);
                 map.put("email", emailUser);
-                map.put("password", passwordUser);
+                //map.put("password", passwordUser);
                 //Crea una collection llamada User y recibe un evento andOn..
                 mFirestore.collection("user").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -191,7 +191,6 @@ public class Firebase {
     }
 
     private void configuraGSO(Context mContext){
-
         //Configurar las gso para google signIn con el fin de luego desloguear de google
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(mContext.getResources().getString(R.string.default_web_client_id))
@@ -203,7 +202,22 @@ public class Firebase {
 
     public void asignarImgNom(Context mContext , TextView userName, CircleImageView imgvw) {
         String providerID = mAuth.getCurrentUser().getProviderData().get(1).getProviderId();
-        userName.setText(usuario.name);
+        if(usuario.name==null){
+            String id =getIdUser();
+            usuario.setId(id);
+            mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        usuario.setName(documentSnapshot.getString("name"));
+                        userName.setText(usuario.name);
+                        return;
+                    }
+                }
+            });
+        }
+            userName.setText(usuario.name);
+
         if (providerID.equals("google.com")) {
             //userName.setText(mAuth.getCurrentUser().getDisplayName());
             Glide.with(mContext).load(mAuth.getCurrentUser().getPhotoUrl()).into(imgvw);
