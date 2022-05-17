@@ -11,14 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeitPlan_proyect">
-
+        <activity
+            android:name=".vista.OlvidoPassword"
+            android:exported="false" />
         <activity
             android:name=".vista.RegistroActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-
         <activity
             android:name=".vista.Activity_login"
             android:exported="true"

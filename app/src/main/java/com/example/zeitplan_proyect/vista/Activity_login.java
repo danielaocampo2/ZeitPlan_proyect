@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
@@ -33,8 +34,9 @@ public class Activity_login extends AppCompatActivity {
 
     EditText txtEmail, txtPassword;
     TextInputLayout inputEmail, inputPassword;
-
+    TextView olvidasteContra;
     PresenterLogin presentadorLogin;
+
 
     FirebaseAuth mAuth;
 
@@ -55,15 +57,32 @@ public class Activity_login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        txtEmail = findViewById(R.id.userName);
+        txtEmail = findViewById(R.id.inputEmail);
         txtPassword = findViewById(R.id.password);
         inputPassword = findViewById(R.id.titPassword);
-        inputEmail = findViewById(R.id.titUserName);
+        inputEmail = findViewById(R.id.txtEmail);
+        olvidasteContra=findViewById(R.id.olvidasteContra);
 
         btnGoogle = findViewById(R.id.btnGoogle); // referencia boton google
         btnRegistrarseLogin = findViewById(R.id.btnRegistrarseLogin);
-        btnLogin = findViewById((R.id.btnLogin));
+        btnLogin = findViewById((R.id.btnRecuperar));
 
+        olvidasteContra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Activity_login.this,OlvidoPassword.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+                /*OnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Activity_login.this,OlvidoPassword.class);
+                startActivity(intent);
+                finish();
+            }
+        });*/
         btnRegistrarseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

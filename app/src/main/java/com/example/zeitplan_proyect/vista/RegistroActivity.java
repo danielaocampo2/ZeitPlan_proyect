@@ -43,11 +43,11 @@ public class RegistroActivity extends AppCompatActivity {
 
         presentadorRegister =new PresenterRegister(this, new Register(this));
         txtuserName2 = findViewById(R.id.userName2);
-        txtuserName = findViewById(R.id.userName);
+        txtuserName = findViewById(R.id.inputEmail);
         txtpassword = findViewById(R.id.password);
         txtpassword2 = findViewById(R.id.password2);
         titUserName2 = findViewById(R.id.titUserName2);
-        titUserName = findViewById(R.id.titUserName);
+        titUserName = findViewById(R.id.txtEmail);
         titPassword = findViewById(R.id.titPassword);
         titPassword2 = findViewById(R.id.titPassword2);
 

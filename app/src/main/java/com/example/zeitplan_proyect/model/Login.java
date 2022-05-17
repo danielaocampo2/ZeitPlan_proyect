@@ -1,10 +1,19 @@
 package com.example.zeitplan_proyect.model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.example.zeitplan_proyect.vista.Activity_login;
+import com.example.zeitplan_proyect.vista.RegistroActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -57,6 +66,24 @@ public class Login {
     }
     public void firebaseAuthWithGoogle(String idToken,String TAG) {
         db.firebaseAuthWithGoogle(idToken,TAG,mContext);
+    }
+
+    public void  sendPassword(String email){
+        String emailAddress =email;
+        db.mAuth.sendPasswordResetEmail(emailAddress).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(mContext,"Correo enviado, verifica tu carpeta de Spam",Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(mContext, Activity_login.class);
+                    mContext.startActivity(intent);
+                    ((RegistroActivity)mContext).finish();
+                }else{
+                    Toast.makeText(mContext,"Correo invalido",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 }
