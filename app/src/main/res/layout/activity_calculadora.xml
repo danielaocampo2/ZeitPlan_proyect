@@ -8,8 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="27dp"
-        tools:context=".MainActivity">
+        android:paddingBottom="27dp">
 
         <TextView
             android:id="@+id/textView_Teoria"

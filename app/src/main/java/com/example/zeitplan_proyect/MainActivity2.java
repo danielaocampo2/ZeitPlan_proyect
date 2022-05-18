@@ -152,7 +152,6 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 menuItem.setChecked(true);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
-
                             case R.id.nav_help:
                                 menuItem.setChecked(true);
                                 usuario=User.getInstance();

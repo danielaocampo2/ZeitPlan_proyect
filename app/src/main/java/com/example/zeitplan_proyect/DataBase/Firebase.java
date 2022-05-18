@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.zeitplan_proyect.model.Asignatura;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -45,7 +46,7 @@ public class Firebase {
 
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    private User usuario=User.getInstance();;
+    private User usuario=User.getInstance();
     //CollectionReference user = mFirestore.collection("user");
 
     //Variables opcionales para cerrar sesión en  de google
@@ -60,6 +61,10 @@ public class Firebase {
             instance = new Firebase();
         }
         return instance;
+    }
+
+    public void guardarAsignatura (String idUser, String nombreAsignatura){
+
     }
 
     public void registerUser(String nameUser, String emailUser, String passwordUser,Context mContext) {
@@ -223,6 +228,8 @@ public class Firebase {
         }
         return id;
     }
+
+
 
 
 
