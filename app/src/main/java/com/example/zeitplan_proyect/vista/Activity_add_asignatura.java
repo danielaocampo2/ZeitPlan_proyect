@@ -1,11 +1,15 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +22,38 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Asignatura;
+import com.example.zeitplan_proyect.model.EventoGeneral;
+import com.example.zeitplan_proyect.model.ValidacionAsignatura;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Activity_add_asignatura extends Fragment {
 
-    EditText campo1;
+
+    EditText campo1, date_inicio_fin;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
     TextView inicio_lunes, inicio_martes, inicio_miercoles, inicio_jueves, inicio_viernes,
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
     Spinner spinner;
     NavigationView navigationView;
-    Button guardar;
+    Button guardar, cancelar;
+
+    ArrayList<TextView> lista_inicios, lista_finales;
+    ArrayList<CheckBox> lista_checkbox;
+
+    ValidacionAsignatura validacionAsignatura;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -41,31 +62,58 @@ public class Activity_add_asignatura extends Fragment {
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Asignatura");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTitleText("SELECT A DATE");
+        MaterialDatePicker materialDatePicker = builder.build();
+
+        date_inicio_fin = view.findViewById(R.id.EditText_datepicker_inicio);
+
         spinner = (Spinner) view.findViewById(R.id.spinner_descripcion);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
         guardar = view.findViewById(R.id.Guardar);
+        cancelar = view.findViewById(R.id.Cancelar);
         campo1 = view.findViewById(R.id.editTextNombreAsignatura);
 
+        lista_inicios = new ArrayList<>();
+        lista_finales = new ArrayList<>();
+        lista_checkbox = new ArrayList<>();
+
         inicio_lunes = view.findViewById(R.id.textView_horarioLunesInicio);
+        lista_inicios.add(inicio_lunes);
         inicio_martes = view.findViewById(R.id.textView_horarioMartesInicio);
+        lista_inicios.add(inicio_martes);
         inicio_miercoles = view.findViewById(R.id.textView_horarioMiercolesInicio);
+        lista_inicios.add(inicio_miercoles);
         inicio_jueves = view.findViewById(R.id.textView_horarioJuevesInicio);
+        lista_inicios.add(inicio_jueves);
         inicio_viernes = view.findViewById(R.id.textView_horarioViernesInicio);
+        lista_inicios.add(inicio_viernes);
 
 
         final_lunes = view.findViewById(R.id.textView_horarioLunesFinal);
+        lista_finales.add(final_lunes);
         final_martes = view.findViewById(R.id.textView_horarioMartesFinal);
+        lista_finales.add(final_martes);
         final_miercoles = view.findViewById(R.id.textView_horarioMiercolesFinal);
+        lista_finales.add(final_miercoles);
         final_jueves = view.findViewById(R.id.textView_horarioJuevesFinal);
+        lista_finales.add(final_jueves);
         final_viernes = view.findViewById(R.id.textView_horarioViernesFinal);
+        lista_finales.add(final_viernes);
 
         checkBox_lunes = view.findViewById(R.id.checkBox_Lunes);
+        lista_checkbox.add(checkBox_lunes);
         checkBox_martes = view.findViewById(R.id.checkBox_Martes);
+        lista_checkbox.add(checkBox_martes);
         checkBox_miercoles = view.findViewById(R.id.checkBox_Miercoles);
+        lista_checkbox.add(checkBox_miercoles);
         checkBox_jueves = view.findViewById(R.id.checkBox_Jueves);
+        lista_checkbox.add(checkBox_jueves);
         checkBox_viernes = view.findViewById(R.id.checkBox_Viernes);
+        lista_checkbox.add(checkBox_viernes);
+
 
 
         Calendar calendar = Calendar.getInstance();
@@ -77,6 +125,23 @@ public class Activity_add_asignatura extends Fragment {
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
         //Hide share button
         shareBtn.setVisibility(View.GONE);
+
+        date_inicio_fin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDatePicker.show(getActivity().getSupportFragmentManager(), "DATE PICKER");
+
+            }
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+
+
+                date_inicio_fin.setText(materialDatePicker.getHeaderText().toString());
+            }
+        });
 
         //Lunes
         inicio_lunes.setOnClickListener(new View.OnClickListener() {
@@ -307,86 +372,45 @@ public class Activity_add_asignatura extends Fragment {
 
             }
         };
+
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                agregarAs(view);
+                validacionAsignatura = new ValidacionAsignatura();
+                int valor = validacionAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, date_inicio_fin);
+                if(valor==2){
+                    Toast.makeText(getActivity().getApplicationContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
+                }else if (valor == 3){
+                    Toast.makeText(getActivity().getApplicationContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
+                }else if (valor == 0){
+                    //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
+
+                    //REGRSAR A LA PANTALLA ANTERIOR
+                    Toast.makeText(getActivity().getApplicationContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityAsignatura activity_asignatura = new ActivityAsignatura();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, activity_asignatura);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                //Tiene que volver a la view anterior
+            }
+        });
+
 
         return view;
     }
 
-    public void agregarAs(View v){
-        if(validarAs()){
-            Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    public boolean validarAs(){
-        boolean retorno = true;
-        String c1 = campo1.getText().toString();
-        if (c1.isEmpty()){
-            campo1.setError("Este campo no puede quedar vacio");
-            retorno = false;
-        }if(checkBox_lunes.isChecked()){
-            if(inicio_lunes.getText().toString().isEmpty()||final_lunes.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
-                retorno = false;
-            }else{
-                retorno = validarCampo(inicio_lunes.getText().toString(), final_lunes.getText().toString());
-            }
-        }if(checkBox_martes.isChecked()){
-            if(inicio_martes.getText().toString().isEmpty()||final_martes.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
-                retorno = false;
-            }else{
-                retorno = validarCampo(inicio_martes.getText().toString(), final_martes.getText().toString());
-            }
-        }if(checkBox_miercoles.isChecked()){
-            if(inicio_miercoles.getText().toString().isEmpty()||final_miercoles.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
-                retorno = false;
-            }else{
-                retorno = validarCampo(inicio_miercoles.getText().toString(), final_miercoles.getText().toString());
-            }
-        }if(checkBox_jueves.isChecked()){
-            if(inicio_jueves.getText().toString().isEmpty()||final_jueves.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
-                retorno = false;
-            }else{
-                retorno = validarCampo(inicio_jueves.getText().toString(), final_jueves.getText().toString());
-            }
-        }if(checkBox_viernes.isChecked()){
-            if(inicio_viernes.getText().toString().isEmpty()||final_viernes.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
-                retorno = false;
-            }else{
-                retorno = validarCampo(inicio_viernes.getText().toString(), final_viernes.getText().toString());
-            }
-        }
-        return retorno;
-    }
 
-    public boolean validarCampo(String inicio, String fin){
-        boolean retorno = true;
 
-        int hora_inicio = Integer.parseInt(inicio.substring(0,inicio.indexOf(':')));
-        int hora_final = Integer.parseInt(fin.substring(0,fin.indexOf(':')));
-
-        int min_inicio = Integer.parseInt(inicio.substring(inicio.indexOf(':')+1,inicio.length()));
-        int min_final = Integer.parseInt(fin.substring(fin.indexOf(':')+1,fin.length()));
-
-        if (hora_inicio > hora_final) {
-            Toast.makeText(getContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
-            retorno = false;
-        } else if (hora_inicio == hora_final) {
-                if (min_inicio > min_final) {
-                    Toast.makeText(getContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
-                    retorno = false;
-                }
-        }
-
-        return retorno;
-    }
 }

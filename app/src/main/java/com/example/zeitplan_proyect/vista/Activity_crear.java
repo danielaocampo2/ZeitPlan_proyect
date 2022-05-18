@@ -63,6 +63,7 @@ public class Activity_crear extends Fragment {
         final View view = inflater.inflate(R.layout.activity_crear, container, false);
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+
         spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);

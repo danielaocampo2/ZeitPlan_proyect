@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Event {
+public class Event{
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
@@ -110,15 +110,6 @@ public class Event {
     public void setRemember(boolean remember) {
         this.remember = remember;
     }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect;
+package com.example.zeitplan_proyect.vista;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Calcular;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;

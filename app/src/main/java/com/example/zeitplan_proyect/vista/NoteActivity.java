@@ -62,7 +62,6 @@ public class NoteActivity extends Fragment {
         HashSet<String> set = (HashSet<String>) sharedPreferences.getStringSet("notes", null);
 
         if (set == null) {
-
             presenterNotes.addNote("Example note");
         } else {
             presenterNotes.setNotes(set);

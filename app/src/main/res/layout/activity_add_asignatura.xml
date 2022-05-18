@@ -14,138 +14,121 @@
         android:layout_height="wrap_content"
         tools:context=".activity_añadir_asignatura">
 
+
         <EditText
             android:id="@+id/editTextNombreAsignatura"
             android:layout_width="322dp"
             android:layout_height="48dp"
             android:layout_marginTop="88dp"
-            android:background="@android:color/holo_green_dark"
-            android:backgroundTint="#DAD9D9"
             android:ems="10"
             android:hint="Nombre de la Asignatura"
-            android:inputType="textPersonName"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextDescripcion"
-            android:layout_width="150dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="36dp"
-            android:background="@android:color/holo_green_dark"
+            android:layout_width="179dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#DAD9D9"
             android:ems="10"
             android:inputType="textPersonName"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.835"
+            app:layout_constraintHorizontal_bias="0.836"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_horarioViernesInicio" />
-
-        <TextView
-            android:id="@+id/textView_horario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Configuración del horario:"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.213"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNombreAsignatura" />
 
         <TextView
             android:id="@+id/textView_Inicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="Inicio"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.562"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+            app:layout_constraintHorizontal_bias="0.223"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_Lunes"
+            app:layout_constraintTop_toBottomOf="@+id/EditText_datepicker_inicio" />
 
         <TextView
             android:id="@+id/textView_Final"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Final"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.536"
             app:layout_constraintStart_toEndOf="@+id/textView_Inicio"
-            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+            app:layout_constraintTop_toTopOf="@+id/textView_Inicio" />
 
         <CheckBox
             android:id="@+id/checkBox_Lunes"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="56dp"
             android:text="Lunes"
             android:textColor="#000000"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.135"
+            app:layout_constraintHorizontal_bias="0.132"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+            app:layout_constraintTop_toBottomOf="@+id/EditText_datepicker_inicio" />
 
         <CheckBox
             android:id="@+id/checkBox_Martes"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="Martes"
             android:textColor="#000000"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.132"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Lunes" />
 
         <CheckBox
             android:id="@+id/checkBox_Miercoles"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="Miércoles"
             android:textColor="#000000"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintHorizontal_bias="0.132"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Martes" />
 
         <CheckBox
             android:id="@+id/checkBox_Jueves"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="Jueves"
             android:textColor="#000000"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.132"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Miercoles" />
 
         <CheckBox
             android:id="@+id/checkBox_Viernes"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="Viernes"
             android:textColor="#000000"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintHorizontal_bias="0.132"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Jueves" />
 
@@ -153,21 +136,21 @@
             android:id="@+id/textView_horarioLunesInicio"
             android:layout_width="77dp"
             android:layout_height="31dp"
-            android:layout_marginStart="68dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="20dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
             android:textSize="17sp"
             app:layout_constraintStart_toEndOf="@+id/checkBox_Lunes"
-            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_Inicio" />
 
         <TextView
             android:id="@+id/textView_horarioMartesInicio"
             android:layout_width="77dp"
             android:layout_height="31dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="26dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -179,8 +162,8 @@
             android:id="@+id/textView_horarioMiercolesInicio"
             android:layout_width="77dp"
             android:layout_height="31dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -192,8 +175,8 @@
             android:id="@+id/textView_horarioJuevesInicio"
             android:layout_width="77dp"
             android:layout_height="31dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -205,8 +188,8 @@
             android:id="@+id/textView_horarioViernesInicio"
             android:layout_width="77dp"
             android:layout_height="31dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -219,20 +202,20 @@
             android:layout_width="77dp"
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
             android:textSize="17sp"
             app:layout_constraintStart_toEndOf="@+id/textView_horarioLunesInicio"
-            app:layout_constraintTop_toBottomOf="@+id/textView_horario" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_Final" />
 
         <TextView
             android:id="@+id/textView_horarioMartesFinal"
             android:layout_width="77dp"
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="26dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -245,7 +228,7 @@
             android:layout_width="77dp"
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -258,7 +241,7 @@
             android:layout_width="77dp"
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -271,7 +254,7 @@
             android:layout_width="77dp"
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="25dp"
             android:background="#DAD9D9"
             android:hint="00:00"
             android:textAlignment="center"
@@ -281,27 +264,51 @@
 
         <Spinner
             android:id="@+id/spinner_descripcion"
-            android:layout_width="170dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="44dp"
+            android:layout_width="144dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="38dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Viernes"
-            app:layout_constraintVertical_bias="0.129" />
+            app:layout_constraintVertical_bias="0.082" />
 
         <Button
             android:id="@+id/Guardar"
-            android:layout_width="119dp"
+            android:layout_width="135dp"
             android:layout_height="51dp"
-            android:text="Guardar"
+            android:text="Aceptar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.154"
+            app:layout_constraintHorizontal_bias="0.137"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion"
-            app:layout_constraintVertical_bias="0.32" />
+            app:layout_constraintVertical_bias="0.212" />
 
+        <Button
+            android:id="@+id/Cancelar"
+            android:layout_width="135dp"
+            android:layout_height="51dp"
+            android:text="Cancelar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.631"
+            app:layout_constraintStart_toEndOf="@+id/Guardar"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion"
+            app:layout_constraintVertical_bias="0.212" />
 
+        <EditText
+            android:id="@+id/EditText_datepicker_inicio"
+            android:layout_width="322dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:hint="Fecha de Inicio - Fecha de Final"
+            android:textAlignment="center"
+            android:ems="10"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNombreAsignatura" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

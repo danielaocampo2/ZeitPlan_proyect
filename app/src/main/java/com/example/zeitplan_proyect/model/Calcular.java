@@ -1,10 +1,6 @@
 package com.example.zeitplan_proyect.model;
 
-import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.example.zeitplan_proyect.CalculadoraActivity;
 
 import java.util.ArrayList;
 
