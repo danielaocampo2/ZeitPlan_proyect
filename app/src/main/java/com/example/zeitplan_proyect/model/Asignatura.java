@@ -12,13 +12,13 @@ import java.util.Date;
 public class Asignatura extends EventoGeneral {
 
     ArrayList<TextView> inicios, finales;
-    ArrayList<CheckBox> cajas;
+    ArrayList<String> diasSemana;
     ArrayList<Asignatura> listaAsignaturas = new ArrayList<>();
     Fechas fechas;
 
-    public Asignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion, ArrayList<CheckBox> cajas,ArrayList<TextView> inicios, ArrayList<TextView> finales){
+    public Asignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<TextView> inicios, ArrayList<TextView> finales){
         super(fecha_inicio, fecha_final, nombre_as, descripcion);
-        this.cajas = cajas;
+        this.diasSemana = diasSemana;
         this.inicios = inicios;
         this.finales = finales;
     }
@@ -80,6 +80,7 @@ public class Asignatura extends EventoGeneral {
 
     }
 
+    /*
     public ArrayList<CheckBox> getCajas() {
         return cajas;
     }
@@ -96,7 +97,7 @@ public class Asignatura extends EventoGeneral {
         }
 
 
-    }
+    }*/
 
     public ArrayList<Asignatura> getListaAsignaturas() {
         return listaAsignaturas;
@@ -104,6 +105,10 @@ public class Asignatura extends EventoGeneral {
 
     public void setListaAsignaturas(ArrayList<Asignatura> listaAsignaturas) {
         this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public void addAsignatura(Asignatura asignatura){
+        this.getListaAsignaturas().add(asignatura);
     }
 
 }

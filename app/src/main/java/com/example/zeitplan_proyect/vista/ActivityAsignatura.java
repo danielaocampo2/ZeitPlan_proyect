@@ -29,7 +29,6 @@ public class ActivityAsignatura extends Fragment {
         boton_add = view.findViewById(R.id.btn_addAsignatura);
 
 
-
         boton_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +40,8 @@ public class ActivityAsignatura extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+
 
         return view;
     }
