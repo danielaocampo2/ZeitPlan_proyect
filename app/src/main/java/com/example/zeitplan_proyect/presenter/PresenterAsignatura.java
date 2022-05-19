@@ -1,5 +1,6 @@
 package com.example.zeitplan_proyect.presenter;
 
+import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ public class PresenterAsignatura {
     }
 
     public void crearAsignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion,
-                                ArrayList<CheckBox> cajas, ArrayList<TextView> inicios, ArrayList<TextView> finales){
+                                ArrayList<CheckBox> cajas, ArrayList<TextView> inicios, ArrayList<TextView> finales, Context mContext){
 
         ArrayList<String> diasSemana = new ArrayList<>();
         ArrayList<String> horasInicio = new ArrayList<>();
@@ -42,8 +43,9 @@ public class PresenterAsignatura {
             }
         }
 
-        Asignatura asignatura = new Asignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,inicios,finales);
+        Asignatura asignatura = new Asignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,inicios,finales,mContext);
         asignatura.addAsignatura(asignatura);
+        asignatura.addFireBaseAsignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,inicios,finales);
     }
 
     public void fechasAsignaturas(String fechaIn, String fechaFin){

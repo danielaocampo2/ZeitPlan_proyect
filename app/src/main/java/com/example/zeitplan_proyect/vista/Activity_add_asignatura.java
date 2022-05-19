@@ -388,7 +388,7 @@ public class Activity_add_asignatura extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
                     //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
                     Date inicio = new Date();
-                    presenterAsignatura.crearAsignatura(inicio,inicio,campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales);
+                    presenterAsignatura.crearAsignatura(inicio,inicio,campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
                 }
 
 
