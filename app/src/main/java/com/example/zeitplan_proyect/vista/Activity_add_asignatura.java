@@ -27,6 +27,7 @@ import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.EventoGeneral;
 import com.example.zeitplan_proyect.model.ValidacionAsignatura;
+import com.example.zeitplan_proyect.presenter.PresenterAsignatura;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,11 +35,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Activity_add_asignatura extends Fragment {
 
 
-    EditText campo1, date_inicio_fin;
+    EditText campo1, date_inicio_fin, descripcion;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
     TextView inicio_lunes, inicio_martes, inicio_miercoles, inicio_jueves, inicio_viernes,
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
@@ -50,7 +52,7 @@ public class Activity_add_asignatura extends Fragment {
     ArrayList<TextView> lista_inicios, lista_finales;
     ArrayList<CheckBox> lista_checkbox;
 
-    ValidacionAsignatura validacionAsignatura;
+    PresenterAsignatura presenterAsignatura = new PresenterAsignatura();
 
 
 
@@ -72,6 +74,7 @@ public class Activity_add_asignatura extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
+        descripcion = view.findViewById(R.id.editTextDescripcion);
         guardar = view.findViewById(R.id.Guardar);
         cancelar = view.findViewById(R.id.Cancelar);
         campo1 = view.findViewById(R.id.editTextNombreAsignatura);
@@ -137,8 +140,6 @@ public class Activity_add_asignatura extends Fragment {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
-
-
                 date_inicio_fin.setText(materialDatePicker.getHeaderText().toString());
             }
         });
@@ -376,17 +377,18 @@ public class Activity_add_asignatura extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validacionAsignatura = new ValidacionAsignatura();
-                int valor = validacionAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, date_inicio_fin);
+
+                int valor = presenterAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, date_inicio_fin);
                 if(valor==2){
                     Toast.makeText(getActivity().getApplicationContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
                 }else if (valor == 3){
                     Toast.makeText(getActivity().getApplicationContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
                 }else if (valor == 0){
-                    //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
-
                     //REGRSAR A LA PANTALLA ANTERIOR
                     Toast.makeText(getActivity().getApplicationContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+                    //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
+                    Date inicio = new Date();
+                    presenterAsignatura.crearAsignatura(inicio,inicio,campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
                 }
 
 

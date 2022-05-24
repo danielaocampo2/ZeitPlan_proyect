@@ -1,24 +1,43 @@
 package com.example.zeitplan_proyect.model;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.presenter.PresenterAsignatura;
+import com.example.zeitplan_proyect.vista.RegistroActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Asignatura extends EventoGeneral {
 
     ArrayList<TextView> inicios, finales;
-    ArrayList<CheckBox> cajas;
+    ArrayList<String> diasSemana;
     ArrayList<Asignatura> listaAsignaturas = new ArrayList<>();
     Fechas fechas;
+    Context mContext;
 
-    public Asignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion, ArrayList<CheckBox> cajas,ArrayList<TextView> inicios, ArrayList<TextView> finales){
+    Firebase bd = new Firebase();
+
+    public Asignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<TextView> inicios, ArrayList<TextView> finales, Context mContext){
         super(fecha_inicio, fecha_final, nombre_as, descripcion);
-        this.cajas = cajas;
+        this.diasSemana = diasSemana;
+        this.mContext = mContext;
         this.inicios = inicios;
         this.finales = finales;
     }
@@ -80,6 +99,34 @@ public class Asignatura extends EventoGeneral {
 
     }
 
+    public void addFireBaseAsignatura(Date fecha_inicio, Date fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<TextView> inicios, ArrayList<TextView> finales){
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", bd.getIdUser());
+        map.put("name", nombre_as);
+        map.put("descripcion", descripcion);
+
+        bd.mFirestore.collection("user").document(bd.getIdUser()).collection("Asignaturas").document("autoincrement").set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.e("HOLAAAAAAA","EEEEEE");
+                Toast.makeText(mContext, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+                //Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
+                //mContext.startActivity(dashboardActivity);
+                //((RegistroActivity)mContext).finish();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mContext, "Error al guardar", Toast.LENGTH_SHORT).show();
+                Log.e("HOLAAAAAAA","MAL");
+
+            }
+        });
+    }
+
+    /*
     public ArrayList<CheckBox> getCajas() {
         return cajas;
     }
@@ -96,7 +143,7 @@ public class Asignatura extends EventoGeneral {
         }
 
 
-    }
+    }*/
 
     public ArrayList<Asignatura> getListaAsignaturas() {
         return listaAsignaturas;
@@ -104,6 +151,10 @@ public class Asignatura extends EventoGeneral {
 
     public void setListaAsignaturas(ArrayList<Asignatura> listaAsignaturas) {
         this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public void addAsignatura(Asignatura asignatura){
+        this.getListaAsignaturas().add(asignatura);
     }
 
 }
