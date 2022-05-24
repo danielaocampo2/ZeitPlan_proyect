@@ -9,6 +9,9 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_google.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_logout.xml" value="0.1785" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_pin.xml" value="0.1785" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_asignatura.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calculadora.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.25" />
@@ -18,6 +21,12 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_note_editor.xml" value="0.1431159420289855" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_olvido_password.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_registro.xml" value="0.25" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_week_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/dialogo_camponuevo.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/event_cell.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/fila_asignatura.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/fila_calculadora.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/fragment_recuerdame.xml" value="0.2" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/menu/menu_content.xml" value="0.12552083333333333" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect.v2/app/src/main/res/layout/activity_main_2.xml" value="0.1" />

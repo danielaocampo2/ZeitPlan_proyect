@@ -45,7 +45,7 @@ public class Firebase {
 
     public FirebaseAuth mAuth=FirebaseAuth.getInstance();
     public FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    public User usuario=User.getInstance();;
+    public User usuario=User.getInstance();
     //CollectionReference user = mFirestore.collection("user");
 
     //Variables opcionales para cerrar sesión en  de google
