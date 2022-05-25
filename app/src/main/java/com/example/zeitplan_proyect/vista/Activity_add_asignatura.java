@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -33,6 +36,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,14 +44,17 @@ import java.util.Date;
 public class Activity_add_asignatura extends Fragment {
 
 
-    EditText campo1, date_inicio_fin, descripcion;
+    EditText campo1, descripcion;
     TimePickerDialog.OnTimeSetListener setListenerTimeLunes,setListenerTimeMartes,setListenerTimeMiercoles,setListenerTimeJueves,setListenerTimeViernes,setListenerTimeLunesFinal,setListenerTimeMartesFinal,setListenerTimeMiercolesFinal,setListenerTimeJuevesFinal,setListenerTimeViernesFinal ;
-    TextView inicio_lunes, inicio_martes, inicio_miercoles, inicio_jueves, inicio_viernes,
+    TextView fehca_in, fecha_fin, inicio_lunes, inicio_martes, inicio_miercoles, inicio_jueves, inicio_viernes,
             final_lunes, final_martes, final_miercoles, final_jueves, final_viernes;
     CheckBox checkBox_lunes, checkBox_martes, checkBox_miercoles, checkBox_jueves, checkBox_viernes;
     Spinner spinner;
     NavigationView navigationView;
     Button guardar, cancelar;
+    ImageButton fechaIn, fechaFin;
+
+    DatePickerDialog.OnDateSetListener setListenerDateEventIn,setListenerDateEventFin;
 
     ArrayList<TextView> lista_inicios, lista_finales;
     ArrayList<CheckBox> lista_checkbox;
@@ -64,11 +71,11 @@ public class Activity_add_asignatura extends Fragment {
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Asignatura");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
-        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-        builder.setTitleText("SELECT A DATE");
-        MaterialDatePicker materialDatePicker = builder.build();
+        fehca_in = view.findViewById(R.id.datepicker_inicio);
+        fecha_fin = view.findViewById(R.id.datepicker_final);
 
-        date_inicio_fin = view.findViewById(R.id.EditText_datepicker_inicio);
+        fechaIn = view.findViewById(R.id.acceder_datepickerinicio);
+        fechaFin = view.findViewById(R.id.acceder_datepickerfinal);
 
         spinner = (Spinner) view.findViewById(R.id.spinner_descripcion);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoDescripcion, android.R.layout.simple_spinner_item);
@@ -123,26 +130,51 @@ public class Activity_add_asignatura extends Fragment {
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
 
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+
+
         navigationView = ((MainActivity2) getActivity()).getNavigationView();
 
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
-        //Hide share button
         shareBtn.setVisibility(View.GONE);
 
-        date_inicio_fin.setOnClickListener(new View.OnClickListener() {
+        fechaIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                materialDatePicker.show(getActivity().getSupportFragmentManager(), "DATE PICKER");
-
+                DatePickerDialog datePicker = new DatePickerDialog(
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEventIn, year, month, day);
+                datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePicker.show();
             }
         });
 
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+       setListenerDateEventIn = new DatePickerDialog.OnDateSetListener() {
+           @Override
+           public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+               String date_inicio = datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
+               fehca_in.setText(date_inicio);
+           }
+       };
+
+        fechaFin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPositiveButtonClick(Object selection) {
-                date_inicio_fin.setText(materialDatePicker.getHeaderText().toString());
+            public void onClick(View view) {
+                DatePickerDialog datePicker = new DatePickerDialog(
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEventFin, year, month, day);
+                datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePicker.show();
             }
         });
+
+        setListenerDateEventFin = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                String date_inicio = datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
+                fecha_fin.setText(date_inicio);
+            }
+        };
 
         //Lunes
         inicio_lunes.setOnClickListener(new View.OnClickListener() {
@@ -378,20 +410,22 @@ public class Activity_add_asignatura extends Fragment {
             @Override
             public void onClick(View view) {
 
-                int valor = presenterAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, date_inicio_fin);
-                if(valor==2){
+                int valor = presenterAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, fehca_in, fecha_fin);
+                if(presenterAsignatura.validarNombre(campo1.getText().toString())){
+                    Toast.makeText(getActivity().getApplicationContext(), "Ya existe una asignatura con ese nombre", Toast.LENGTH_SHORT).show();
+                }
+                else if(valor==2){
                     Toast.makeText(getActivity().getApplicationContext(), "Los campos de hora no pueden quedar vacios", Toast.LENGTH_SHORT).show();
                 }else if (valor == 3){
                     Toast.makeText(getActivity().getApplicationContext(), "La hora de inicio debe ser menor a la de final", Toast.LENGTH_SHORT).show();
+                }else if (valor == 4){
+                    Toast.makeText(getActivity().getApplicationContext(), "La fecha de inicio debe ser menor a la final", Toast.LENGTH_SHORT).show();
                 }else if (valor == 0){
                     //REGRSAR A LA PANTALLA ANTERIOR
-                    Toast.makeText(getActivity().getApplicationContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
                     //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
-                    Date inicio = new Date();
-                    presenterAsignatura.crearAsignatura(inicio,inicio,campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
+                    presenterAsignatura.crearAsignatura(fehca_in.getText().toString(),fecha_fin.getText().toString(),campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
+                    presenterAsignatura.getUserAsignaturas();
                 }
-
-
             }
         });
 
