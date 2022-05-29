@@ -1,7 +1,5 @@
 package com.example.zeitplan_proyect.DataBase;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,7 +7,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.CollectionReference;
+import com.example.zeitplan_proyect.model.Asignatura;
+import com.example.zeitplan_proyect.model.ListaAsignatura;
+import com.example.zeitplan_proyect.presenter.PresenterAsignatura;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import androidx.annotation.NonNull;
@@ -32,8 +32,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +47,8 @@ public class Firebase {
 
     public FirebaseAuth mAuth=FirebaseAuth.getInstance();
     public FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    public User usuario=User.getInstance();
+    public User usuario = User.getInstance();
+    //PresenterAsignatura presenterAsignatura = new PresenterAsignatura();
     //CollectionReference user = mFirestore.collection("user");
 
     //Variables opcionales para cerrar sesión en  de google
@@ -237,6 +240,9 @@ public class Firebase {
         }
         return id;
     }
+
+
+
 
 
 
