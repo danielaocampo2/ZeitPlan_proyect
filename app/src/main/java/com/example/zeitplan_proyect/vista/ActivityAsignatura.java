@@ -41,7 +41,7 @@ public class ActivityAsignatura extends Fragment {
 
         container = view.findViewById(R.id.containerFilaAsignatura);
         boton_add = view.findViewById(R.id.btn_addAsignatura);
-        aceptar = view.findViewById(R.id.button_aceptar);
+        aceptar = view.findViewById(R.id.btn_guardar);
 
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override

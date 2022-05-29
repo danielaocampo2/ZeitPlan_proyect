@@ -10,7 +10,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_logout.xml" value="0.1785" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_pin.xml" value="0.1785" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_asignatura.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_asignatura.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calculadora.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.18" />
@@ -100,7 +100,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.136" />
+        <option name="scale" value="0.33" />
       </ProjectState>
     </option>
   </component>

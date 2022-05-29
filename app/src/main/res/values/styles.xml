@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/black</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.DatePickerEnAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <item name="android:datePickerDialogTheme">@style/DatePickerStyle</item>
     </style>
+
+    <style name="DatePickerStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorPrimary">@color/colorLogo</item>
+        <item name="colorSecondary">@color/colorLogo</item>
+    </style>
+
 </resources>

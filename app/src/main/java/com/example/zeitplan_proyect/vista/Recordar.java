@@ -1,6 +1,8 @@
 package com.example.zeitplan_proyect.vista;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Data;
+import androidx.work.WorkManager;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,11 +18,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.WorkManagerNoti;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class Recordar extends AppCompatActivity {
 
@@ -55,7 +59,7 @@ public class Recordar extends AppCompatActivity {
                 mes=actual.get(Calendar.MONTH);
                 dia=actual.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog =new DatePickerDialog(view.getContext(),/* R.style.DialogTheme,*/
+                DatePickerDialog datePickerDialog =new DatePickerDialog(view.getContext(), R.style.DatePickerStyle,
                         new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
@@ -80,7 +84,7 @@ public class Recordar extends AppCompatActivity {
             public void onClick(View view) {
                 hora=actual.get(calendar.HOUR_OF_DAY);
                 minutos=actual.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog=new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog=new TimePickerDialog(view.getContext(), R.style.DatePickerStyle, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
                         calendar.set(calendar.HOUR_OF_DAY, h);
@@ -98,6 +102,15 @@ public class Recordar extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tag =generateKey();
+                //Pasa el valor de la fecha y hora a milisegundos, el sistem es para que workmanager trabajae de manera correcta
+                Long alerttime=calendar.getTimeInMillis() - System.currentTimeMillis();
+                int random =(int) (Math.random()*50+1);
+
+                Data data=guardarData("soy un titulo", "soy un detalle", random);
+                WorkManagerNoti.GuardarNoti(alerttime,data,tag);
+
+
                 Toast.makeText(Recordar.this, "Alarma guardada",Toast.LENGTH_SHORT).show();
 
             }
@@ -106,6 +119,25 @@ public class Recordar extends AppCompatActivity {
 
 
 
+    }
+
+    private void eliminarNoti(String tag){
+        WorkManager.getInstance(this).cancelAllWorkByTag(tag);
+        Toast.makeText(Recordar.this, "Alarma eliminada",Toast.LENGTH_SHORT).show();
+
+    }
+
+    // genera numero aleatorio
+    private String generateKey(){
+        return UUID.randomUUID().toString();
+
+    }
+
+    private Data guardarData(String titulo, String detalle, int id_noti){
+        return new Data.Builder()
+                .putString("titulo",titulo)
+                .putString("detalle",detalle)
+                .putInt("id_noti",id_noti).build();
     }
 
 
