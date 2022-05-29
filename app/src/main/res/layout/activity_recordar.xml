@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="textStart"
     tools:context=".vista.Recordar">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="409dp"
         android:layout_height="673dp"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
@@ -38,72 +39,78 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <TextView
-            android:id="@+id/textView_Fecha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Fecha:"
-            android:textSize="18sp"
+            android:id="@+id/tv_fecha"
+            android:layout_width="153dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="32dp"
+            android:hint="Fecha"
+            android:textAlignment="textStart"
+            android:textDirection="firstStrong"
+            android:textSize="20sp"
+            app:autoSizeTextType="none"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.117"
+            app:layout_constraintHorizontal_bias="0.164"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_descripcion" />
 
         <TextView
-            android:id="@+id/textView_Hora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_hora"
+            android:layout_width="153dp"
+            android:layout_height="30dp"
             android:layout_marginTop="44dp"
-            android:text="Hora:"
-            android:textSize="18sp"
+            android:hint="Hora"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintHorizontal_bias="0.164"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_Fecha" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_fecha" />
 
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+        <Button
+            android:id="@+id/btn_seleFecha"
+            android:layout_width="155dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
-            android:hint="dd/mm/yyyy"
             android:inputType="date"
             android:minHeight="48dp"
+            android:text="Elegir fecha"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView_Fecha"
+            app:layout_constraintHorizontal_bias="0.315"
+            app:layout_constraintStart_toEndOf="@+id/tv_fecha"
             app:layout_constraintTop_toBottomOf="@+id/editText_descripcion"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <EditText
-            android:id="@+id/editTextHour"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+        <Button
+            android:id="@+id/btn_seleHora"
+            android:layout_width="150dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="40dp"
             android:ems="10"
-            android:hint="00:00"
             android:inputType="date"
             android:minHeight="48dp"
+            android:text="Elegir Hora"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.535"
-            app:layout_constraintStart_toEndOf="@+id/textView_Hora"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+            app:layout_constraintHorizontal_bias="0.937"
+            app:layout_constraintStart_toEndOf="@+id/tv_hora"
+            app:layout_constraintTop_toBottomOf="@+id/btn_seleFecha"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/button_aceptar"
+            android:id="@+id/btn_guardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="56dp"
-            android:text="Aceptar"
+            android:text="Guardar Notificación"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.584"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextHour"
+            app:layout_constraintTop_toBottomOf="@+id/btn_seleHora"
             app:layout_constraintVertical_bias="0.366" />
 
 

@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_Fecha"
+        android:id="@+id/tv_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -60,10 +60,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Fecha" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_fecha" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/btn_seleFecha"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -73,12 +73,12 @@
         android:minHeight="48dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_Fecha"
+        app:layout_constraintStart_toEndOf="@+id/tv_fecha"
         app:layout_constraintTop_toBottomOf="@+id/editText_descripcion"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/editTextHour"
+        android:id="@+id/btn_seleHora"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -90,11 +90,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toEndOf="@+id/textView_Hora"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        app:layout_constraintTop_toBottomOf="@+id/btn_seleFecha"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/button_aceptar"
+        android:id="@+id/btn_guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
@@ -148,7 +148,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_Tipo"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHour" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_seleHora" />
 
     <SeekBar
         android:id="@+id/seekBar_prioridad"
@@ -168,7 +168,7 @@
         android:layout_height="49dp"
         android:text="Recuerdame"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_aceptar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_guardar"
         app:layout_constraintHorizontal_bias="0.312"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar_prioridad"

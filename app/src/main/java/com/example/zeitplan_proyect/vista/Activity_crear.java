@@ -67,13 +67,13 @@ public class Activity_crear extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        acpetar = view.findViewById(R.id.button_aceptar);
+        acpetar = view.findViewById(R.id.btn_guardar);
 
         eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
         eventDescrET = (EditText) view.findViewById(R.id.editText_descripcion);
 
-        eventDateTV = view.findViewById(R.id.editTextDate);
-        eventTimeTV = view.findViewById(R.id.editTextHour);
+        eventDateTV = view.findViewById(R.id.btn_seleFecha);
+        eventTimeTV = view.findViewById(R.id.btn_seleHora);
 
         resultado_seekBar = view.findViewById(R.id.textView_resultadoPrioridad);
         seekBar = view.findViewById(R.id.seekBar_prioridad);
