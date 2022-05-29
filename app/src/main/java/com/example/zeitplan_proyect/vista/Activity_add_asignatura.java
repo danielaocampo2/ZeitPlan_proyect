@@ -424,7 +424,6 @@ public class Activity_add_asignatura extends Fragment {
                     //REGRSAR A LA PANTALLA ANTERIOR
                     //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
                     presenterAsignatura.crearAsignatura(fehca_in.getText().toString(),fecha_fin.getText().toString(),campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
-                    presenterAsignatura.getUserAsignaturas();
                 }
             }
         });

@@ -7,38 +7,52 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.Fechas;
+import com.example.zeitplan_proyect.model.ListaAsignatura;
 import com.example.zeitplan_proyect.model.ValidacionAsignatura;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PresenterAsignatura {
+public class PresenterAsignatura implements ListaAsignatura.vmInterface {
 
     Fechas fechas;
     ValidacionAsignatura validacionAsignatura;
-    ArrayList<Asignatura> listaAsignaturas;
-    Firebase bd = new Firebase();
-
+    ArrayList<Asignatura> llistaAsignaturas;
 
     public PresenterAsignatura() {
         fechas = new Fechas();
         validacionAsignatura = new ValidacionAsignatura();
-        listaAsignaturas = new ArrayList<>();
+        llistaAsignaturas = new ArrayList<>();
+        ListaAsignatura lista = new ListaAsignatura(this);
+        lista.getUserAsignaturas();
     }
+
+
+
+    public ArrayList<Asignatura> getListaAsignaturas() {
+        Log.e("k", llistaAsignaturas.toString());
+        return llistaAsignaturas;
+    }
+
 
     public int validarAs(ArrayList<TextView> inicios, ArrayList<TextView> finales, ArrayList<CheckBox> cajas, EditText campo1, TextView campo2, TextView campo3) {
         return validacionAsignatura.validarAs(inicios, finales, cajas, campo1, campo2, campo3);
     }
 
     public boolean validarNombre(String nombre){
-        return validacionAsignatura.equalsAsignatura(nombre, this.getListaAsignaturas());
+        //return validacionAsignatura.equalsAsignatura(nombre, this.getListaAsignaturas());
+        return false;
     }
 
     public void crearAsignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion,
@@ -58,49 +72,25 @@ public class PresenterAsignatura {
         }
 
         Asignatura asignatura = new Asignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,horasInicio,horasFinal,mContext);
-        this.addAsignatura(asignatura);
         asignatura.addFireBaseAsignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,horasInicio,horasFinal);
+        llistaAsignaturas.add(asignatura);
     }
 
     public void fechasAsignaturas(String fechaIn, String fechaFin){
         fechas.FechasDiaSemana(fechaIn,fechaFin);
     }
 
-    public ArrayList<Asignatura> getListaAsignaturas() {
-        return listaAsignaturas;
+
+    @Override
+    public void setCollection(ArrayList<Asignatura> ac) {
+        llistaAsignaturas = ac;
+
     }
 
-    public void setListaAsignaturas(ArrayList<Asignatura> listaAsignaturas) {
-        this.listaAsignaturas = listaAsignaturas;
+    @Override
+    public void setToast(String s) {
+
     }
-
-    public void addAsignatura(Asignatura asignatura){
-        this.getListaAsignaturas().add(asignatura);
-    }
-
-    public void getUserAsignaturas(){
-
-        bd.mFirestore.collection("users").document(bd.getIdUser().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Log.e("TAG", "hola");
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Log.e("TAG", document.getId() + " => " + document.get("userCourses"));
-                                ArrayList<String> acc = (ArrayList<String>) document.get("userCourses");
-                                //getUserObjectCourses(acc);
-                            }
-                        }
-
-                    }
-
-                });
-    }
-
-
-
-
-
-
 }
+
+
