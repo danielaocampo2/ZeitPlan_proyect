@@ -159,6 +159,35 @@ public class Firebase {
                     usuario.setName(mAuth.getCurrentUser().getDisplayName());
                     usuario.setEmail(mAuth.getCurrentUser().getEmail());
                     usuario.setId(getIdUser());
+
+                    mFirestore.collection("user").document(getIdUser()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (!documentSnapshot.exists()) {
+
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("id", getIdUser());
+                                map.put("name", mAuth.getCurrentUser().getDisplayName());
+                                map.put("email", mAuth.getCurrentUser().getEmail());
+                                //map.put("password", passwordUser);
+                                //Crea una collection llamada User y recibe un evento andOn..
+                                mFirestore.collection("user").document(getIdUser()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(mContext, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto uestra un error
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(mContext, "Error al guardar", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
                     Intent dashboardActivity = new Intent(mContext, MainActivity2.class);
                     mContext.startActivity(dashboardActivity);
                     ((Activity_login)mContext).finish();
