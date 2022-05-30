@@ -1,15 +1,26 @@
 package com.example.zeitplan_proyect.model;
 
+import android.content.Context;
 import android.os.Build;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
+import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Event{
+    Firebase bd = new Firebase();
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
@@ -110,7 +121,6 @@ public class Event{
     public void setRemember(boolean remember) {
         this.remember = remember;
     }
-
 
 
 }

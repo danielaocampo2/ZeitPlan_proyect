@@ -69,8 +69,11 @@ public class Activity_crear extends Fragment {
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
         spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
+        String [] tipoEvento={ "Otro","Examen","Trabajo","Social"};
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, tipoEvento);
         spinner.setAdapter(adapter);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
+        //spinner.setAdapter(adapter);
         acpetar = view.findViewById(R.id.btn_guardar);
 
         eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
@@ -90,7 +93,7 @@ public class Activity_crear extends Fragment {
 
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
 
-        PreCreEvent = new PresenterCrearEvent();
+        PreCreEvent = new PresenterCrearEvent(getContext());
 
         recuerdame_check.setOnCheckedChangeListener(
                 new CheckBox.OnCheckedChangeListener(){
@@ -182,13 +185,18 @@ public class Activity_crear extends Fragment {
         if(validar()){
             String eventName = eventNameET.getText().toString();
             String eventDescription = eventDescrET.getText().toString();
+            String fecha=eventDateTV.getText().toString();
+            String hora=eventTimeTV.getText().toString();
+            Log.i(TAG, "agregar: " +fecha);
+            Log.i(TAG, "agregar: " +hora);
+            String tipoEven=spinner.getSelectedItem().toString();
+            // falta el tipo y en Event model
             Event newEvent = new Event(eventName, eventDescription, date, time, prioridad, remember);
-
             Event.eventsList.add(newEvent);
-
+            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad,tipoEven);
 
             // llamar a metodo para guardar datos.
-            Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
 
 
             if(remember){
