@@ -120,7 +120,6 @@ public class Firebase {
                     usuario.setId(id);
                     mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
-
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
                                 usuario.setName(documentSnapshot.getString("name"));

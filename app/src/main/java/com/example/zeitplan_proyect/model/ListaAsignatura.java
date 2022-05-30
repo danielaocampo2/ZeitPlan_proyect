@@ -39,6 +39,7 @@ public class ListaAsignatura {
                         Asignatura asignatura = new Asignatura((String) document.get("Fecha inicio"), (String)document.get("Fecha final"), (String)document.get("Name"), (String)document.get("Descripcion"), (ArrayList<String>) document.get("Dias semana"), (ArrayList<String>) document.get("Horas de inicio"), (ArrayList<String>) document.get("Horas de Final"), null);
                         as.add(asignatura);
                     }
+                    Log.i("TAG", "onComplete: "+ as);
                     listener.setCollection(as);
                 } else {
                     Log.e("TAG", "Error getting documents: ", task.getException());
