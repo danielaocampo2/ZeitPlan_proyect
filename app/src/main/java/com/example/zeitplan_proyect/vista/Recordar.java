@@ -2,13 +2,16 @@ package com.example.zeitplan_proyect.vista;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Data;
+import androidx.work.ListenableWorker;
 import androidx.work.WorkManager;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.WorkManagerNoti;
 
@@ -28,14 +32,14 @@ import java.util.UUID;
 
 public class Recordar extends AppCompatActivity {
 
-    Button seleFecha, seleHora, guardar;
-    TextView tv_fecha, tv_hora;
+    private static final String TAG = "Recordar";
+    Button seleFecha, seleHora, guardar, btn_eliminar;
+    TextView tv_fecha, tv_hora, et_titulo, et_descripcion;
+    String titulo, descripcion;
 
 
     Calendar actual = Calendar.getInstance(); // Para declarar la fecha actual
     Calendar calendar =Calendar.getInstance();
-
-
 
 
     private int minutos,hora,dia,mes,anio;
@@ -45,12 +49,32 @@ public class Recordar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordar);
+        Intent intent = getIntent();
+        titulo = intent.getStringExtra("nombreEvento");
+        descripcion=intent.getStringExtra("descripcion");
+        btn_eliminar=findViewById(R.id.btn_eliminar);
+        et_descripcion=findViewById(R.id.editText_descripcion);
+        et_titulo=findViewById(R.id.editText_Titulo);
+        et_titulo.setText(titulo);
+        et_descripcion.setText(descripcion);
+        Log.i(TAG, "onCreate: nombre "+ titulo);
+        Log.i(TAG, "onCreate: descripcion "+ descripcion);
+
+
 
         seleFecha=findViewById(R.id.btn_seleFecha);
         seleHora=findViewById(R.id.btn_seleHora);
         tv_fecha=findViewById(R.id.tv_fecha);
         tv_hora=findViewById(R.id.tv_hora);
         guardar=findViewById(R.id.btn_guardar);
+
+        btn_eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(view.getContext(), MainActivity2.class);
+                startActivity(intent);
+            }
+        });
 
         seleFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +113,7 @@ public class Recordar extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
                         calendar.set(calendar.HOUR_OF_DAY, h);
                         calendar.set(calendar.MINUTE,m);
-
-                        // ara ponerlo en el textview
+                        // si es menor a 9 que le ponga un cero adelante
                         tv_hora.setText(String.format("%02d:%02d",h,m));
 
                     }
@@ -102,17 +125,20 @@ public class Recordar extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(tv_fecha.getText().toString()=="" || tv_hora.getText().toString()==""){
+                    Toast.makeText(Recordar.this, "Debe elegir fecha y hora",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String tag =generateKey();
                 //Pasa el valor de la fecha y hora a milisegundos, el sistem es para que workmanager trabajae de manera correcta
                 Long alerttime=calendar.getTimeInMillis() - System.currentTimeMillis();
                 int random =(int) (Math.random()*50+1);
 
-                Data data=guardarData("soy un titulo", "soy un detalle", random);
+                Data data=guardarData(titulo, descripcion, random);
                 WorkManagerNoti.GuardarNoti(alerttime,data,tag);
-
-
                 Toast.makeText(Recordar.this, "Alarma guardada",Toast.LENGTH_SHORT).show();
-
+                Intent intent =new Intent(view.getContext(), MainActivity2.class);
+                startActivity(intent);
             }
         });
 
@@ -122,9 +148,10 @@ public class Recordar extends AppCompatActivity {
     }
 
     private void eliminarNoti(String tag){
+
+
         WorkManager.getInstance(this).cancelAllWorkByTag(tag);
         Toast.makeText(Recordar.this, "Alarma eliminada",Toast.LENGTH_SHORT).show();
-
     }
 
     // genera numero aleatorio

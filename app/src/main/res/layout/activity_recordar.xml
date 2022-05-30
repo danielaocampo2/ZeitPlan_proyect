@@ -18,23 +18,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.618">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/editText_descripcion"
-            android:layout_width="325dp"
-            android:layout_height="54dp"
+            android:layout_width="328dp"
+            android:layout_height="37dp"
             android:layout_marginTop="24dp"
             android:hint="Descripción"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_Titulo" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/editText_Titulo"
-            android:layout_width="325dp"
-            android:layout_height="54dp"
+            android:layout_width="326dp"
+            android:layout_height="37dp"
             android:layout_marginTop="68dp"
             android:hint="Titulo"
             android:textAllCaps="false"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -104,14 +106,30 @@
             android:id="@+id/btn_guardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
+            android:layout_marginTop="56dp"
             android:text="Guardar Notificación"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:icon="@android:drawable/ic_menu_save"
+            app:layout_constraintBottom_toTopOf="@+id/btn_eliminar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.584"
+            app:layout_constraintHorizontal_bias="0.557"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_seleHora"
-            app:layout_constraintVertical_bias="0.366" />
+            app:layout_constraintVertical_bias="0.504" />
+
+        <Button
+            android:id="@+id/btn_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="56dp"
+            android:backgroundTint="#EA2A2A"
+            android:text="Eliminar Notificación"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.552"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_seleHora"
+            app:layout_constraintVertical_bias="0.596" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

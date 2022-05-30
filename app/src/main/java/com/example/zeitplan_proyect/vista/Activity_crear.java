@@ -1,14 +1,18 @@
 package com.example.zeitplan_proyect.vista;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,8 +183,21 @@ public class Activity_crear extends Fragment {
             String eventName = eventNameET.getText().toString();
             String eventDescription = eventDescrET.getText().toString();
             Event newEvent = new Event(eventName, eventDescription, date, time, prioridad, remember);
+
             Event.eventsList.add(newEvent);
+
+
+            // llamar a metodo para guardar datos.
             Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+
+
+            if(remember){
+                Intent intent =new Intent(v.getContext(),Recordar.class);
+                intent.putExtra("nombreEvento", eventName);
+                intent.putExtra("descripcion", eventDescription);
+                startActivity(intent);
+            }
+
         }
     }
 
