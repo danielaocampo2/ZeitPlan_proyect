@@ -15,6 +15,8 @@ public abstract class EventoGeneral {
         this.descripcion = descripcion;
     }
 
+    public EventoGeneral() {}
+
     public abstract String getNombre();
     public abstract void setNombre(String nombre);
 

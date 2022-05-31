@@ -97,8 +97,8 @@ public class LlistaEventsActivity extends Fragment {
 
     private void setEventAdapter() {
         // String orden = spinner.getSelectedItem().toString();
-        ArrayList<Event> events = Event.getEventsList();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), events);
+        ArrayList<Event> eventos = new ArrayList<>();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
         eventRV.setAdapter(eAdapter);
 
         mFirestore.collection("evento").orderBy("titulo", Query.Direction.ASCENDING)
@@ -111,7 +111,7 @@ public class LlistaEventsActivity extends Fragment {
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                events.add(dc.getDocument().toObject(Event.class));
+                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("idUser")));
                             }
                             eAdapter.notifyDataSetChanged();
                         }

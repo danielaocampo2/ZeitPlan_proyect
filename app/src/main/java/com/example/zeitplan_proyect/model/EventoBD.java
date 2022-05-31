@@ -25,7 +25,7 @@ public class EventoBD {
 
 
     public void creaEvento(String eventName, String eventDescription, String date,
-                           String time,int prioridad,  String tipoEven,Context mContext){
+                           String time,int prioridad,  String tipoEven, Context mContext){
 
         String uniqueID = UUID.randomUUID().toString();
 

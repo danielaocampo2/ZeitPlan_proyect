@@ -80,15 +80,14 @@ public class Event extends EventoGeneral{
     private String id;
 
     public Event(){
-        super(" "," ", " ", " ");
-        this.date = LocalDate.now();
-        this.timeIn = LocalTime.now();
-        this.timeFi = LocalTime.now().plusHours(1);
-        this.type = " ";
-        this.priority = 0;
-        this.remember = false;
-        this.id = " ";
+        super();
     }
+
+    public Event(String nombre, String descripcion, String idUser) {
+        super(" ", " ", nombre, descripcion);
+        this.id = idUser;
+    }
+
     public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember, String id) {
         super(date.toString(), date.toString(), name, description);
         this.date = date;

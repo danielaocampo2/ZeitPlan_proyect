@@ -14,7 +14,6 @@ import android.util.Log;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
-import com.example.zeitplan_proyect.model.EventoNuevo;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
-import com.example.zeitplan_proyect.model.EventoNuevo;
 
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -35,10 +34,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Event eventoNuevo = eventoArrayList.get(position);
-        holder.descripcion.setText(eventoNuevo.getDescripcion());
-        holder.titulo.setText(eventoNuevo.getNombre());
-        holder.idUser.setText(eventoNuevo.getId()); // holder.Age.setText(String.valueOf(user.age))
+        Event event = eventoArrayList.get(position);
+        holder.descripcion.setText(event.getDescripcion());
+        holder.titulo.setText(event.getNombre());
+        holder.idUser.setText(event.getId()); // holder.Age.setText(String.valueOf(user.age))
     }
 
     @Override

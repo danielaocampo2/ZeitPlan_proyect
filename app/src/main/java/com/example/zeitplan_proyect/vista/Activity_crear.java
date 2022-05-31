@@ -95,7 +95,7 @@ public class Activity_crear extends Fragment {
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
 
         this.PreCal = PresenterCalendarUtils.getInstance();
-        PreCreEvent = new PresenterCrearEvent(getContext());
+        PreCreEvent = new PresenterCrearEvent(getActivity().getApplicationContext());
 
         recuerdame_check.setOnCheckedChangeListener(
                 new CheckBox.OnCheckedChangeListener(){
@@ -193,7 +193,7 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
             Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, remember, User.getInstance().id);
-            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad,tipoEven);
+            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad, tipoEven);
             Event.eventsList.add(newEvent);
 
 
