@@ -46,7 +46,7 @@ public class EventoBD {
         bd.mFirestore.collection("evento").document(uniqueID).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(mContext, "Evento guardado correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "EventoNuevo guardado correctamente", Toast.LENGTH_SHORT).show();
                 //retornar a la pantalla anterior
                 Log.i(TAG, "creaEvento: creooo");
             }

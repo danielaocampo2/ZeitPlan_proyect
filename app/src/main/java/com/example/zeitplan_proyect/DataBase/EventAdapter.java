@@ -1,24 +1,22 @@
 package com.example.zeitplan_proyect.DataBase;
 
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
-
 import com.example.zeitplan_proyect.R;
 
 
-import com.example.zeitplan_proyect.model.Event;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.zeitplan_proyect.model.EventoNuevo;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class EventAdapter extends FirestoreRecyclerAdapter<Event, EventAdapter.ViewHolder>
-{
+public class EventAdapter  extends FirestoreRecyclerAdapter<EventoNuevo, EventAdapter.ViewHolder> {
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -26,35 +24,33 @@ public class EventAdapter extends FirestoreRecyclerAdapter<Event, EventAdapter.V
      *
      * @param options
      */
-    public EventAdapter(@NonNull @androidx.annotation.NonNull FirestoreRecyclerOptions<Event> options) {
+    public EventAdapter(@NonNull FirestoreRecyclerOptions<EventoNuevo> options) {
         super(options);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onBindViewHolder(@NonNull @androidx.annotation.NonNull ViewHolder holder, int position, @NonNull @androidx.annotation.NonNull Event model) {
-        holder.titulo.setText(model.getName());
-        holder.descripcion.setText(model.getDescription());
-        holder.tipo.setText(model.getPriority());
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EventoNuevo model) {
+        holder.titulo.setText(model.getTitulo());
+        holder.descripcion.setText(model.getDescripcion());
+        holder.tipo.setText(model.getPrioridad());
     }
 
     @NonNull
-    @androidx.annotation.NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @androidx.annotation.NonNull ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_event_single,viewGroup,false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_event_single,parent,false);
         return new ViewHolder(v);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView titulo, descripcion, tipo;
-
-        public ViewHolder(@NonNull @androidx.annotation.NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo= itemView.findViewById(R.id.tx_titulo);
             descripcion= itemView.findViewById(R.id.tx_descripcion);
             tipo= itemView.findViewById(R.id.tx_tipo);
-
         }
     }
 }
+
