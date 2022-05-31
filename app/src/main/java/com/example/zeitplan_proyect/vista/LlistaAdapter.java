@@ -20,7 +20,7 @@ import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class LlistaAdapter extends ArrayAdapter<Event> {
-    PresenterCalendarUtils PresCal;;
+    PresenterCalendarUtils PresCal;
 
     public LlistaAdapter(@NonNull Context context, List<Event> events ){
         super(context, 0, events);
@@ -35,7 +35,7 @@ public class LlistaAdapter extends ArrayAdapter<Event> {
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell,parent,false);
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
-        eventTitle = PresCal.formattedDateNum(event.getDate()) + " | " + PresCal.formattedShortTime(event.getTimeIn()) + " - " + PresCal.formattedShortTime(event.getTimeFi())+ " " + event.getName();
+        eventTitle = PresCal.formattedDateNum(event.getDate()) + " | " + PresCal.formattedShortTime(event.getTimeIn()) + " - " + PresCal.formattedShortTime(event.getTimeFi())+ " " + event.getNombre();
         eventCellTV.setText(eventTitle);
         return convertView;
     }

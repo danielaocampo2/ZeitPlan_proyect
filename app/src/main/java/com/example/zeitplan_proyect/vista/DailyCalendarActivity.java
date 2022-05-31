@@ -19,6 +19,7 @@ import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.HourEvent;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class DailyCalendarActivity extends Fragment {
         semanalAction = view.findViewById(R.id.semanalButt);
         llistaAction = view.findViewById(R.id.ListButt);
         PresCal = PresenterCalendarUtils.getInstance();
+        FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+        shareBtn.setVisibility(View.GONE);
 
         prevDayAction.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Event{
+public class Event extends EventoGeneral{
     Firebase bd = new Firebase();
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
@@ -72,27 +72,35 @@ public class Event{
     }
 
 
-    private String name;
-    private String description;
     private LocalDate date;
     private LocalTime timeIn, timeFi;
     private String type;
     private int priority;
     private boolean remember;
+    private String id;
 
-    public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember) {
-        this.name = name;
-        this.description = description;
+    public Event(){
+        super(" "," ", " ", " ");
+        this.date = LocalDate.now();
+        this.timeIn = LocalTime.now();
+        this.timeFi = LocalTime.now().plusHours(1);
+        this.type = " ";
+        this.priority = 0;
+        this.remember = false;
+        this.id = " ";
+    }
+    public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember, String id) {
+        super(date.toString(), date.toString(), name, description);
         this.date = date;
         this.timeIn = time;
         this.timeFi = time.plusHours(1);
         this.type = type;
         this.priority = priority;
         this.remember = remember;
+        this.id = id;
     }
     public Event(String name, String description, LocalDate date, LocalTime timeIn, LocalTime timeFi, String type, int priority, boolean remember) {
-        this.name = name;
-        this.description = description;
+        super(date.toString(), date.toString(), name, description);
         this.date = date;
         this.timeIn = timeIn;
         this.timeFi = timeFi;
@@ -101,20 +109,44 @@ public class Event{
         this.remember = remember;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Override
+    public String getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    @Override
+    public void setFecha_inicio(String fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
+
+    @Override
+    public String getFecha_final() {
+        return fecha_final;
+    }
+
+    @Override
+    public void setFecha_final(String fecha_final) {
+        this.fecha_final = fecha_final;
     }
 
     public LocalDate getDate() {
@@ -164,5 +196,11 @@ public class Event{
         this.remember = remember;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

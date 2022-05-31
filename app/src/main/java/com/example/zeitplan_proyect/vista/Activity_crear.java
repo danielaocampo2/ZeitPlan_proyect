@@ -32,6 +32,7 @@ import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.User;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -191,7 +192,7 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +fecha);
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
-            Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, remember);
+            Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, remember, User.getInstance().id);
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad,tipoEven);
             Event.eventsList.add(newEvent);
 

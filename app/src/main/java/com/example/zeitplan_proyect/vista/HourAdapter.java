@@ -106,7 +106,7 @@ public class HourAdapter extends ArrayAdapter<HourEvent>
     }
 
     private void setEvent(TextView tv, Event event) {
-        tv.setText(event.getName());
+        tv.setText(event.getNombre());
         tv.setVisibility(View.VISIBLE);
     }
 

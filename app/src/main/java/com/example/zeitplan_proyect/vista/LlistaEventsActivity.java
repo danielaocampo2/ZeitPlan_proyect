@@ -1,13 +1,17 @@
 package com.example.zeitplan_proyect.vista;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +20,30 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class LlistaEventsActivity extends Fragment {
 
-    private ListView eventListView;
+    private RecyclerView eventRV;
     private Button calendarAction, semanalAction, dailyAction;
     private Spinner spinner;
+
+    MyAdapter eAdapter;
+    FirebaseFirestore mFirestore;
 
     PresenterCalendarUtils PresCal;
 
@@ -42,11 +57,19 @@ public class LlistaEventsActivity extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner_orden);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoOrden, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        eventListView = view.findViewById(R.id.eventListView);
+        eventRV = view.findViewById(R.id.reciclerllista);
+        eventRV.setHasFixedSize(true);
+        eventRV.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         calendarAction= view.findViewById(R.id.calendarButt);
         semanalAction = view.findViewById(R.id.semanalButt);
         dailyAction = view.findViewById(R.id.dailyButt);
+
+        mFirestore=FirebaseFirestore.getInstance();
+
         PresCal = PresenterCalendarUtils.getInstance();
+
+        FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+        shareBtn.setVisibility(View.GONE);
 
         setEventAdapter();
 
@@ -73,10 +96,28 @@ public class LlistaEventsActivity extends Fragment {
     }
 
     private void setEventAdapter() {
-        String orden = spinner.getSelectedItem().toString();
-        ArrayList<Event> dailyEvents = Event.getEventsList();
-        LlistaAdapter llistaAdapter = new LlistaAdapter(getContext(), dailyEvents);
-        eventListView.setAdapter(llistaAdapter);
+        // String orden = spinner.getSelectedItem().toString();
+        ArrayList<Event> events = Event.getEventsList();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), events);
+        eventRV.setAdapter(eAdapter);
+
+        mFirestore.collection("evento").orderBy("titulo", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                events.add(dc.getDocument().toObject(Event.class));
+                            }
+                            eAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
     }
 
     public void calendarAction(View view) {

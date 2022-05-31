@@ -22,6 +22,7 @@ import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         calendarAction=view.findViewById(R.id.calendarButt);
         dailyAction = view.findViewById(R.id.dailyButt);
         llistaAction = view.findViewById(R.id.ListButt);
+        FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+        shareBtn.setVisibility(View.GONE);
 
         PresCal = PresenterCalendarUtils.getInstance();
 
