@@ -139,7 +139,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     private void setEventAdapter()
     {
         ArrayList<Event> dailyEvents = Event.eventsForDate(PresCal.getSelectedDate());
-        EventAdapter eventAdapter = new EventAdapter(getContext(), dailyEvents);
+        EventAdapter eventAdapter = new EventAdapter(getActivity().getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
     }
 

@@ -60,6 +60,24 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
             holder.dayMonth.setTextColor(Color.LTGRAY);
         }
 
+        int nEvents = PresCal.numEvents(date);
+
+        switch (nEvents){
+            default:
+                holder.casella1.setVisibility(View.INVISIBLE);
+            case 1:
+                holder.casella2.setVisibility(View.INVISIBLE);
+            case 2:
+                holder.casella3.setVisibility(View.INVISIBLE);
+            case 3:
+                holder.casella4.setVisibility(View.INVISIBLE);
+            case 4:
+                break;
+            case 5:
+                holder.casella4.setText("+");
+                break;
+        }
+
     }
 
     @Override

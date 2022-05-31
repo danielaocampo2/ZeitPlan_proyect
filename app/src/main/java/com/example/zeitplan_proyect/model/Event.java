@@ -54,6 +54,17 @@ public class Event extends EventoGeneral{
         return  events;
     }
 
+    public static int numEvents(LocalDate date) {
+        int numEvents = 0;
+        for(Event event : eventsList)
+        {
+            if(event.getDate().equals(date))
+                numEvents++;
+                if(numEvents==5) return 5;
+        }
+        return  numEvents;
+    }
+
     public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time){
 
         ArrayList<Event> events= new ArrayList<>();
