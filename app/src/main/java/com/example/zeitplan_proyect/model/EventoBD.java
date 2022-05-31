@@ -31,12 +31,12 @@ public class EventoBD {
 
         Map<String, Object> map = new HashMap<>();
         map.put("idUser", bd.getIdUser());
-        map.put("Nombre", eventName);
-        map.put("descricion", eventDescription);
-        map.put("date", date);
-        map.put("time", time);
-        map.put("prioridad", prioridad);
-        map.put("tipoEven", tipoEven);
+        map.put("titulo", eventName);
+        map.put("descripcion", eventDescription);
+        //map.put("date", date);
+        //map.put("time", time);
+       // map.put("prioridad", prioridad);
+       // map.put("tipoEven", tipoEven);
 
 
 

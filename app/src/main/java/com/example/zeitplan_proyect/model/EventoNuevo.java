@@ -1,14 +1,14 @@
 package com.example.zeitplan_proyect.model;
 
 public class EventoNuevo {
-    String titulo, descripcion,prioridad;
+    String titulo, descripcion,idUser;
 
     public EventoNuevo(){}
 
-    public EventoNuevo(String titulo, String descripcion, String prioridad) {
+    public EventoNuevo(String titulo, String descripcion, String idUser) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.prioridad = prioridad;
+        this.idUser = idUser;
     }
 
     public String getTitulo() {
@@ -27,11 +27,11 @@ public class EventoNuevo {
         this.descripcion = descripcion;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

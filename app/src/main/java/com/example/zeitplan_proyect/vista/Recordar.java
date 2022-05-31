@@ -71,7 +71,7 @@ public class Recordar extends AppCompatActivity {
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(view.getContext(), MainActivity2.class);
+                Intent intent =new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
