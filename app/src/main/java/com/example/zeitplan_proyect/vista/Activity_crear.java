@@ -32,6 +32,7 @@ import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -52,7 +53,8 @@ public class Activity_crear extends Fragment {
     private int prioridad;
     private boolean remember;
 
-    PresenterCrearEvent PreCreEvent;
+    private PresenterCalendarUtils PreCal;
+    private PresenterCrearEvent PreCreEvent;
 
     Spinner spinner;
     SeekBar seekBar;
@@ -60,6 +62,7 @@ public class Activity_crear extends Fragment {
     CheckBox recuerdame_check;
     NavigationView navigationView;
     Button acpetar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -69,11 +72,8 @@ public class Activity_crear extends Fragment {
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
         spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
-        String [] tipoEvento={ "Otro","Examen","Trabajo","Social"};
-        ArrayAdapter <String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, tipoEvento);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
-        //spinner.setAdapter(adapter);
         acpetar = view.findViewById(R.id.btn_guardar);
 
         eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
@@ -93,6 +93,7 @@ public class Activity_crear extends Fragment {
 
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
 
+        this.PreCal = PresenterCalendarUtils.getInstance();
         PreCreEvent = new PresenterCrearEvent(getContext());
 
         recuerdame_check.setOnCheckedChangeListener(
@@ -127,7 +128,7 @@ public class Activity_crear extends Fragment {
 
         time = LocalTime.now();
         eventTimeTV.setText(CalendarUtils.formattedShortTime(time));
-        date = PreCreEvent.getSelectedDate();
+        date = PreCal.getSelectedDate();
         eventDateTV.setText(date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear());
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
@@ -189,14 +190,14 @@ public class Activity_crear extends Fragment {
             String hora=eventTimeTV.getText().toString();
             Log.i(TAG, "agregar: " +fecha);
             Log.i(TAG, "agregar: " +hora);
-            String tipoEven=spinner.getSelectedItem().toString();
-            // falta el tipo y en Event model
-            Event newEvent = new Event(eventName, eventDescription, date, time, prioridad, remember);
-            Event.eventsList.add(newEvent);
+            String tipoEven =spinner.getSelectedItem().toString();
+            Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, remember);
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad,tipoEven);
+            Event.eventsList.add(newEvent);
+
 
             // llamar a metodo para guardar datos.
-            //Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
 
 
             if(remember){

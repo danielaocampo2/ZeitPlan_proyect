@@ -18,6 +18,9 @@
             android:name=".vista.Recordar"
             android:exported="true" />
         <activity
+            android:name=".vista.EventViewer"
+            android:exported="false" />
+        <activity
             android:name=".vista.OlvidoPassword"
             android:exported="false" />
         <activity

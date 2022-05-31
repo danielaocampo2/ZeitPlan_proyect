@@ -24,6 +24,25 @@ public class Event{
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
+    public static ArrayList<Event> getEventsList(){
+        return eventsList;
+    }
+
+    /*public static ArrayList<Event> getEventsListSorted(String orden) {
+        ArrayList<Event> events = new ArrayList<>();
+        switch (orden){
+            case "Fecha":
+                //events = Event.getEventsListByDate();
+            case "Nombre":
+                //events = Event.getEventsListByName();
+            case "Prioridad":
+                //events = Event.getEventsListByPriority();
+            default:
+               return eventsList;
+        }
+        return events;
+    }*/
+
     public static ArrayList<Event> eventsForDate(LocalDate date){
 
         ArrayList<Event> events= new ArrayList<>();
@@ -40,10 +59,14 @@ public class Event{
         ArrayList<Event> events= new ArrayList<>();
         for(Event event : eventsList)
         {
-            int eventHour = event.time.getHour();
+            int eventHourIn = event.getTimeIn().getHour();
+            int eventHourFi = event.getTimeFi().minusMinutes(1).getHour();
             int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
-                events.add(event);
+            for(int eventHour = eventHourIn; eventHour <= eventHourFi; eventHour++){
+                if(event.getDate().equals(date) && eventHour == cellHour)
+                    events.add(event);
+            }
+
         }
         return  events;
     }
@@ -52,16 +75,28 @@ public class Event{
     private String name;
     private String description;
     private LocalDate date;
-    private LocalTime time;
+    private LocalTime timeIn, timeFi;
     private String type;
     private int priority;
     private boolean remember;
 
-    public Event(String name, String description, LocalDate date, LocalTime time, int priority, boolean remember) {
+    public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember) {
         this.name = name;
         this.description = description;
         this.date = date;
-        this.time = time;
+        this.timeIn = time;
+        this.timeFi = time.plusHours(1);
+        this.type = type;
+        this.priority = priority;
+        this.remember = remember;
+    }
+    public Event(String name, String description, LocalDate date, LocalTime timeIn, LocalTime timeFi, String type, int priority, boolean remember) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.timeIn = timeIn;
+        this.timeFi = timeFi;
+        this.type = type;
         this.priority = priority;
         this.remember = remember;
     }
@@ -90,13 +125,20 @@ public class Event{
         this.date = date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getTimeIn() {
+        return timeIn;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setTimeIn(LocalTime timeIn) {
+        this.timeIn = timeIn;
     }
+
+    public LocalTime getTimeFi() {
+        return timeFi;
+    }
+
+    public void setTimeFi(LocalTime timeFi) { this.timeIn = timeFi; }
+
 
     public String getType() {
         return type;

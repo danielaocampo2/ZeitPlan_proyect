@@ -15,17 +15,9 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarUtils {
 
-    private static CalendarUtils instance;
     private static LocalDate selectedDate;
 
     public CalendarUtils() {
-    }
-
-    public static CalendarUtils getInstance() {
-        if (instance == null) {
-            instance = new CalendarUtils();
-        }
-        return instance;
     }
 
     public static LocalDate getSelectedDate() {
@@ -39,6 +31,11 @@ public class CalendarUtils {
     public static String formattedDate(LocalDate date)
     {
         return date.getDayOfMonth() + " " + MonthToString(date.getMonth())+ " " + date.getYear();
+    }
+
+    public static String formattedDateNum(LocalDate date)
+    {
+        return date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear();
     }
 
     public static String formattedTime(LocalTime time)
@@ -82,12 +79,12 @@ public class CalendarUtils {
         return daysMonth;
     }
 
-    public static String monthYearFromDate(LocalDate date)
+    public String monthYearFromDate(LocalDate date)
     {
         return MonthToString(date.getMonth()) + " " + date.getYear();
     }
 
-    public static String monthDayFromDate(LocalDate date)
+    public String monthDayFromDate(LocalDate date)
     {
         return date.getDayOfMonth() + " " + MonthToString(date.getMonth());
     }

@@ -1,8 +1,5 @@
 package com.example.zeitplan_proyect.vista;
 
-import static com.example.zeitplan_proyect.model.CalendarUtils.daysInMonthArray;
-import static com.example.zeitplan_proyect.model.CalendarUtils.monthYearFromDate;
-
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 public class CalendarActivity extends Fragment implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRV;
-    private Button prevMonth, nextMonth, weeklyAction;
+    private Button prevMonth, nextMonth, semanalAction, dailyAction, llistaAction;
     private NavigationView navigationView;
 
     PresenterCalendarUtils PresCal;
@@ -45,9 +42,11 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
         monthYearText = (TextView) view.findViewById(R.id.monthYearTV);
         prevMonth = view.findViewById(R.id.prevMonth);
         nextMonth = view.findViewById(R.id.nextMonth);
-        weeklyAction = view.findViewById(R.id.weeklyAction);
+        semanalAction = view.findViewById(R.id.semanalButt);
+        dailyAction = view.findViewById(R.id.dailyButt);
+        llistaAction = view.findViewById(R.id.ListButt);
         navigationView = ((MainActivity2) getActivity()).getNavigationView();
-        PresCal = new PresenterCalendarUtils();
+        PresCal = PresenterCalendarUtils.getInstance();
 
         nextMonth.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -61,10 +60,22 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
                 prevMonthAction(view);
             }
         });
-        weeklyAction.setOnClickListener(new View.OnClickListener() {
+        semanalAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 weeklyAction(view);
+            }
+        });
+        dailyAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dailyAction(view);
+            }
+        });
+        llistaAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                llistaAction(view);
             }
         });
 
@@ -77,9 +88,9 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
 
     private void setMonthView()
     {
-        monthYearText.setText(monthYearFromDate(PresCal.getSelectedDate()));
-        ArrayList<LocalDate> daysMonth = daysInMonthArray();
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysMonth, this, PresCal);
+        monthYearText.setText(PresCal.monthYearFromSelDay());
+        ArrayList<LocalDate> daysMonth = PresCal.daysInMonthArray();
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(requireContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
@@ -100,18 +111,40 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onItemClick(int position, LocalDate date){
         if(date!=null){
-            PresCal.setSelectedDate(date);
-            setMonthView();
+            if(PresCal.getSelectedDate().equals(date)){
+                dailyAction(this.getView());
+            }else{
+                PresCal.setSelectedDate(date);
+                setMonthView();
+            }
         }
     }
 
 
     public void weeklyAction(View view)
     {
-        WeekViewActivity weekViewActivity = new WeekViewActivity(PresCal);
+        WeekViewActivity weekViewActivity = new WeekViewActivity();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, weekViewActivity);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void dailyAction(View view) {
+        DailyCalendarActivity dailyCalendarActivity = new DailyCalendarActivity();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment, dailyCalendarActivity);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    public void llistaAction(View view)
+    {
+        LlistaEventsActivity llistaEventsActivity = new LlistaEventsActivity();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment, llistaEventsActivity);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -29,9 +29,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.HourEvent;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalTime;
@@ -43,8 +44,11 @@ import java.util.List;
 public class HourAdapter extends ArrayAdapter<HourEvent>
 {
 
+    PresenterCalendarUtils PresCal;
+
     public HourAdapter(@NonNull Context context, List<HourEvent> hourEvents) {
         super(context, 0, hourEvents);
+        this.PresCal = PresenterCalendarUtils.getInstance();
     }
 
     @NonNull
@@ -55,15 +59,15 @@ public class HourAdapter extends ArrayAdapter<HourEvent>
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.hour_cell,parent,false);
 
-        setHour(convertView, event.time);
-        setEvents(convertView, event.events);
+        setHour(convertView, event.getTime());
+        setEvents(convertView, event.getEvents());
 
         return convertView;
     }
 
     private void setHour(View convertView, LocalTime time) {
         TextView timeTV = convertView.findViewById(R.id.timeTV);
-        timeTV.setText(CalendarUtils.formattedShortTime(time));
+        timeTV.setText(PresCal.formattedShortTime(time));
     }
 
     private void setEvents(View convertView, ArrayList<Event> events) {
@@ -104,7 +108,6 @@ public class HourAdapter extends ArrayAdapter<HourEvent>
     private void setEvent(TextView tv, Event event) {
         tv.setText(event.getName());
         tv.setVisibility(View.VISIBLE);
-
     }
 
     private void hideEvent(TextView event) {

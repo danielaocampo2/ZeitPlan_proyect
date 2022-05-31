@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".vista.DailyCalendarActivity">
+    tools:context=".vista.LlistaEventsActivity">
+    >
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +38,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:onClick="weeklyAction"
+            android:onClick="semanalAction"
             android:text="SEM" />
         <Button
             android:id="@+id/dailyButt"
@@ -45,9 +47,10 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:icon="@drawable/ic_action_name_3"
-            android:textColor="@color/colorLogo"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:onClick="dailyAction"
             android:text="DIA" />
         <Button
             android:id="@+id/ListButt"
@@ -56,74 +59,39 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:icon="@drawable/ic_action_name_3"
-            android:textColor="@color/black"
+            android:textColor="@color/colorLogo"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:onClick="ListAction"
             android:text="LIS" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:gravity="end">
         <TextView
-            android:id="@+id/monthDayTV"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Apr 2022"
-            android:textAlignment="center"
-            android:textColor="@color/colorLogo"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/prevDayAction"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="prevDayAction"
-            android:text="←"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.05" />
-        <Button
-            android:id="@+id/nextDayAction"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="nextDayAction"
-            android:text="→"
-            android:textSize="20sp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="Ordenar por:"
+            android:textSize="15dp"
+            android:textColor="@color/black"/>
+        <Spinner
+            android:id="@+id/spinner_orden"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="15dp"
+            android:textColor="@color/black"
             android:textStyle="bold"
-            app:cornerRadius="20dp" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1" />
-        </LinearLayout>
+            android:visibility="visible"/>
 
-    <TextView
-        android:id="@+id/dayOfWeekTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dimarts"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/gray"
-        android:textAlignment="center"
-        android:textSize="18sp"/>
-
+    </LinearLayout>
     <ListView
-        android:id="@+id/hourListView"
+        android:id="@+id/eventListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"/>
+
 
 
 </LinearLayout>

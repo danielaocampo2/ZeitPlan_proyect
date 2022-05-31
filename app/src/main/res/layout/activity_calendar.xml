@@ -8,11 +8,63 @@
     android:orientation="vertical"
     tools:context=".vista.CalendarActivity"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="57dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/calendarButt"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:icon="@drawable/ic_action_name_3"
+            android:textColor="@color/colorLogo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="CAL" />
+        <Button
+            android:id="@+id/semanalButt"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:icon="@drawable/ic_action_name_3"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="weeklyAction"
+            android:text="SEM" />
+        <Button
+            android:id="@+id/dailyButt"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:icon="@drawable/ic_action_name_3"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="dailyAction"
+            android:text="DIA" />
+        <Button
+            android:id="@+id/ListButt"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:icon="@drawable/ic_action_name_3"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="ListAction"
+            android:text="LIS" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
@@ -26,7 +78,6 @@
             android:textAlignment="center"
             android:textColor="@color/colorLogo"
             android:textSize="20dp" />
-
         <Button
             android:id="@+id/prevMonth"
             android:layout_width="25dp"
@@ -56,16 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.1" />
-        <Button
-            android:id="@+id/weeklyAction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:onClick="weeklyAction"
-            android:text="Setmana"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
 
 
@@ -142,9 +183,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+
 
 
 </LinearLayout>

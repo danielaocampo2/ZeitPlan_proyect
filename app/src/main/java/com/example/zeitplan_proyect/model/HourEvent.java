@@ -1,4 +1,4 @@
-package com.example.zeitplan_proyect.vista;
+package com.example.zeitplan_proyect.model;
 
 import com.example.zeitplan_proyect.model.Event;
 

@@ -23,10 +23,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     private final OnItemListener onItemListener;
     private final PresenterCalendarUtils PresCal;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener, PresenterCalendarUtils PresCal) {
+    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.days = days;
         this.onItemListener = onItemListener;
-        this.PresCal = PresCal;
+        this.PresCal = PresenterCalendarUtils.getInstance();
     }
 
     @NonNull

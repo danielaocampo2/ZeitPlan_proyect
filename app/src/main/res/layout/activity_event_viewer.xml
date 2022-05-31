@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vista.EventViewer"
+    android:orientation="horizontal">
+    <Space
+        android:layout_width="5dp"
+        android:layout_height="match_parent">
+    </Space>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@color/lightGray">
+
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Titulo"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Descripción:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp">
+            </Space>
+
+            <TextView
+                android:id="@+id/descrTV"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="..."
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:textSize="18sp"
+                android:layout_marginRight="5dp"/>
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hora:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <TextView
+                android:id="@+id/timeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="00:00"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <TextView
+                android:id="@+id/typeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Otros"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prioridad:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent">
+            </Space>
+
+            <TextView
+                android:id="@+id/priorityTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recuerdame:"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"/>
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent">
+            </Space>
+            <TextView
+                android:id="@+id/rememberTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+        </Space>
+        <Button
+            android:id="@+id/SalirAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salir"
+            android:layout_gravity="center"
+            android:onClick="Salir">
+
+        </Button>
+
+    </LinearLayout>
+    <Space
+        android:layout_width="5dp"
+        android:layout_height="match_parent">
+    </Space>
+
+
+
+</LinearLayout>
