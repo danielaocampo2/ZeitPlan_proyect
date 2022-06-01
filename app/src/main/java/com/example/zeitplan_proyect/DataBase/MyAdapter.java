@@ -35,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         EventoNuevo eventoNuevo = eventoNuevoArrayList.get(position);
         holder.descripcion.setText(eventoNuevo.getDescripcion());
         holder.titulo.setText(eventoNuevo.getTitulo());
-        holder.idUser.setText(eventoNuevo.getIdUser()); // holder.Age.setText(String.valueOf(user.age))
+        //holder.idUser.setText(eventoNuevo.getIdUser()); // holder.Age.setText(String.valueOf(user.age))
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(itemView);
             titulo= itemView.findViewById(R.id.tx_titulo);
             descripcion= itemView.findViewById(R.id.tx_descripcion);
-            idUser= itemView.findViewById(R.id.tx_tipo);
+            //idUser= itemView.findViewById(R.id.tx_tipo);
         }
     }
 }

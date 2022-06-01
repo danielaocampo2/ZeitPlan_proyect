@@ -9,10 +9,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.EventoNuevo;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     MyAdapter eAdapter;
     FirebaseFirestore mFirestore;
     ProgressDialog progressDialog;
+    Firebase db =new Firebase();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void EventChangeListener() {
-        mFirestore.collection("evento").orderBy("titulo",Query.Direction.ASCENDING)
+        mFirestore.collection("evento").orderBy("titulo",Query.Direction.ASCENDING).whereEqualTo("idUser",db.getIdUser())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
