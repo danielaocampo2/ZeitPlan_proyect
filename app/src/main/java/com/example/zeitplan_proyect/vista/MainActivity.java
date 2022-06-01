@@ -1,18 +1,19 @@
 package com.example.zeitplan_proyect.vista;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.model.EventoNuevo;
+import com.example.zeitplan_proyect.model.Event;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,14 +23,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
     RecyclerView reventos;
-    ArrayList<EventoNuevo> eventoNuevoArrayList;
+    ArrayList<Event> eventoArrayList;
     MyAdapter eAdapter;
     FirebaseFirestore mFirestore;
     ProgressDialog progressDialog;
-    Firebase db =new Firebase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         mFirestore=FirebaseFirestore.getInstance();
 
-        eventoNuevoArrayList =new ArrayList<EventoNuevo>();
-        eAdapter = new MyAdapter(MainActivity.this,eventoNuevoArrayList);
+        eventoArrayList =new ArrayList<Event>();
+        eAdapter = new MyAdapter(MainActivity.this,eventoArrayList);
 
         reventos.setAdapter(eAdapter);
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void EventChangeListener() {
-        mFirestore.collection("evento").orderBy("titulo",Query.Direction.ASCENDING).whereEqualTo("idUser",db.getIdUser())
+        mFirestore.collection("evento").orderBy("titulo",Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                eventoNuevoArrayList.add(dc.getDocument().toObject(EventoNuevo.class));
+                                eventoArrayList.add(dc.getDocument().toObject(Event.class));
                             }
                             eAdapter.notifyDataSetChanged();
                             if(progressDialog.isShowing())

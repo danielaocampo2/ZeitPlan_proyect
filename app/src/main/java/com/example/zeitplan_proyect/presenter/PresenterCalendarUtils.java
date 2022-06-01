@@ -77,4 +77,6 @@ public class PresenterCalendarUtils {
         HourEvent hourEvent = new HourEvent(time, events);
         return hourEvent;
     }
+
+    public int numEvents(LocalDate date) { return Event.numEvents(date);}
 }

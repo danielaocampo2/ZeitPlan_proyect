@@ -14,6 +14,9 @@ public abstract class EventoGeneral {
         this.fecha_final = fecha_final;
         this.descripcion = descripcion;
     }
+
+    public EventoGeneral() {}
+
     public abstract String getNombre();
     public abstract void setNombre(String nombre);
 

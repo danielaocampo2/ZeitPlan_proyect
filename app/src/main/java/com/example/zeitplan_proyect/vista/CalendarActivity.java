@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -47,6 +48,8 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
         llistaAction = view.findViewById(R.id.ListButt);
         navigationView = ((MainActivity2) getActivity()).getNavigationView();
         PresCal = PresenterCalendarUtils.getInstance();
+        FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
+        shareBtn.setVisibility(View.GONE);
 
         nextMonth.setOnClickListener(new View.OnClickListener(){
             @Override
