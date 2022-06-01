@@ -33,10 +33,10 @@ public class EventoBD {
         map.put("idUser", bd.getIdUser());
         map.put("titulo", eventName);
         map.put("descripcion", eventDescription);
-        //map.put("date", date);
-        //map.put("time", time);
-       // map.put("prioridad", prioridad);
-       // map.put("tipoEven", tipoEven);
+        map.put("fecha", date);
+        map.put("hora", time);
+        map.put("prioridad", prioridad);
+        map.put("tipo", tipoEven);
 
 
 

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
@@ -44,7 +45,7 @@ public class LlistaEventsActivity extends Fragment {
 
     MyAdapter eAdapter;
     FirebaseFirestore mFirestore;
-
+    Firebase db = new Firebase();
     PresenterCalendarUtils PresCal;
 
     @Override
@@ -94,6 +95,33 @@ public class LlistaEventsActivity extends Fragment {
 
         return view;
     }
+/*
+    //
+    private void buscarEventFecha(String fecha) {
+        // String orden = spinner.getSelectedItem().toString();
+        ArrayList<Event> eventos = new ArrayList<>();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eventRV.setAdapter(eAdapter);
+
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha",fecha)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("idUser")));
+                            }
+                            eAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
+    }*/
+
 
     private void setEventAdapter() {
         // String orden = spinner.getSelectedItem().toString();
@@ -101,7 +129,7 @@ public class LlistaEventsActivity extends Fragment {
         eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
         eventRV.setAdapter(eAdapter);
 
-        mFirestore.collection("evento").orderBy("titulo", Query.Direction.ASCENDING)
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -119,7 +147,6 @@ public class LlistaEventsActivity extends Fragment {
                 });
 
     }
-
     public void calendarAction(View view) {
         CalendarActivity CalendarActivity = new CalendarActivity();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
