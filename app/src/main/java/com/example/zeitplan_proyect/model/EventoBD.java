@@ -30,14 +30,14 @@ public class EventoBD {
         String uniqueID = UUID.randomUUID().toString();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("idUser", bd.getIdUser());
+
         map.put("nombre", eventName);
         map.put("descripcion", eventDescription);
         map.put("fecha", date);
         map.put("tiempoIni", time);
-        map.put("prioridad", prioridad);
         map.put("tipo", tipoEven);
-
+        map.put("prioridad", prioridad);
+        map.put("idUser", bd.getIdUser());
 
 
          //Toast.makeText(mContext, "holii555", Toast.LENGTH_SHORT).show();

@@ -29,7 +29,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.User;

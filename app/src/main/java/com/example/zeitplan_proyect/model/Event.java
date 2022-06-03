@@ -150,11 +150,11 @@ public class Event extends EventoGeneral{
     }
 
     public LocalDate getFechaIniLD() {
-        return LocalDate.parse(fecha_inicio, formatterTime);
+        return LocalDate.parse(fecha_inicio, formatterDate);
     }
 
     public LocalDate getFechaFiLD() {
-        return LocalDate.parse(fecha_final, formatterTime);
+        return LocalDate.parse(fecha_final, formatterDate);
     }
 
     public LocalTime getTiempoIniLT() {
