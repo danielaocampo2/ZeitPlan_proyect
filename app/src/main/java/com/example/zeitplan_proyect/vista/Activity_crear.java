@@ -40,6 +40,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Activity_crear extends Fragment {
@@ -53,6 +54,7 @@ public class Activity_crear extends Fragment {
     private LocalDate date;
     private int prioridad;
     private boolean remember;
+    String formattedLocalDate;
 
     private PresenterCalendarUtils PreCal;
     private PresenterCrearEvent PreCreEvent;
@@ -130,7 +132,11 @@ public class Activity_crear extends Fragment {
         time = LocalTime.now();
         eventTimeTV.setText(CalendarUtils.formattedShortTime(time));
         date = PreCal.getSelectedDate();
-        eventDateTV.setText(date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear());
+        // CAMBIO POR QUE CON EL GETDAYOFMOTH no pone el 01 .. 02 y luego para pasarlo a fecha da error.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formattedLocalDate = date.format(formatter);
+
+        eventDateTV.setText(formattedLocalDate);
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +199,7 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
             Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, remember, User.getInstance().id);
-            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad, tipoEven);
+            PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
             Event.eventsList.add(newEvent);
 
 

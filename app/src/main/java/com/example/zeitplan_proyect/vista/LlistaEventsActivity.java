@@ -34,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -42,6 +44,7 @@ public class LlistaEventsActivity extends Fragment {
     private RecyclerView eventRV;
     private Button calendarAction, semanalAction, dailyAction;
     private Spinner spinner;
+
 
     MyAdapter eAdapter;
     FirebaseFirestore mFirestore;
@@ -129,7 +132,8 @@ public class LlistaEventsActivity extends Fragment {
         eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
         eventRV.setAdapter(eAdapter);
 
-        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
+        Log.i("ento", "holiii: ");
+        mFirestore.collection("evento").orderBy("prioridad",Query.Direction.DESCENDING).whereEqualTo("idUser",db.getIdUser())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -138,8 +142,17 @@ public class LlistaEventsActivity extends Fragment {
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
+                            Log.i("ento", "porfa: ");
+
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("idUser")));
+
+                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("tipo"), (String)
+                                        String.valueOf(dc.getDocument().get("prioridad") ), (String)dc.getDocument().get("fecha")));
+                            }
+                            if(dc.getType() == DocumentChange.Type.MODIFIED){
+
+                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("tipo"), (String)
+                                        String.valueOf(dc.getDocument().get("prioridad") ), (String)dc.getDocument().get("fecha")));
                             }
                             eAdapter.notifyDataSetChanged();
                         }

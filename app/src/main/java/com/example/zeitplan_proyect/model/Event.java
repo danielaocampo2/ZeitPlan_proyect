@@ -2,6 +2,7 @@ package com.example.zeitplan_proyect.model;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,9 +96,20 @@ public class Event extends EventoGeneral{
         super();
     }
 
-    public Event(String nombre, String descripcion, String idUser) {
+    public Event(String nombre, String descripcion, String tipo, String prioridad,String fecha) {
         super(" ", " ", nombre, descripcion);
-        this.id = idUser;
+
+
+        this.type = tipo;
+        this.priority= Integer.parseInt(prioridad);
+        DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // parsing the string to convert it into date
+
+        LocalDate local_date = LocalDate.parse(fecha, JEFormatter);
+        this.date=local_date;
+       // this.id=fecha;
+       // Log.i("puta fecha", this.id);
+
     }
 
     public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember, String id) {
