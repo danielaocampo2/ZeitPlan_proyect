@@ -39,23 +39,20 @@ public class EventAdapter extends ArrayAdapter<Event>
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell,parent,false);
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
-        String eventTitle = PresCal.formattedShortTime(event.getTiempoIni()) + " - " + PresCal.formattedShortTime(event.getTiempoFi())+ " " + event.getNombre();
+        String eventTitle = event.getTiempoIni() + " - " + event.getTiempoFi()+ " " + event.getNombre();
         eventCellTV.setText(eventTitle);
-        eventCellTV.setOnClickListener(new View.OnClickListener() {
+        /*eventCellTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, EventViewer.class);
                 intent.putExtra("name", event.getNombre());
                 intent.putExtra("descr", event.getDescripcion());
-                intent.putExtra("date", PresCal.formattedDate(event.getFecha()));
-                intent.putExtra("time", PresCal.formattedShortTime(event.getTiempoIni()) + " - " + PresCal.formattedShortTime(event.getTiempoFi()));
+                intent.putExtra("date", PresCal.formattedDate(event.getFechaIniLD()));
+                intent.putExtra("time", PresCal.formattedShortTime(event.getTiempoIniLT()) + " - " + PresCal.formattedShortTime(event.getTiempoFiLT()));
                 intent.putExtra("prior", event.getPrioridad() + "%");
-                intent.putExtra("prior", event.getTipo());
-                if(event.isRemember()) intent.putExtra("rememb", "✓");
-                else                   intent.putExtra("rememb", "✕");
                 context.startActivity(intent);
             }
-        });
+        });*/
 
         return convertView;
     }

@@ -130,7 +130,7 @@ public class Activity_crear extends Fragment {
 
 
         time = LocalTime.now();
-        eventTimeTV.setText(CalendarUtils.formattedShortTime(time));
+        eventTimeTV.setText(PreCal.formattedShortTime(time));
         date = PreCal.getSelectedDate();
         // CAMBIO POR QUE CON EL GETDAYOFMOTH no pone el 01 .. 02 y luego para pasarlo a fecha da error.
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -193,13 +193,13 @@ public class Activity_crear extends Fragment {
         if(validar()){
             String eventName = eventNameET.getText().toString();
             String eventDescription = eventDescrET.getText().toString();
-            String fecha=eventDateTV.getText().toString();
-            String hora=eventTimeTV.getText().toString();
+            String fecha= eventDateTV.getText().toString();
+            String hora= eventTimeTV.getText().toString();
             Log.i(TAG, "agregar: " +fecha);
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
-            Event newEvent = new Event(eventName, eventDescription, date, time, tipoEven, prioridad, User.getInstance().id);
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
+            Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
             Event.eventsList.add(newEvent);
 
 

@@ -40,9 +40,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.titulo.setText(event.getNombre());
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad()));
-        DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedString =event.getFecha().format(JEFormatter);
-        holder.fecha.setText(formattedString);
+        holder.fecha.setText(event.getFecha_inicio());
 
 
     }

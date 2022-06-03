@@ -8,10 +8,12 @@ import com.example.zeitplan_proyect.DataBase.Firebase;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Event extends EventoGeneral{
+
     Firebase bd = new Firebase();
 
     public static ArrayList<Event> eventsList = new ArrayList<>();
@@ -40,7 +42,7 @@ public class Event extends EventoGeneral{
         ArrayList<Event> events= new ArrayList<>();
         for(Event event : eventsList)
         {
-            if(event.getFecha().equals(date))
+            if(event.getFechaIniLD().equals(date))
                 events.add(event);
         }
         return  events;
@@ -50,7 +52,7 @@ public class Event extends EventoGeneral{
         int numEvents = 0;
         for(Event event : eventsList)
         {
-            if(event.getFecha().equals(date))
+            if(event.getFechaIniLD().equals(date))
                 numEvents++;
                 if(numEvents==5) return 5;
         }
@@ -62,11 +64,11 @@ public class Event extends EventoGeneral{
         ArrayList<Event> events= new ArrayList<>();
         for(Event event : eventsList)
         {
-            int eventHourIn = event.getTiempoIni().getHour();
-            int eventHourFi = event.getTiempoFi().minusMinutes(1).getHour();
+            int eventHourIn = event.getTiempoIniLT().getHour();
+            int eventHourFi = event.getTiempoFiLT().minusMinutes(1).getHour();
             int cellHour = time.getHour();
             for(int eventHour = eventHourIn; eventHour <= eventHourFi; eventHour++){
-                if(event.getFecha().equals(date) && eventHour == cellHour)
+                if(event.getFechaIniLD().equals(date) && eventHour == cellHour)
                     events.add(event);
             }
 
@@ -75,12 +77,14 @@ public class Event extends EventoGeneral{
     }
 
 
-    private LocalDate fecha;
-    private LocalTime tiempoIni, tiempoFi;
+    private String tiempoIni, tiempoFi;
     private String tipo;
     private int prioridad;
     private String idUser;
     private String id;
+
+    DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Event(){
         super();
@@ -88,23 +92,22 @@ public class Event extends EventoGeneral{
 
 
 
-    public Event(String name, String description, LocalDate fecha, LocalTime time, String tipo, int prioridad, String idUser) {
-        super(fecha.toString(), fecha.toString(), name, description);
-        this.fecha = fecha;
-        this.tiempoIni = time;
-        this.tiempoFi = time.plusHours(1);
+    public Event(String nombre, String descripcion, String fecha, String tiempoIni, String tipo, int prioridad, String idUser) {
+        super(fecha, fecha, nombre, descripcion);
+        this.tiempoIni = tiempoIni;
+        this.tiempoFi = LocalTime.parse(tiempoIni, formatterTime).plusHours(1).toString();
         this.tipo = tipo;
         this.prioridad = prioridad;
         this.idUser = idUser;
     }
-    public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
+    /*public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
         super(fecha.toString(), fecha.toString(), name, description);
         this.fecha = fecha;
         this.tiempoIni = tiempoIni;
         this.tiempoFi = tiempoFi;
         this.tipo = tipo;
         this.prioridad = prioridad;
-    }
+    }*/
 
     @Override
     public String getNombre() {
@@ -146,27 +149,36 @@ public class Event extends EventoGeneral{
         this.fecha_final = fecha_final;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDate getFechaIniLD() {
+        return LocalDate.parse(fecha_inicio, formatterTime);
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public LocalDate getFechaFiLD() {
+        return LocalDate.parse(fecha_final, formatterTime);
     }
 
-    public LocalTime getTiempoIni() {
+    public LocalTime getTiempoIniLT() {
+        return LocalTime.parse(tiempoIni, formatterTime);
+    }
+
+    public String getTiempoIni() {
         return tiempoIni;
     }
 
-    public void setTiempoIni(LocalTime tiempoIni) {
+    public void setTiempoIni(String tiempoIni) {
         this.tiempoIni = tiempoIni;
     }
 
-    public LocalTime getTiempoFi() {
+    public LocalTime getTiempoFiLT() {
+        return LocalTime.parse(tiempoFi, formatterTime);
+    }
+
+    public String getTiempoFi() {
         return tiempoFi;
     }
 
-    public void setTiempoFi(LocalTime tiempoFi) { this.tiempoIni = tiempoFi; }
+
+    public void setTiempoFi(String tiempoFi) { this.tiempoIni = tiempoFi; }
 
 
     public String getTipo() {
