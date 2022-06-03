@@ -1,24 +1,14 @@
 package com.example.zeitplan_proyect.model;
 
-import android.content.Context;
 import android.os.Build;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Event extends EventoGeneral{
@@ -50,7 +40,7 @@ public class Event extends EventoGeneral{
         ArrayList<Event> events= new ArrayList<>();
         for(Event event : eventsList)
         {
-            if(event.getDate().equals(date))
+            if(event.getFecha().equals(date))
                 events.add(event);
         }
         return  events;
@@ -60,7 +50,7 @@ public class Event extends EventoGeneral{
         int numEvents = 0;
         for(Event event : eventsList)
         {
-            if(event.getDate().equals(date))
+            if(event.getFecha().equals(date))
                 numEvents++;
                 if(numEvents==5) return 5;
         }
@@ -72,11 +62,11 @@ public class Event extends EventoGeneral{
         ArrayList<Event> events= new ArrayList<>();
         for(Event event : eventsList)
         {
-            int eventHourIn = event.getTimeIn().getHour();
-            int eventHourFi = event.getTimeFi().minusMinutes(1).getHour();
+            int eventHourIn = event.getTiempoIni().getHour();
+            int eventHourFi = event.getTiempoFi().minusMinutes(1).getHour();
             int cellHour = time.getHour();
             for(int eventHour = eventHourIn; eventHour <= eventHourFi; eventHour++){
-                if(event.getDate().equals(date) && eventHour == cellHour)
+                if(event.getFecha().equals(date) && eventHour == cellHour)
                     events.add(event);
             }
 
@@ -85,13 +75,12 @@ public class Event extends EventoGeneral{
     }
 
 
-    private LocalDate date;
-    private LocalTime timeIn, timeFi;
-    private String type;
-    private int priority;
-    private boolean remember;
+    private LocalDate fecha;
+    private LocalTime tiempoIni, tiempoFi;
+    private String tipo;
+    private int prioridad;
+    private String idUser;
     private String id;
-    private String idEvent;
 
     public Event(){
         super();
@@ -99,24 +88,22 @@ public class Event extends EventoGeneral{
 
 
 
-    public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember, String id) {
-        super(date.toString(), date.toString(), name, description);
-        this.date = date;
-        this.timeIn = time;
-        this.timeFi = time.plusHours(1);
-        this.type = type;
-        this.priority = priority;
-        this.remember = remember;
-        this.id = id;
+    public Event(String name, String description, LocalDate fecha, LocalTime time, String tipo, int prioridad, String idUser) {
+        super(fecha.toString(), fecha.toString(), name, description);
+        this.fecha = fecha;
+        this.tiempoIni = time;
+        this.tiempoFi = time.plusHours(1);
+        this.tipo = tipo;
+        this.prioridad = prioridad;
+        this.idUser = idUser;
     }
-    public Event(String name, String description, LocalDate date, LocalTime timeIn, LocalTime timeFi, String type, int priority, boolean remember) {
-        super(date.toString(), date.toString(), name, description);
-        this.date = date;
-        this.timeIn = timeIn;
-        this.timeFi = timeFi;
-        this.type = type;
-        this.priority = priority;
-        this.remember = remember;
+    public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
+        super(fecha.toString(), fecha.toString(), name, description);
+        this.fecha = fecha;
+        this.tiempoIni = tiempoIni;
+        this.tiempoFi = tiempoFi;
+        this.tipo = tipo;
+        this.prioridad = prioridad;
     }
 
     @Override
@@ -159,51 +146,51 @@ public class Event extends EventoGeneral{
         this.fecha_final = fecha_final;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
-    public LocalTime getTimeIn() {
-        return timeIn;
+    public LocalTime getTiempoIni() {
+        return tiempoIni;
     }
 
-    public void setTimeIn(LocalTime timeIn) {
-        this.timeIn = timeIn;
+    public void setTiempoIni(LocalTime tiempoIni) {
+        this.tiempoIni = tiempoIni;
     }
 
-    public LocalTime getTimeFi() {
-        return timeFi;
+    public LocalTime getTiempoFi() {
+        return tiempoFi;
     }
 
-    public void setTimeFi(LocalTime timeFi) { this.timeIn = timeFi; }
+    public void setTiempoFi(LocalTime tiempoFi) { this.tiempoIni = tiempoFi; }
 
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getPrioridad() {
+        return prioridad;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
     }
 
-    public boolean isRemember() {
-        return remember;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setRemember(boolean remember) {
-        this.remember = remember;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getId() {
@@ -213,5 +200,4 @@ public class Event extends EventoGeneral{
     public void setId(String id) {
         this.id = id;
     }
-
 }

@@ -35,7 +35,7 @@ public class LlistaAdapter extends ArrayAdapter<Event> {
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell,parent,false);
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
-        eventTitle = PresCal.formattedDateNum(event.getDate()) + " | " + PresCal.formattedShortTime(event.getTimeIn()) + " - " + PresCal.formattedShortTime(event.getTimeFi())+ " " + event.getNombre();
+        eventTitle = PresCal.formattedDateNum(event.getFecha()) + " | " + PresCal.formattedShortTime(event.getTiempoIni()) + " - " + PresCal.formattedShortTime(event.getTiempoFi())+ " " + event.getNombre();
         eventCellTV.setText(eventTitle);
         return convertView;
     }

@@ -2,7 +2,6 @@ package com.example.zeitplan_proyect.DataBase;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
-import com.example.zeitplan_proyect.model.Login;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,10 +38,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         Event event = eventoArrayList.get(position);
 
         holder.titulo.setText(event.getNombre());
-        holder.tipo.setText(event.getType()); // holder.Age.setText(String.valueOf(user.age))
-        holder.prioridad.setText(String.valueOf(event.getPriority()));
+        holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
+        holder.prioridad.setText(String.valueOf(event.getPrioridad()));
         DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedString =event.getDate().format(JEFormatter);
+        String formattedString =event.getFecha().format(JEFormatter);
         holder.fecha.setText(formattedString);
 
 

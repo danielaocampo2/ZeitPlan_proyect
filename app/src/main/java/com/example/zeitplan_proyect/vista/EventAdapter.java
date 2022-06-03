@@ -1,6 +1,5 @@
 package com.example.zeitplan_proyect.vista;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -14,12 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -42,7 +39,7 @@ public class EventAdapter extends ArrayAdapter<Event>
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell,parent,false);
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
-        String eventTitle = PresCal.formattedShortTime(event.getTimeIn()) + " - " + PresCal.formattedShortTime(event.getTimeFi())+ " " + event.getNombre();
+        String eventTitle = PresCal.formattedShortTime(event.getTiempoIni()) + " - " + PresCal.formattedShortTime(event.getTiempoFi())+ " " + event.getNombre();
         eventCellTV.setText(eventTitle);
         eventCellTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,10 +47,10 @@ public class EventAdapter extends ArrayAdapter<Event>
                 Intent intent = new Intent(context, EventViewer.class);
                 intent.putExtra("name", event.getNombre());
                 intent.putExtra("descr", event.getDescripcion());
-                intent.putExtra("date", PresCal.formattedDate(event.getDate()));
-                intent.putExtra("time", PresCal.formattedShortTime(event.getTimeIn()) + " - " + PresCal.formattedShortTime(event.getTimeFi()));
-                intent.putExtra("prior", event.getPriority() + "%");
-                intent.putExtra("prior", event.getType());
+                intent.putExtra("date", PresCal.formattedDate(event.getFecha()));
+                intent.putExtra("time", PresCal.formattedShortTime(event.getTiempoIni()) + " - " + PresCal.formattedShortTime(event.getTiempoFi()));
+                intent.putExtra("prior", event.getPrioridad() + "%");
+                intent.putExtra("prior", event.getTipo());
                 if(event.isRemember()) intent.putExtra("rememb", "✓");
                 else                   intent.putExtra("rememb", "✕");
                 context.startActivity(intent);
