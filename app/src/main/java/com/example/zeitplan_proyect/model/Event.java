@@ -91,26 +91,13 @@ public class Event extends EventoGeneral{
     private int priority;
     private boolean remember;
     private String id;
+    private String idEvent;
 
     public Event(){
         super();
     }
 
-    public Event(String nombre, String descripcion, String tipo, String prioridad,String fecha) {
-        super(" ", " ", nombre, descripcion);
 
-
-        this.type = tipo;
-        this.priority= Integer.parseInt(prioridad);
-        DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        // parsing the string to convert it into date
-
-        LocalDate local_date = LocalDate.parse(fecha, JEFormatter);
-        this.date=local_date;
-       // this.id=fecha;
-       // Log.i("puta fecha", this.id);
-
-    }
 
     public Event(String name, String description, LocalDate date, LocalTime time, String type, int priority, boolean remember, String id) {
         super(date.toString(), date.toString(), name, description);
@@ -226,4 +213,5 @@ public class Event extends EventoGeneral{
     public void setId(String id) {
         this.id = id;
     }
+
 }
