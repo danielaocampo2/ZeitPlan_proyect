@@ -131,7 +131,8 @@ public class LlistaEventsActivity extends Fragment {
 
     private void EventChangeListener() {
         // String orden = spinner.getSelectedItem().toString();
-        mFirestore.collection("evento").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if(error != null ){

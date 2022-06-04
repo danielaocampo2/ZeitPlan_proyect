@@ -198,8 +198,8 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
-            Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
-            Event.eventsList.add(newEvent);
+           // Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
+           // Event.eventsList.add(newEvent);
 
 
             // llamar a metodo para guardar datos.
@@ -210,6 +210,9 @@ public class Activity_crear extends Fragment {
                 Intent intent =new Intent(v.getContext(),Recordar.class);
                 intent.putExtra("nombreEvento", eventName);
                 intent.putExtra("descripcion", eventDescription);
+                startActivity(intent);
+            }else{
+                Intent intent =new Intent(v.getContext(),MainActivity2.class);
                 startActivity(intent);
             }
 

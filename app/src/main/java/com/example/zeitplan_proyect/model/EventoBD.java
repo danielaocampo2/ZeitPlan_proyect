@@ -32,7 +32,7 @@ public class EventoBD {
         Map<String, Object> map = new HashMap<>();
 
         map.put("nombre", eventName);
-        map.put("descripcion", eventDescription);
+        map.put("descripcion_inicio", eventDescription);
         map.put("fecha", date);
         map.put("tiempoIni", time);
         map.put("tipo", tipoEven);
