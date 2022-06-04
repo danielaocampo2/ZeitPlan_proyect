@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="Titulo"
                 android:textAlignment="viewStart"
-                android:textColor="#164318"
+                android:textColor="@color/colorLogo"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -34,15 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Fecha: "
-                    android:textColor="#000500"
-                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tx_fecha"
@@ -61,11 +52,10 @@
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Prioridad:"
-                    android:textColor="#000500"
+                    android:text="Prioridad: "
+                    android:textColor="#737373"
                     android:textSize="18sp" />
 
                 <TextView
@@ -73,16 +63,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#000500"
+                    android:textColor="#737373"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Tipo: "
-                    android:textColor="#000500"
+                    android:textColor="#737373"
                     android:textSize="18sp" />
 
                 <TextView
@@ -90,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#000500"
+                    android:textColor="#737373"
                     android:textSize="18sp" />
             </LinearLayout>
 

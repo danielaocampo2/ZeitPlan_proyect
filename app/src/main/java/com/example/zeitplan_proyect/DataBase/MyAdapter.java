@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,9 +40,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         Event event = eventoArrayList.get(position);
 
         holder.titulo.setText(event.getNombre());
+        String fecha = event.getFecha_inicio();
+        String hora = event.getTiempoIni() + " - " + event.getTiempoFi();
+        holder.fechaYHora.setText(fecha + ", "+ hora);
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
-        holder.prioridad.setText(String.valueOf(event.getPrioridad()));
-        holder.fecha.setText(event.getFecha_inicio());
+        holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
+
 
 
     }
@@ -52,14 +57,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titulo, prioridad, tipo, fecha;
+        TextView titulo, prioridad, tipo, fechaYHora;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo= itemView.findViewById(R.id.tx_titulo);
             prioridad= itemView.findViewById(R.id.tx_prioridad);
             tipo= itemView.findViewById(R.id.tx_tipo);
-            fecha=itemView.findViewById(R.id.tx_fecha);
+            fechaYHora=itemView.findViewById(R.id.tx_fecha);
         }
     }
 }

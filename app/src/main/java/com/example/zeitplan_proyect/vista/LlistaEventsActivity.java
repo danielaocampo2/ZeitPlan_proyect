@@ -140,20 +140,16 @@ public class LlistaEventsActivity extends Fragment {
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
-
-
                             if(dc.getType() == DocumentChange.Type.ADDED){
-
                                 eventos.add(dc.getDocument().toObject(Event.class));
-
                             }
-
                             eAdapter.notifyDataSetChanged();
                         }
                     }
                 });
 
     }
+
     public void calendarAction(View view) {
         CalendarActivity CalendarActivity = new CalendarActivity();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

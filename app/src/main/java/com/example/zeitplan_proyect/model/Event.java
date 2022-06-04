@@ -90,17 +90,24 @@ public class Event extends EventoGeneral{
         super();
     }
 
-
-
-    public Event(String nombre, String descripcion, String fecha, String tiempoIni, String tipo, int prioridad, String idUser) {
-        super(fecha, fecha, nombre, descripcion);
+    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tipo) {
+        super(fecha_inicio, fecha_inicio, nombre, descripcion);
+        this.tiempoIni = tiempoIni;
+        this.tiempoFi = getTiempoIniLT().plusHours(1).toString();
+        this.tipo = tipo;
+        this.prioridad = prioridad;
+        this.idUser = idUser;
+    }
+/*
+    public Event(String nombre, String descripcion, String fecha_inicio, String tiempoIni, String tipo, int prioridad, String idUser) {
+        super(fecha_inicio, fecha_inicio, nombre, descripcion);
         this.tiempoIni = tiempoIni;
         this.tiempoFi = LocalTime.parse(tiempoIni, formatterTime).plusHours(1).toString();
         this.tipo = tipo;
         this.prioridad = prioridad;
         this.idUser = idUser;
     }
-    /*public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
+    public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
         super(fecha.toString(), fecha.toString(), name, description);
         this.fecha = fecha;
         this.tiempoIni = tiempoIni;
