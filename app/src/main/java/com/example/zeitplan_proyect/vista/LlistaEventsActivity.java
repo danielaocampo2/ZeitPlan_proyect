@@ -77,6 +77,7 @@ public class LlistaEventsActivity extends Fragment {
         shareBtn.setVisibility(View.GONE);
         eventos = new ArrayList<>();
         eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eventRV.setAdapter(eAdapter);
         EventChangeListener();
 
         calendarAction.setOnClickListener(new View.OnClickListener() {
