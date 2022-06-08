@@ -41,10 +41,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         holder.titulo.setText(event.getNombre());
         String fecha = event.getFecha_inicio();
-        String hora = event.getTiempoIni() + " - " + event.getTiempoFi();
-        holder.fechaYHora.setText(fecha + ", "+ hora);
+        String hora = event.getTiempoIni() ;//+ " - " + event.getTiempoFi();
+        holder.fechaYHora.setText(fecha );//+ ", "+ hora);
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
+        holder.tx_hora.setText(hora);
 
 
 
@@ -57,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titulo, prioridad, tipo, fechaYHora;
+        TextView titulo, prioridad, tipo, fechaYHora, tx_hora;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             prioridad= itemView.findViewById(R.id.tx_prioridad);
             tipo= itemView.findViewById(R.id.tx_tipo);
             fechaYHora=itemView.findViewById(R.id.tx_fecha);
+            tx_hora=itemView.findViewById(R.id.txt_hora);
         }
     }
 }

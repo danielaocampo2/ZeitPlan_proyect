@@ -75,7 +75,7 @@ public class LlistaEventsActivity extends Fragment {
 
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
         shareBtn.setVisibility(View.GONE);
-        eventos = new ArrayList<>();
+        eventos = new ArrayList<Event>();
         eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
         eventRV.setAdapter(eAdapter);
         EventChangeListener();

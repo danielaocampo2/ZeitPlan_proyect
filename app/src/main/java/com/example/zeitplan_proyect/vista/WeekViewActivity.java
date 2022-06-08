@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -62,7 +63,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
         calendarRV = view.findViewById(R.id.calendarRV);
         monthYearText = view.findViewById(R.id.monthYearTV);
-        eventRV = view.findViewById(R.id.eventRV);
+        //eventRV = view.findViewById(R.id.eventRV);
         prevWeekAction = view.findViewById(R.id.prevWeekAction);
         nextWeekAction = view.findViewById(R.id.nextWeekAction);
         calendarAction=view.findViewById(R.id.calendarButt);
@@ -74,12 +75,16 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         PresCal = PresenterCalendarUtils.getInstance();
 
         mFirestore = FirebaseFirestore.getInstance();
-        eventos = new ArrayList<>();
-        eAdapter = new MyAdapter(getContext(), eventos);
-        eventRV.setAdapter(eAdapter);
+        eventRV = view.findViewById(R.id.eventRV);
+        eventRV.setHasFixedSize(true);
+        eventRV.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         setWeekView();
-        setEventAdapter();
+        eventos = new ArrayList<Event>();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eventRV.setAdapter(eAdapter);
+        EventChangeListener();
+
 
         prevWeekAction.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -154,8 +159,8 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         super.onResume();
     }
 
-    private void setEventAdapter()
-    {
+    private void EventChangeListener() {
+        // String orden = spinner.getSelectedItem().toString();
         mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -172,7 +177,9 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
                         }
                     }
                 });
+
     }
+
 
     public void calendarAction(View view) {
         CalendarActivity CalendarActivity = new CalendarActivity();
