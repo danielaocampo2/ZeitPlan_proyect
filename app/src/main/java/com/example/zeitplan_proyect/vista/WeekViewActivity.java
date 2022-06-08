@@ -63,7 +63,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
         calendarRV = view.findViewById(R.id.calendarRV);
         monthYearText = view.findViewById(R.id.monthYearTV);
-        //eventRV = view.findViewById(R.id.eventRV);
+        eventRV = view.findViewById(R.id.eventRV);
         prevWeekAction = view.findViewById(R.id.prevWeekAction);
         nextWeekAction = view.findViewById(R.id.nextWeekAction);
         calendarAction=view.findViewById(R.id.calendarButt);
@@ -161,7 +161,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
     private void EventChangeListener() {
         // String orden = spinner.getSelectedItem().toString();
-        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha_inicio","08/06/2022")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

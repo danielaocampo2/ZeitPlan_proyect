@@ -64,6 +64,7 @@ public class Activity_crear extends Fragment {
     CheckBox recuerdame_check;
     NavigationView navigationView;
     Button acpetar;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
     @Override
@@ -132,7 +133,7 @@ public class Activity_crear extends Fragment {
         eventTimeTV.setText(PreCal.formattedShortTime(time));
         date = PreCal.getSelectedDate();
         // CAMBIO POR QUE CON EL GETDAYOFMOTH no pone el 01 .. 02 y luego para pasarlo a fecha da error.
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         formattedLocalDate = date.format(formatter);
 
         eventDateTV.setText(formattedLocalDate);
@@ -150,6 +151,7 @@ public class Activity_crear extends Fragment {
         setListenerDateEvent = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
                 String day_month_year = datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear();
                 eventDateTV.setText(day_month_year);
                 date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
@@ -197,7 +199,7 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +fecha);
             Log.i(TAG, "agregar: " +hora);
             String tipoEven =spinner.getSelectedItem().toString();
-            PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
+            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, hora, prioridad, tipoEven);
             // Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
             // Event.eventsList.add(newEvent);
 
