@@ -18,8 +18,6 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/menu/menu_content.xml" value="0.12552083333333333" />
-        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_llista_events.xml" value="0.1" />
-        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.5" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect.v2/app/src/main/res/layout/activity_main_2.xml" value="0.1" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.11820652173913043" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.11775362318840579" />
@@ -49,15 +47,21 @@
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.19" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/ic_action_name_2.xml" value="0.19" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/ic_action_name_3.xml" value="0.19" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1685" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1685" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_logout.xml" value="0.1685" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_pin.xml" value="0.1685" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/drawable/ic_watch.xml" value="0.1685" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.151268115942029" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_asignatura.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calculadora.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.3236196319018405" />
-        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.25" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.30793650793650795" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_daily_calendar.xml" value="0.16259057971014493" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_event_edit.xml" value="0.16259057971014493" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_event_viewer.xml" value="0.264" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_llista_events.xml" value="0.25" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_main.xml" value="0.20153985507246377" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_olvido_password.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_recordar.xml" value="0.25" />
@@ -66,6 +70,7 @@
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/casella_calendari.xml" value="0.264" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/event_cell.xml" value="0.151268115942029" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/hour_cell.xml" value="0.234375" />
+        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.4" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_add_asignatura.xml" value="0.1" />

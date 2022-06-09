@@ -34,8 +34,10 @@ import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.User;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.timepicker.MaterialTimePicker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -45,7 +47,7 @@ import java.time.format.DateTimeFormatter;
 public class Activity_crear extends Fragment {
 
     EditText eventNameET, eventDescrET;
-    EditText eventDateTV, eventTimeTV;
+    TextView eventDateTV, eventTimeTV;
     TimePickerDialog.OnTimeSetListener setListenerTimeEvent;
     DatePickerDialog.OnDateSetListener setListenerDateEvent;
 
@@ -81,8 +83,8 @@ public class Activity_crear extends Fragment {
         eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
         eventDescrET = (EditText) view.findViewById(R.id.editText_descripcion);
 
-        eventDateTV = view.findViewById(R.id.btn_seleFecha);
-        eventTimeTV = view.findViewById(R.id.btn_seleHora);
+        eventDateTV = view.findViewById(R.id.FechaTV);
+        eventTimeTV = view.findViewById(R.id.HoraTV);
 
         resultado_seekBar = view.findViewById(R.id.textView_resultadoPrioridad);
         seekBar = view.findViewById(R.id.seekBar_prioridad);
@@ -129,30 +131,28 @@ public class Activity_crear extends Fragment {
 
 
         time = LocalTime.now();
-        eventTimeTV.setText(PreCal.formattedShortTime(time));
         date = PreCal.getSelectedDate();
-        // CAMBIO POR QUE CON EL GETDAYOFMOTH no pone el 01 .. 02 y luego para pasarlo a fecha da error.
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        formattedLocalDate = date.format(formatter);
-
-        eventDateTV.setText(formattedLocalDate);
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        formattedLocalDate = date.format(formatterDate);
+        eventDateTV.setText(PreCal.formattedDate(date));
+        eventTimeTV.setText(time.format(formatterTime));
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePicker = new DatePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
                 datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePicker.show();
-
             }
         });
         setListenerDateEvent = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                String day_month_year = datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear();
-                eventDateTV.setText(day_month_year);
                 date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                formattedLocalDate = date.format(formatterDate);
+                eventDateTV.setText(PreCal.formattedDate(date));
             }
         };
 
@@ -168,9 +168,8 @@ public class Activity_crear extends Fragment {
         setListenerTimeEvent = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int e) {
-                String hour_time = timePicker.getHour() + ":" + timePicker.getMinute();
-                eventTimeTV.setText(hour_time);
                 time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
+                eventTimeTV.setText(time.format(formatterTime));
             }
         };
 
