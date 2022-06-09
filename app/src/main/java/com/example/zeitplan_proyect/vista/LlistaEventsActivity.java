@@ -130,7 +130,8 @@ public class LlistaEventsActivity extends Fragment {
 
 
     private void EventChangeListener() {
-        // String orden = spinner.getSelectedItem().toString();
+        String orden = spinner.getSelectedItem().toString();
+        //Log.i("soy spinner", orden);
         mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -146,10 +147,10 @@ public class LlistaEventsActivity extends Fragment {
                             eAdapter.notifyDataSetChanged();
                         }
                     }
-                });
+
+          });
 
     }
-
     public void calendarAction(View view) {
         CalendarActivity CalendarActivity = new CalendarActivity();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
