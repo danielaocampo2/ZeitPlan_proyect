@@ -2,18 +2,28 @@ package com.example.zeitplan_proyect.vista;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -60,7 +70,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
             holder.dayMonth.setTextColor(Color.LTGRAY);
         }
 
-        int nEvents = PresCal.numEvents(date);
+        int nEvents = 0;
 
         switch (nEvents){
             default:

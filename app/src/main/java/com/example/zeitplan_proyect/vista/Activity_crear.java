@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -60,7 +61,7 @@ public class Activity_crear extends Fragment {
     private PresenterCalendarUtils PreCal;
     private PresenterCrearEvent PreCreEvent;
 
-    Spinner spinner;
+    AutoCompleteTextView spinner;
     SeekBar seekBar;
     TextView resultado_seekBar;
     CheckBox recuerdame_check;
@@ -75,7 +76,8 @@ public class Activity_crear extends Fragment {
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
-        spinner = (Spinner) view.findViewById(R.id.spinner_tipos);
+        spinner = (AutoCompleteTextView) view.findViewById(R.id.spinner_tipos);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
         acpetar = view.findViewById(R.id.btn_guardar);
@@ -135,8 +137,8 @@ public class Activity_crear extends Fragment {
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         formattedLocalDate = date.format(formatterDate);
-        eventDateTV.setText(PreCal.formattedDate(date));
-        eventTimeTV.setText(time.format(formatterTime));
+        eventDateTV.setText(" " + PreCal.formattedDate(date));
+        eventTimeTV.setText(" " + time.format(formatterTime));
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +154,7 @@ public class Activity_crear extends Fragment {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
                 formattedLocalDate = date.format(formatterDate);
-                eventDateTV.setText(PreCal.formattedDate(date));
+                eventDateTV.setText(" " + PreCal.formattedDate(date));
             }
         };
 
@@ -169,7 +171,7 @@ public class Activity_crear extends Fragment {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int e) {
                 time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
-                eventTimeTV.setText(time.format(formatterTime));
+                eventTimeTV.setText(" " + time.format(formatterTime));
             }
         };
 
@@ -195,7 +197,7 @@ public class Activity_crear extends Fragment {
             String hora= eventTimeTV.getText().toString();
             Log.i(TAG, "agregar: " +fecha);
             Log.i(TAG, "agregar: " +hora);
-            String tipoEven =spinner.getSelectedItem().toString();
+            String tipoEven =spinner.getText().toString();
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
             // Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
             // Event.eventsList.add(newEvent);

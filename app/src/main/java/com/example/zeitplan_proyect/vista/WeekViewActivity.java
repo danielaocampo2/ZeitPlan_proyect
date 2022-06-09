@@ -52,6 +52,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     Firebase db = new Firebase();
     PresenterCalendarUtils PresCal;
 
+
     public WeekViewActivity() {
     }
 
@@ -80,10 +81,6 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         eventRV.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         setWeekView();
-        eventos = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
-        eventRV.setAdapter(eAdapter);
-        EventChangeListener();
 
 
         prevWeekAction.setOnClickListener(new View.OnClickListener(){
@@ -128,6 +125,10 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
+        eventos = new ArrayList<Event>();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eventRV.setAdapter(eAdapter);
+        EventChangeListener();
     }
 
 
@@ -136,6 +137,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     {
         PresCal.SelDateMoveWeek(-1);
         setWeekView();
+
     }
 
     public void nextWeekAction(View view)
@@ -161,7 +163,9 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
     private void EventChangeListener() {
         // String orden = spinner.getSelectedItem().toString();
-        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha_inicio","08/06/2022")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String SelDate = PresCal.getSelectedDate().format(formatter);
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha_inicio",SelDate)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
