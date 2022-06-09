@@ -24,7 +24,7 @@
             android:textColor="@color/colorLogo"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="CAL" />
+            android:text="MES" />
         <Button
             android:id="@+id/semanalButt"
             android:layout_width="25dp"
