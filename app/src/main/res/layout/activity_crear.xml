@@ -85,14 +85,14 @@
 
 
     <TextView
-        android:id="@+id/HoraTV"
-        android:layout_width="325dp"
+        android:id="@+id/HoraTVIni"
+        android:layout_width="160dp"
         android:layout_height="45dp"
         android:layout_marginStart="42dp"
-        android:layout_marginTop="305dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="328dp"
-        android:drawableLeft="@drawable/ic_watch"
+        android:layout_marginTop="303dp"
+        android:layout_marginEnd="207dp"
+        android:layout_marginBottom="325dp"
+        android:drawableLeft="@drawable/ic_watchfin"
         android:gravity="center_vertical"
         android:hint=" Hora"
         android:textSize="17sp"
@@ -101,6 +101,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/HoraTVFin"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="209dp"
+        android:layout_marginTop="303dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="325dp"
+        android:drawableLeft="@drawable/ic_watch"
+        android:gravity="center_vertical"
+        android:hint=" Hora"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_guardar"
@@ -164,7 +181,8 @@
           android:id="@+id/spinner_tipos"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:inputType="none" />
+          android:inputType="none"
+          android:text="Otro" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

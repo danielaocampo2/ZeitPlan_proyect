@@ -90,10 +90,10 @@ public class Event extends EventoGeneral{
         super();
     }
 
-    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tipo) {
+    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tiempoFin, String tipo) {
         super(fecha_inicio, fecha_inicio, nombre, descripcion);
         this.tiempoIni = tiempoIni;
-        this.tiempoFi = getTiempoIniLT().plusHours(1).toString();
+        this.tiempoFi = tiempoFin;
         this.tipo = tipo;
         this.prioridad = prioridad;
         this.idUser = idUser;

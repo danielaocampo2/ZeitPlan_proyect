@@ -24,21 +24,16 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.zeitplan_proyect.MainActivity2;
-import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
-import com.example.zeitplan_proyect.model.User;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.timepicker.MaterialTimePicker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -48,15 +43,14 @@ import java.time.format.DateTimeFormatter;
 public class Activity_crear extends Fragment {
 
     EditText eventNameET, eventDescrET;
-    TextView eventDateTV, eventTimeTV;
-    TimePickerDialog.OnTimeSetListener setListenerTimeEvent;
+    TextView eventDateTV, eventTimeTVIni, eventTimeTVFin;
+    TimePickerDialog.OnTimeSetListener setListenerTimeEventIni, setListenerTimeEventFin;
     DatePickerDialog.OnDateSetListener setListenerDateEvent;
 
-    private LocalTime time;
+    private LocalTime timeIni, timeFin;
     private LocalDate date;
     private int prioridad;
     private boolean remember;
-    String formattedLocalDate;
 
     private PresenterCalendarUtils PreCal;
     private PresenterCrearEvent PreCreEvent;
@@ -67,6 +61,9 @@ public class Activity_crear extends Fragment {
     CheckBox recuerdame_check;
     NavigationView navigationView;
     Button acpetar;
+
+    DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
 
 
     @Override
@@ -86,7 +83,8 @@ public class Activity_crear extends Fragment {
         eventDescrET = (EditText) view.findViewById(R.id.editText_descripcion);
 
         eventDateTV = view.findViewById(R.id.FechaTV);
-        eventTimeTV = view.findViewById(R.id.HoraTV);
+        eventTimeTVIni = view.findViewById(R.id.HoraTVIni);
+        eventTimeTVFin = view.findViewById(R.id.HoraTVFin);
 
         resultado_seekBar = view.findViewById(R.id.textView_resultadoPrioridad);
         seekBar = view.findViewById(R.id.seekBar_prioridad);
@@ -132,13 +130,13 @@ public class Activity_crear extends Fragment {
         );
 
 
-        time = LocalTime.now();
+        timeIni = LocalTime.now();
+        timeFin = timeIni.plusHours(1);
         date = PreCal.getSelectedDate();
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
-        formattedLocalDate = date.format(formatterDate);
-        eventDateTV.setText(" " + PreCal.formattedDate(date));
-        eventTimeTV.setText(" " + time.format(formatterTime));
+
+        eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+        eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+        eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,25 +151,41 @@ public class Activity_crear extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
-                formattedLocalDate = date.format(formatterDate);
-                eventDateTV.setText(" " + PreCal.formattedDate(date));
+                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
             }
         };
 
-        eventTimeTV.setOnClickListener(new View.OnClickListener() {
+        eventTimeTVIni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TimePickerDialog timePicker = new TimePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeEvent, time.getHour(), time.getMinute(), true);
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeEventIni, timeIni.getHour(), timeIni.getMinute(), true);
                 timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePicker.show();
             }
         });
-        setListenerTimeEvent = new TimePickerDialog.OnTimeSetListener() {
+        setListenerTimeEventIni = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int e) {
-                time = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
-                eventTimeTV.setText(" " + time.format(formatterTime));
+                timeIni = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
+                eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+            }
+        };
+
+        eventTimeTVFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog timePicker = new TimePickerDialog(
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerTimeEventFin, timeFin.getHour(), timeFin.getMinute(), true);
+                timePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePicker.show();
+            }
+        });
+        setListenerTimeEventFin = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int e) {
+                timeFin = LocalTime.of(timePicker.getHour(), timePicker.getMinute());
+                eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
             }
         };
 
@@ -193,15 +207,14 @@ public class Activity_crear extends Fragment {
         if(validar()){
             String eventName = eventNameET.getText().toString();
             String eventDescription = eventDescrET.getText().toString();
-            String fecha= eventDateTV.getText().toString();
-            String hora= eventTimeTV.getText().toString();
+            String fecha = date.format(formatterDate);
+            String horaIni = timeIni.format(formatterTime);
+            String horaFin = timeFin.format(formatterTime);
             Log.i(TAG, "agregar: " +fecha);
 
-            String tipoEven =spinner.getText().toString();
-            //Log.i(TAG, "agregar: " +tipoEven);
-            PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
-            // Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
-            // Event.eventsList.add(newEvent);
+            String tipoEven = spinner.getText().toString();
+
+            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven);
 
 
             // llamar a metodo para guardar datos.
@@ -222,20 +235,15 @@ public class Activity_crear extends Fragment {
     }
 
     public boolean validar(){
-        boolean retorno = true;
-        String c1 = eventNameET.getText().toString(), c2 = eventDateTV.getText().toString(), c3 = eventTimeTV.getText().toString();
+        String c1 = eventNameET.getText().toString();
         if (c1.isEmpty()){
             eventNameET.setError("Este campo no puede quedar vacio");
-            retorno = false;
-        } if (c2.isEmpty()){
-            eventDateTV.setError("Este campo no puede quedar vacio");
-            retorno = false;
+            return false;
+        } if (timeIni.isAfter(timeFin)){
+            Toast.makeText(getContext(), "Hora Inicio debe ser anterior a Hora Final", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (c3.isEmpty()){
-            eventTimeTV.setError("Este campo no puede quedar vacio");
-            retorno = false;
-        }
-        return retorno;
+        return true;
     }
 
 

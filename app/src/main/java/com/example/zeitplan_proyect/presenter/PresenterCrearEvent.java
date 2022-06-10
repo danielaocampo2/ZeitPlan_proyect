@@ -22,10 +22,10 @@ public class PresenterCrearEvent {
     }
 
     public void guardarEvendoBD(String eventName, String eventDescription, String date,
-                                String time,int prioridad,  String tipoEven){
+                                String timeIni, String timeFin, int prioridad,  String tipoEven){
 
         bdEvent.creaEvento( eventName,  eventDescription,  date,
-                 time, prioridad,   tipoEven, mContext);
+                 timeIni, timeFin, prioridad,   tipoEven, mContext);
 
 
 

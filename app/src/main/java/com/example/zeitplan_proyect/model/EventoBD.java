@@ -35,7 +35,7 @@ public class EventoBD {
 
 
     public void creaEvento(String eventName, String eventDescription, String date,
-                           String time,int prioridad,  String tipoEven, Context mContext){
+                           String timeIni, String timeFin,int prioridad,  String tipoEven, Context mContext){
 
         String uniqueID = UUID.randomUUID().toString();
 
@@ -44,7 +44,8 @@ public class EventoBD {
         map.put("nombre", eventName);
         map.put("descripcion", eventDescription);
         map.put("fecha_inicio", date);
-        map.put("tiempoIni", time);
+        map.put("tiempoIni", timeIni);
+        map.put("tiempoFin", timeFin);
         map.put("tipo", tipoEven);
         map.put("prioridad", prioridad);
         map.put("idUser", bd.getIdUser());
