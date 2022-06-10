@@ -15,17 +15,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.model.EventoBD;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.example.zeitplan_proyect.presenter.PresenterListaEvents;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -40,7 +44,7 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class LlistaEventsActivity extends Fragment {
-
+    private boolean bandera = false;
     private RecyclerView eventRV;
     private Button calendarAction, semanalAction, dailyAction;
     private Spinner spinner;
@@ -50,6 +54,7 @@ public class LlistaEventsActivity extends Fragment {
     FirebaseFirestore mFirestore;
     Firebase db = new Firebase();
     PresenterCalendarUtils PresCal;
+    PresenterListaEvents consulta =new PresenterListaEvents();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -59,8 +64,12 @@ public class LlistaEventsActivity extends Fragment {
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Calendario");
 
         spinner = (Spinner) view.findViewById(R.id.spinner_orden);
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoOrden, android.R.layout.simple_spinner_item);
+
         spinner.setAdapter(adapter);
+
         eventRV = view.findViewById(R.id.reciclerllista);
         eventRV.setHasFixedSize(true);
         eventRV.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -75,10 +84,28 @@ public class LlistaEventsActivity extends Fragment {
 
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
         shareBtn.setVisibility(View.GONE);
+
         eventos = new ArrayList<Event>();
         eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
         eventRV.setAdapter(eAdapter);
-        EventChangeListener();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                eventos = new ArrayList<Event>();
+                eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+                eventRV.setAdapter(eAdapter);
+                mostarFiltro();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         calendarAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +113,8 @@ public class LlistaEventsActivity extends Fragment {
                 calendarAction(view);
             }
         });
+
+
         semanalAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,56 +128,17 @@ public class LlistaEventsActivity extends Fragment {
             }
         });
 
+
+
         return view;
     }
-/*
-    //
-    private void buscarEventFecha(String fecha) {
-        // String orden = spinner.getSelectedItem().toString();
-        ArrayList<Event> eventos = new ArrayList<>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
-        eventRV.setAdapter(eAdapter);
-
-        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha",fecha)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error != null ){
-                            Log.e("Firestore error", error.getMessage() );
-                            return;
-                        }
-                        for(DocumentChange dc: value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
-                                eventos.add(new Event((String) dc.getDocument().get("titulo"),(String) dc.getDocument().get("descripcion"), (String) dc.getDocument().get("idUser")));
-                            }
-                            eAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-
-    }*/
 
 
-    private void EventChangeListener() {
+
+    private void mostarFiltro() {
         String orden = spinner.getSelectedItem().toString();
-        //Log.i("soy spinner", orden);
-        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error != null ){
-                            Log.e("Firestore error", error.getMessage() );
-                            return;
-                        }
-                        for(DocumentChange dc: value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
-                                eventos.add(dc.getDocument().toObject(Event.class));
-                            }
-                            eAdapter.notifyDataSetChanged();
-                        }
-                    }
-
-          });
+        Log.i("filtro valor enviado", orden);
+        consulta.filtrarEvento(orden,eventos,eAdapter);
 
     }
     public void calendarAction(View view) {

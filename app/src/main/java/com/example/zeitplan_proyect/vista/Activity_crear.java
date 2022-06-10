@@ -196,8 +196,9 @@ public class Activity_crear extends Fragment {
             String fecha= eventDateTV.getText().toString();
             String hora= eventTimeTV.getText().toString();
             Log.i(TAG, "agregar: " +fecha);
-            Log.i(TAG, "agregar: " +hora);
+
             String tipoEven =spinner.getText().toString();
+            //Log.i(TAG, "agregar: " +tipoEven);
             PreCreEvent.guardarEvendoBD(eventName, eventDescription, formattedLocalDate, hora, prioridad, tipoEven);
             // Event newEvent = new Event(eventName, eventDescription, formattedLocalDate, hora, tipoEven, prioridad, User.getInstance().id);
             // Event.eventsList.add(newEvent);

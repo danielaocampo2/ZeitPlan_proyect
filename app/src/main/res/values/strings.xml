@@ -21,8 +21,10 @@
     <string-array name="TipoOrden">
         <item>Prioridad</item>
         <item>Nombre</item>
-        <item>Fecha</item>
-        <item>Creación</item>
+        <item>Evento</item>
+        <item>Trabajo</item>
+        <item>Entrega</item>
+        <item>Examen</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
