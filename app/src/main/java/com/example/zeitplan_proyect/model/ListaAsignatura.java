@@ -1,20 +1,64 @@
 package com.example.zeitplan_proyect.model;
 
-import android.util.Log;
+import android.content.Context;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.example.zeitplan_proyect.DataBase.ListaAsignaturaAdapter;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class ListaAsignatura {
 
-    Firebase firebase = new Firebase();
+    ArrayList<Asignatura> asignaturaArrayList;
+    ListaAsignaturaAdapter listaAsignaturaAdapter;
+    Firebase bd;
+
+    public ListaAsignatura(Context context){
+        bd = new Firebase();
+        asignaturaArrayList = new ArrayList<Asignatura>();
+        listaAsignaturaAdapter = new ListaAsignaturaAdapter(context,asignaturaArrayList);
+    }
+
+    public ListaAsignaturaAdapter getListaAsignaturaAdapter() {
+        return listaAsignaturaAdapter;
+    }
+
+    public void EventChangedListener(){
+        bd.mFirestore.collection("user").document(bd.getIdUser()).collection("Asignaturas").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null){
+
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"), null);
+                        asignaturaArrayList.add(asignatura);
+                    }
+                }
+                setAsignaturaArrayList(asignaturaArrayList);
+                listaAsignaturaAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public ArrayList<Asignatura> getAsignaturaArrayList() {
+        return asignaturaArrayList;
+    }
+
+    public void setAsignaturaArrayList(ArrayList<Asignatura> asignaturaArrayList) {
+        this.asignaturaArrayList = asignaturaArrayList;
+    }
+
+
+
+/*Firebase firebase = new Firebase();
 
     public vmInterface listener;
     public ListaAsignatura listaAsignatura;
@@ -47,8 +91,6 @@ public class ListaAsignatura {
             }
 
         });
-    }
-
-
+    }*/
 
 }

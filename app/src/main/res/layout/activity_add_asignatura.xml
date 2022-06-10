@@ -272,17 +272,19 @@
             app:layout_constraintTop_toBottomOf="@+id/checkBox_Viernes"
             app:layout_constraintVertical_bias="0.082" />
 
+
         <Button
             android:id="@+id/Guardar"
             android:layout_width="135dp"
             android:layout_height="51dp"
+            android:layout_marginEnd="36dp"
             android:text="Aceptar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.137"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/Cancelar"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion"
-            app:layout_constraintVertical_bias="0.212" />
+            app:layout_constraintVertical_bias="0.257" />
 
         <Button
             android:id="@+id/Cancelar"
@@ -291,11 +293,10 @@
             android:text="Cancelar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.631"
-            app:layout_constraintStart_toEndOf="@+id/Guardar"
+            app:layout_constraintHorizontal_bias="0.137"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion"
-            app:layout_constraintVertical_bias="0.212" />
-
+            app:layout_constraintVertical_bias="0.257" />
 
         <ImageButton
             android:id="@+id/acceder_datepickerinicio"

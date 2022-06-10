@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Asignatura extends EventoGeneral {
 
@@ -34,7 +35,6 @@ public class Asignatura extends EventoGeneral {
     ArrayList<String> diasSemana;
     Fechas fechas;
     Context mContext;
-
     Firebase bd = new Firebase();
 
     public Asignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<String> inicios, ArrayList<String> finales, Context mContext){
@@ -85,22 +85,6 @@ public class Asignatura extends EventoGeneral {
         this.fecha_final = fecha_final;
     }
 
-    public ArrayList<String> getInicios() {
-        return inicios;
-    }
-
-    public void setInicios(ArrayList<String> inicios) {
-        this.inicios = inicios;
-    }
-
-    public ArrayList<String> getFinales() {
-        return finales;
-    }
-
-    public void setFinales(ArrayList<String> finales) {
-        this.finales = finales;
-
-    }
 
     public void addFireBaseAsignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<String> inicios, ArrayList<String> finales){
 
@@ -114,11 +98,10 @@ public class Asignatura extends EventoGeneral {
         map.put("Name", nombre_as);
         map.put("Descripcion", descripcion);
 
-        bd.mFirestore.collection("user").document(bd.getIdUser()).collection("Asignaturas").document(nombre_as).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        bd.mFirestore.collection("Asignaturas").document(nombre_as).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(mContext, "Asignatura guardada correctamente", Toast.LENGTH_SHORT).show();
-                //retornar a la pantalla anterior
 
             }
         }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto muestra un error
@@ -129,9 +112,6 @@ public class Asignatura extends EventoGeneral {
             }
         });
     }
-
-
-
 
     /*
     public ArrayList<CheckBox> getCajas() {

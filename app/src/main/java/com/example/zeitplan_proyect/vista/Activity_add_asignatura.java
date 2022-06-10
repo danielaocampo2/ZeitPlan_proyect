@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -59,10 +60,7 @@ public class Activity_add_asignatura extends Fragment {
     ArrayList<TextView> lista_inicios, lista_finales;
     ArrayList<CheckBox> lista_checkbox;
 
-    PresenterAsignatura presenterAsignatura = new PresenterAsignatura();
-
-
-
+    PresenterAsignatura presenterAsignatura;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -71,6 +69,7 @@ public class Activity_add_asignatura extends Fragment {
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Asignatura");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
+        presenterAsignatura = new PresenterAsignatura(getContext());
         fehca_in = view.findViewById(R.id.datepicker_inicio);
         fecha_fin = view.findViewById(R.id.datepicker_final);
 
@@ -421,9 +420,8 @@ public class Activity_add_asignatura extends Fragment {
                 }else if (valor == 4){
                     Toast.makeText(getActivity().getApplicationContext(), "La fecha de inicio debe ser menor a la final", Toast.LENGTH_SHORT).show();
                 }else if (valor == 0){
-                    //REGRSAR A LA PANTALLA ANTERIOR
-                    //CREAR OBJETO ASIGNATURA Y AÑADIRLO A LA LISTA DE ASIGNATURAS DEL USUARIO
                     presenterAsignatura.crearAsignatura(fehca_in.getText().toString(),fecha_fin.getText().toString(),campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
+                    getFragmentManager().popBackStack();
                 }
             }
         });
@@ -431,20 +429,14 @@ public class Activity_add_asignatura extends Fragment {
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityAsignatura activity_asignatura = new ActivityAsignatura();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, activity_asignatura);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                //Tiene que volver a la view anterior
+                getFragmentManager().popBackStack();
             }
         });
 
 
+
         return view;
     }
-
 
 
 

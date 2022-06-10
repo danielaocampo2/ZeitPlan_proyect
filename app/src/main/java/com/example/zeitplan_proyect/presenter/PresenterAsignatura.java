@@ -1,50 +1,43 @@
 package com.example.zeitplan_proyect.presenter;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.Fechas;
 import com.example.zeitplan_proyect.model.ListaAsignatura;
+import com.example.zeitplan_proyect.DataBase.ListaAsignaturaAdapter;
 import com.example.zeitplan_proyect.model.ValidacionAsignatura;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class PresenterAsignatura implements ListaAsignatura.vmInterface {
+public class PresenterAsignatura{
 
     Fechas fechas;
     ValidacionAsignatura validacionAsignatura;
-    ArrayList<Asignatura> llistaAsignaturas;
+    Context context;
+    ListaAsignatura listaAsignatura;
 
-    public PresenterAsignatura() {
-        fechas = new Fechas();
-        validacionAsignatura = new ValidacionAsignatura();
-        llistaAsignaturas = new ArrayList<>();
-        ListaAsignatura lista = new ListaAsignatura(this);
-        lista.getUserAsignaturas();
+    public PresenterAsignatura(Context context) {
+        this.fechas = new Fechas();
+        this.validacionAsignatura = new ValidacionAsignatura();
+        this.context = context;
+        this.listaAsignatura = new ListaAsignatura(context);
     }
 
-
-
-    public ArrayList<Asignatura> getListaAsignaturas() {
-        Log.e("k", llistaAsignaturas.toString());
-        return llistaAsignaturas;
+    public void EventChangedListener(){
+        listaAsignatura.EventChangedListener();
     }
 
+    public ListaAsignaturaAdapter getListaAsignaturaAdapter() {
+        return listaAsignatura.getListaAsignaturaAdapter();
+    }
+
+    public ArrayList<Asignatura> getAsignaturaArrayList() {
+        return listaAsignatura.getAsignaturaArrayList();
+    }
 
     public int validarAs(ArrayList<TextView> inicios, ArrayList<TextView> finales, ArrayList<CheckBox> cajas, EditText campo1, TextView campo2, TextView campo3) {
         return validacionAsignatura.validarAs(inicios, finales, cajas, campo1, campo2, campo3);
@@ -73,24 +66,17 @@ public class PresenterAsignatura implements ListaAsignatura.vmInterface {
 
         Asignatura asignatura = new Asignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,horasInicio,horasFinal,mContext);
         asignatura.addFireBaseAsignatura(fecha_inicio,fecha_final,nombre_as,descripcion,diasSemana,horasInicio,horasFinal);
-        llistaAsignaturas.add(asignatura);
+
+    }
+
+    public void eliminarAsignatura(Asignatura asignatura){
+        //asignatura.deleteFireBaseAsignatura(asignatura);
     }
 
     public void fechasAsignaturas(String fechaIn, String fechaFin){
         fechas.FechasDiaSemana(fechaIn,fechaFin);
     }
 
-
-    @Override
-    public void setCollection(ArrayList<Asignatura> ac) {
-        llistaAsignaturas = ac;
-
-    }
-
-    @Override
-    public void setToast(String s) {
-
-    }
 }
 
 
