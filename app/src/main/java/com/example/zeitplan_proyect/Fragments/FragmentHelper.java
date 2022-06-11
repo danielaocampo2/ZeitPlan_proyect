@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.zeitplan_proyect.vista.ActivityAsignatura;
 import com.example.zeitplan_proyect.vista.Activity_add_asignatura;
+import com.example.zeitplan_proyect.vista.AudioActivity;
 import com.example.zeitplan_proyect.vista.CalculadoraActivity;
 import com.example.zeitplan_proyect.vista.NoteActivity;
 import com.example.zeitplan_proyect.R;
@@ -25,6 +26,7 @@ public class FragmentHelper extends FragmentActivity {
     private static final int NOTAS = 3;
     private static final int SING_OUT = 4;
     private static final int CALCULADORA = 5;
+    private static final int AUDIO = 6;
     private final FragmentManager fragmentManager;
     private final FragmentActivity fragmentActivity;
 
@@ -68,6 +70,11 @@ public class FragmentHelper extends FragmentActivity {
                 fragmentTransaction.replace(R.id.fragment, calculadoraActivity);
                 fragmentTransaction.commit();
                 break;
+            case AUDIO:
+                fragmentTransaction = fragmentManager.beginTransaction();
+               AudioActivity audioActivity = new AudioActivity();
+                fragmentTransaction.replace(R.id.fragment, audioActivity);
+                fragmentTransaction.commit();
 
         }
     }
