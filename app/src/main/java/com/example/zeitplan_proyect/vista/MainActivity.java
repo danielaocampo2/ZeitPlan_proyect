@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mFirestore=FirebaseFirestore.getInstance();
 
         eventoArrayList =new ArrayList<Event>();
-        eAdapter = new MyAdapter(MainActivity.this,eventoArrayList, getApplicationContext());
+        eAdapter = new MyAdapter(MainActivity.this,eventoArrayList);
 
         reventos.setAdapter(eAdapter);
 

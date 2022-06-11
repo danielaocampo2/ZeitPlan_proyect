@@ -3,6 +3,7 @@ package com.example.zeitplan_proyect.DataBase;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,22 +19,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.zeitplan_proyect.model.Login;
+import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
+import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
+import com.example.zeitplan_proyect.vista.Recordar;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
     ArrayList<Event> eventoArrayList;
-    Context ensayo;
 
-    public MyAdapter(Context context, ArrayList<Event> eventArrayList, Context nuevo) {
+    public MyAdapter(Context context, ArrayList<Event> eventArrayList) {
         this.context = context;
         this.eventoArrayList = eventArrayList;
-        this.ensayo=nuevo;
     }
 
     @NonNull
@@ -45,6 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        //DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         Event event = eventoArrayList.get(position);
 
         holder.titulo.setText(event.getNombre());
@@ -54,51 +57,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
         holder.tx_hora.setText(hora);
-        holder.tx_idEvento.setText("holi dani");
 
 
         holder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
+                Log.i( "onClick: ","hola");
                 //Toast.makeText(context, "Debe elegir fecha y hora",Toast.LENGTH_LONG).show();
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(ensayo);
-                dialogo1.setTitle("¿Está seguro que desea eliminarlo? ");
-               // dialogo1.setMessage("Se eliminará "+ holder.titulo);
-                dialogo1.setCancelable(false);
-                dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        // Elimar nota
-                        Log.i("holi", "onClick: "+holder.tx_idEvento.getText());
+               // AlertDialog builder = new AlertDialog.Builder(context).create();
 
-                    }
-                });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        Toast.makeText(context, "Cancelado", Toast.LENGTH_LONG).show();
-                    }
-                });
-                dialogo1.show();
-            }
-        });
 
-        holder.btn_editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        holder.btn_ver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                //AlertDialog dialog = builder.create();
             }
         });
 
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -107,8 +81,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titulo, prioridad, tipo, fechaYHora, tx_hora, tx_idEvento;
-        ImageButton btn_eliminar, btn_ver, btn_editar;
+        TextView titulo, prioridad, tipo, fechaYHora, tx_hora;
+        ImageButton btn_eliminar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,9 +92,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             fechaYHora=itemView.findViewById(R.id.tx_fecha);
             tx_hora=itemView.findViewById(R.id.txt_hora);
             btn_eliminar=itemView.findViewById(R.id.btn_eliminar);
-            btn_ver=itemView.findViewById(R.id.btn_ver);
-            btn_editar=itemView.findViewById(R.id.btn_editar);
-            tx_idEvento=itemView.findViewById(R.id.tx_idEvento);
         }
     }
 }

@@ -6,10 +6,8 @@ import androidx.work.Data;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkManager;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -78,22 +76,6 @@ public class Recordar extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent =new Intent(view.getContext(), MainActivity2.class);
                 startActivity(intent);
-                /*
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(view.getContext());
-                dialogo1.setTitle("Importante");
-                dialogo1.setMessage("¿ Acepta la ejecución de este programa en modo prueba ?");
-                dialogo1.setCancelable(false);
-                dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        Log.i(TAG, "onClick: funcio");
-                    }
-                });
-                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        Log.i(TAG, "onClick: funcio cancel");
-                    }
-                });
-                dialogo1.show();*/
             }
         });
 

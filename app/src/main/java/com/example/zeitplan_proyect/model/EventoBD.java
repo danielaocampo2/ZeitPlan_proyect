@@ -49,7 +49,6 @@ public class EventoBD {
         map.put("tipo", tipoEven);
         map.put("prioridad", prioridad);
         map.put("idUser", bd.getIdUser());
-        map.put("idEvento", uniqueID);
 
 
         bd.mFirestore.collection("evento").document(uniqueID).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
