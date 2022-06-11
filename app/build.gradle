@@ -51,6 +51,7 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-database:20.0.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // FirebaseUI for Cloud Firestore
