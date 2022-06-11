@@ -84,7 +84,7 @@ public class LlistaEventsActivity extends Fragment {
         shareBtn.setVisibility(View.GONE);
 
         eventos = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos, getContext());
         eventRV.setAdapter(eAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -92,7 +92,7 @@ public class LlistaEventsActivity extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 eventos = new ArrayList<Event>();
-                eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+                eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos,getContext());
                 eventRV.setAdapter(eAdapter);
                 mostarFiltro();
 
