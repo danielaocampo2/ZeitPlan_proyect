@@ -1,5 +1,6 @@
 package com.example.zeitplan_proyect.vista;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Data;
 import androidx.work.ListenableWorker;
@@ -10,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,9 +71,10 @@ public class Recordar extends AppCompatActivity {
         guardar=findViewById(R.id.btn_guardar);
 
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(view.getContext(), MainActivity.class);
+                Intent intent =new Intent(view.getContext(), MainActivity2.class);
                 startActivity(intent);
             }
         });

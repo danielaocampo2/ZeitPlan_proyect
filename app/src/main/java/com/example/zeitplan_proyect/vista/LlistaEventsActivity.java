@@ -65,9 +65,7 @@ public class LlistaEventsActivity extends Fragment {
 
         spinner = (Spinner) view.findViewById(R.id.spinner_orden);
 
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoOrden, android.R.layout.simple_spinner_item);
-
         spinner.setAdapter(adapter);
 
         eventRV = view.findViewById(R.id.reciclerllista);
