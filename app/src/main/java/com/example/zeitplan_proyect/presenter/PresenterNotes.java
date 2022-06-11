@@ -1,6 +1,7 @@
 package com.example.zeitplan_proyect.presenter;
 
 import com.example.zeitplan_proyect.model.CalendarUtils;
+import com.example.zeitplan_proyect.model.Notas;
 import com.example.zeitplan_proyect.model.Notes;
 import com.example.zeitplan_proyect.model.User;
 
@@ -9,6 +10,8 @@ import java.util.HashSet;
 
 public class PresenterNotes {
     Notes notes;
+
+    Notas notas;
 
     public PresenterNotes(){
         notes = Notes.getInstance();
@@ -25,4 +28,7 @@ public class PresenterNotes {
     public String getNoteId(int id){
         return notes.getNoteId(id);
     }
+
+
+
 }

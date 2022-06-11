@@ -8,14 +8,23 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zeitplan_proyect.Fragments.FragmentHelper;
+import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Asignatura;
+import com.example.zeitplan_proyect.vista.ActivityAsignatura;
+import com.example.zeitplan_proyect.vista.Activity_add_asignatura;
+import com.example.zeitplan_proyect.vista.CalculadoraActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -31,47 +40,15 @@ public class ListaAsignaturaAdapter extends RecyclerView.Adapter<ListaAsignatura
     public ListaAsignaturaAdapter(Context context, ArrayList<Asignatura> asignaturaArrayList) {
         this.context = context;
         this.asignaturaArrayList = asignaturaArrayList;
+
     }
 
     @NonNull
     @Override
     public ListaAsignaturaAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.fila_asignatura,parent,false);
-        ImageButton buttonRemove = v.findViewById(R.id.configuracion);
-        ImageButton buttonCalculadora = v.findViewById(R.id.acceder_calculadora);
 
-        final View.OnClickListener thisListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                TextView nombre = v.findViewById(R.id.textViewAsignaturaNombre);
-                firebase.mFirestore.collection("Asignaturas").document(nombre.getText().toString())
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("TAG", "DocumentSnapshot successfully deleted!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("TAG", "Error deleting document", e);
-                            }
-                        });
-                ((RecyclerView)v).removeView(v);
-            }
-        };
-        buttonRemove.setOnClickListener(thisListener);
-
-        final View.OnClickListener thisListener2 = new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-
-            }
-        };
-        buttonCalculadora.setOnClickListener(thisListener2);
-
-        return new ListaAsignaturaAdapter.MyViewHolder(v);
+        View addView = LayoutInflater.from(context).inflate(R.layout.fila_asignatura,parent,false);
+        return new ListaAsignaturaAdapter.MyViewHolder(addView);
     }
 
     @Override
@@ -85,15 +62,31 @@ public class ListaAsignaturaAdapter extends RecyclerView.Adapter<ListaAsignatura
         return asignaturaArrayList.size();
     }
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView titulo;
+        RelativeLayout viewF, viewB;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.textViewAsignaturaNombre);
+            viewF = itemView.findViewById(R.id.rl);
+            viewB = itemView.findViewById(R.id.view_background);
+
         }
 
     }
+
+    public void removeItem(int position){
+        asignaturaArrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Asignatura asignatura, int position){
+        asignaturaArrayList.add(position,asignatura);
+        notifyItemInserted(position);
+    }
+
 
 }

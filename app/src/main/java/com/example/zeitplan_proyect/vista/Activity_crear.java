@@ -5,8 +5,11 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -238,6 +241,11 @@ public class Activity_crear extends Fragment {
         String c1 = eventNameET.getText().toString();
         if (c1.isEmpty()){
             eventNameET.setError("Este campo no puede quedar vacio");
+            Log.i(TAG, "validar:  hola"+ getContext());
+            Log.i(TAG, "validar:  hola"+ this.getActivity().getApplicationContext());
+
+            Toast.makeText(getActivity(), "Click!", Toast.LENGTH_SHORT).show();;
+
             return false;
         } if (timeIni.isAfter(timeFin)){
             Toast.makeText(getContext(), "Hora Inicio debe ser anterior a Hora Final", Toast.LENGTH_SHORT).show();

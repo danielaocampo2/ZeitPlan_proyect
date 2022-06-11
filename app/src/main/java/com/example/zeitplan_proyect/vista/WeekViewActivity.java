@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
@@ -131,7 +133,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
         // Sublista
         eventosL = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventosL);
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventosL, getContext());
         eventRV.setAdapter(eAdapter);
         EventLChangeListener();
     }

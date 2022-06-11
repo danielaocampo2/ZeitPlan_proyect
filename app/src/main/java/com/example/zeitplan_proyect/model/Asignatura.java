@@ -98,7 +98,8 @@ public class Asignatura extends EventoGeneral {
         map.put("Name", nombre_as);
         map.put("Descripcion", descripcion);
 
-        bd.mFirestore.collection("Asignaturas").document(nombre_as).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        bd.mFirestore.collection("Asignaturas").document(nombre_as).set(map).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(mContext, "Asignatura guardada correctamente", Toast.LENGTH_SHORT).show();

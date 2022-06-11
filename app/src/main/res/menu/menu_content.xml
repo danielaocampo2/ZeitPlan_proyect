@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:icon="@android:drawable/ic_menu_agenda"
             android:title="Calendario" />
         <item
             android:id="@+id/nav_add_subj"
@@ -20,6 +20,10 @@
             android:id="@+id/nav_notes"
             android:icon="@android:drawable/ic_menu_edit"
             android:title="Notas" />
+        <item
+            android:id="@+id/audio_note"
+            android:icon="@android:drawable/presence_audio_away"
+            android:title="Notas de Voz" />
         <item
             android:id="@+id/nav_calculadora"
             android:icon="@android:drawable/ic_dialog_dialer"
@@ -40,6 +44,7 @@
                 android:id="@+id/nav_out"
                 android:icon="@drawable/ic_logout"
                 android:title="Cerrar sesión" />
+
         </menu>
     </item>
 

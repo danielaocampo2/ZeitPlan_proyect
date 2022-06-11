@@ -2,6 +2,8 @@ package com.example.zeitplan_proyect.model;
 
 public class Notas {
     String idUser,texto, nombre;
+    static int idNota;
+    public User user = User.getInstance();
 
     public Notas(){}
 
@@ -9,6 +11,7 @@ public class Notas {
         this.idUser = idUser;
         this.texto = texto;
         this.nombre = nombre;
+        idNota++;
     }
 
     public String getIdUser() {
@@ -33,5 +36,13 @@ public class Notas {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getIdNota(){
+        return idNota++;
+    }
+
+    public String getUsuarioId(){
+         return user.getId();
     }
 }

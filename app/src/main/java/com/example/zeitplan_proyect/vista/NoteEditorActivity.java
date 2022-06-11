@@ -24,6 +24,14 @@ public class NoteEditorActivity extends Fragment {
     int noteId;
     NoteActivity noteActivity = new NoteActivity();;
 
+
+    public void onBackPressed(){
+
+
+
+        super.getActivity().onBackPressed();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -66,8 +74,11 @@ public class NoteEditorActivity extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
+
             }
         });
+
+
         return view;
     }
 }

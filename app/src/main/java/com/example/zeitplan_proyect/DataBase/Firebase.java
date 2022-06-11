@@ -2,14 +2,20 @@ package com.example.zeitplan_proyect.DataBase;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.bumptech.glide.Glide;
 import com.example.zeitplan_proyect.model.Asignatura;
+import com.example.zeitplan_proyect.model.AudioNota;
 import com.example.zeitplan_proyect.model.ListaAsignatura;
 import com.example.zeitplan_proyect.presenter.PresenterAsignatura;
+import com.example.zeitplan_proyect.presenter.PresenterAudioNotas;
+import com.google.android.gms.tasks.Continuation;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import androidx.annotation.NonNull;
@@ -34,7 +40,12 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +54,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Firebase {
 
+    public static final String TAG = "Firebase";
     //Variable para gestionar FirebaseAuth
 
     public FirebaseAuth mAuth=FirebaseAuth.getInstance();
     public FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+    public final FirebaseStorage storage = FirebaseStorage.getInstance();
     public User usuario = User.getInstance();
     //PresenterAsignatura presenterAsignatura = new PresenterAsignatura();
     //CollectionReference user = mFirestore.collection("user");
@@ -56,7 +69,6 @@ public class Firebase {
     private GoogleSignInOptions gso;
 
     private static Firebase instance;
-
 
     public static Firebase getInstance(){
         if(instance == null){
@@ -268,16 +280,6 @@ public class Firebase {
         }
         return id;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

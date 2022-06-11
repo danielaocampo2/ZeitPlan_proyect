@@ -145,6 +145,11 @@ public class MainActivity2  extends AppCompatActivity implements NavigationView.
                                 fragmentHelper.setFragment(5);
                                 drawer.closeDrawer(GravityCompat.START);
                                 return true;
+                            case R.id.audio_note:
+                                menuItem.setChecked(true);
+                                fragmentHelper.setFragment(6);
+                                drawer.closeDrawer(GravityCompat.START);
+                                return true;
                             case R.id.nav_out:
                                 menuItem.setChecked(true);
                                 presenterMenu.cierraSession();
