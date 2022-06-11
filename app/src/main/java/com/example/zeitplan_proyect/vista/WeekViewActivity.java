@@ -126,7 +126,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
         eventos = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos, getContext());
         eventRV.setAdapter(eAdapter);
         EventChangeListener();
     }
