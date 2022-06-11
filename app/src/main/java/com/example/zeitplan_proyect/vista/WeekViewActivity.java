@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
@@ -46,8 +44,10 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     private RecyclerView eventRV;
     private Button prevWeekAction,nextWeekAction,dailyAction, calendarAction, llistaAction;
 
-    ArrayList<Event> eventos;
+    ArrayList<Event> eventosV;
+    ArrayList<Event> eventosL;
     MyAdapter eAdapter;
+    CalendarAdapter calendarAdapter;
     FirebaseFirestore mFirestore;
     Firebase db = new Firebase();
     PresenterCalendarUtils PresCal;
@@ -119,18 +119,22 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
 
     private void setWeekView()
     {
+        // Vista semanal
+        eventosV = new ArrayList<Event>();
         monthYearText.setText(PresCal.monthYearFromSelDay());
         ArrayList<LocalDate> days = PresCal.daysInWeekArray();
-        CalendarAdapter calendarAdapter = new CalendarAdapter(days, this);
+        calendarAdapter = new CalendarAdapter(days, this, eventosV);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
-        eventos = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos);
-        eventRV.setAdapter(eAdapter);
-        EventChangeListener();
-    }
+        EventVChangeListener();
 
+        // Sublista
+        eventosL = new ArrayList<Event>();
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventosL);
+        eventRV.setAdapter(eAdapter);
+        EventLChangeListener();
+    }
 
 
     public void prevWeekAction(View view)
@@ -161,7 +165,26 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         super.onResume();
     }
 
-    private void EventChangeListener() {
+    private void EventVChangeListener() {
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                eventosV.add(dc.getDocument().toObject(Event.class));
+                            }
+                            calendarAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    private void EventLChangeListener() {
         // String orden = spinner.getSelectedItem().toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String SelDate = PresCal.getSelectedDate().format(formatter);
@@ -175,7 +198,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                eventos.add(dc.getDocument().toObject(Event.class));
+                                eventosL.add(dc.getDocument().toObject(Event.class));
                             }
                             eAdapter.notifyDataSetChanged();
                         }

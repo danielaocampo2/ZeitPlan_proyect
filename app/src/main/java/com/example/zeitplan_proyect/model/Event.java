@@ -36,21 +36,19 @@ public class Event extends EventoGeneral{
         }
         return events;
     }*/
-
-    public static ArrayList<Event> eventsForDate(LocalDate date){
-
+    public static ArrayList<Event> eventListOfDate(LocalDate date, ArrayList<Event> eventArrayList) {
         ArrayList<Event> events= new ArrayList<>();
-        for(Event event : eventsList)
+        for(Event event : eventArrayList)
         {
             if(event.getFechaIniLD().equals(date))
                 events.add(event);
         }
-        return  events;
+        return events;
     }
 
-    public static int numEvents(LocalDate date) {
+    public static int numEvents(LocalDate date, ArrayList<Event> events) {
         int numEvents = 0;
-        for(Event event : eventsList)
+        for(Event event : events)
         {
             if(event.getFechaIniLD().equals(date))
                 numEvents++;
@@ -98,6 +96,8 @@ public class Event extends EventoGeneral{
         this.prioridad = prioridad;
         this.idUser = idUser;
     }
+
+
 /*
     public Event(String nombre, String descripcion, String fecha_inicio, String tiempoIni, String tipo, int prioridad, String idUser) {
         super(fecha_inicio, fecha_inicio, nombre, descripcion);

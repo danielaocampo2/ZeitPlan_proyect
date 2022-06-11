@@ -33,10 +33,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     private final OnItemListener onItemListener;
     private final PresenterCalendarUtils PresCal;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener) {
+    private final ArrayList<Event> eventos;
+
+    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener, ArrayList<Event> eventos) {
         this.days = days;
         this.onItemListener = onItemListener;
         this.PresCal = PresenterCalendarUtils.getInstance();
+
+        this.eventos = eventos;
     }
 
     @NonNull
@@ -70,7 +74,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
             holder.dayMonth.setTextColor(Color.LTGRAY);
         }
 
-        int nEvents = 0;
+        int nEvents = PresCal.numEvents(date, eventos);
 
         switch (nEvents){
             default:

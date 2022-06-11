@@ -18,6 +18,7 @@ import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
@@ -46,9 +47,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
         holder.tx_hora.setText(hora);
-
-
-
 
     }
 

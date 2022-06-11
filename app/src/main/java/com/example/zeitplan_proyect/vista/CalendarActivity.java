@@ -1,5 +1,6 @@
 package com.example.zeitplan_proyect.vista;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +20,19 @@ import android.widget.TextView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarActivity extends Fragment implements CalendarAdapter.OnItemListener {
@@ -32,6 +42,12 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
     private NavigationView navigationView;
 
     PresenterCalendarUtils PresCal;
+
+    ArrayList<Event> eventosV;
+    CalendarAdapter calendarAdapter;
+    FirebaseFirestore mFirestore;
+    Firebase db = new Firebase();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -50,6 +66,8 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
         PresCal = PresenterCalendarUtils.getInstance();
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
         shareBtn.setVisibility(View.GONE);
+
+        mFirestore = FirebaseFirestore.getInstance();
 
         nextMonth.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -91,12 +109,14 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
 
     private void setMonthView()
     {
+        eventosV = new ArrayList<Event>();
         monthYearText.setText(PresCal.monthYearFromSelDay());
         ArrayList<LocalDate> daysMonth = PresCal.daysInMonthArray();
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysMonth, this);
+        calendarAdapter = new CalendarAdapter(daysMonth, this, eventosV);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(requireContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
+        EventVChangeListener();
     }
 
 
@@ -109,6 +129,25 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
     public void nextMonthAction(View view) {
         PresCal.SelDateMoveMonth(1);
         setMonthView();
+    }
+
+    private void EventVChangeListener() {
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                eventosV.add(dc.getDocument().toObject(Event.class));
+                            }
+                            calendarAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 
     @Override

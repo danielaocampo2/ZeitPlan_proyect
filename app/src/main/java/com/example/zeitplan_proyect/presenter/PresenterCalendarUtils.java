@@ -78,5 +78,9 @@ public class PresenterCalendarUtils {
         return hourEvent;
     }
 
-    public int numEvents(LocalDate date) { return Event.numEvents(date);}
+    public int numEvents(LocalDate date, ArrayList<Event> events) { return Event.numEvents(date, events);}
+
+    public ArrayList<Event> eventosSelDate(ArrayList<Event> eventArrayList) {
+        return Event.eventListOfDate(getSelectedDate(), eventArrayList);
+    }
 }
