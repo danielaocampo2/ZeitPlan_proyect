@@ -11,7 +11,7 @@
         <item
             android:id="@+id/nav_add_subj"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Añadir Asignatura" />
+            android:title="Asignaturas" />
         <item
             android:id="@+id/nav_add_activity"
             android:icon="@android:drawable/ic_menu_add"
