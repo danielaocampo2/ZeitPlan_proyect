@@ -32,6 +32,7 @@ import java.util.UUID;
 public class Asignatura extends EventoGeneral {
 
     ArrayList<String> inicios, finales;
+
     ArrayList<String> diasSemana;
     Fechas fechas;
 
@@ -80,6 +81,14 @@ public class Asignatura extends EventoGeneral {
     @Override
     public void setFecha_final(String fecha_final) {
         this.fecha_final = fecha_final;
+    }
+
+    public ArrayList<String> getDiasSemana() {
+        return diasSemana;
+    }
+
+    public void setDiasSemana(ArrayList<String> diasSemana) {
+        this.diasSemana = diasSemana;
     }
 
     /*

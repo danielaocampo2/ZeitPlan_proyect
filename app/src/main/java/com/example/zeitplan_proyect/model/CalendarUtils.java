@@ -182,4 +182,17 @@ public class CalendarUtils {
         return " ";
     }
 
+    public String DayOfWeek(LocalDate date) {
+        switch(date.getDayOfWeek()){
+            case MONDAY: return "Lunes";
+            case TUESDAY: return "Martes";
+            case WEDNESDAY: return "Miercoles";
+            case THURSDAY: return "Jueves";
+            case FRIDAY: return "Viernes";
+            case SATURDAY: return "Sabado";
+            case SUNDAY: return "Domingo";
+        }
+        return " ";
+    }
+
 }

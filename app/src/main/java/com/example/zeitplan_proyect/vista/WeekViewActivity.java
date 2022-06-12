@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
 import com.example.zeitplan_proyect.MainActivity2;
+import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
@@ -53,6 +54,8 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     FirebaseFirestore mFirestore;
     Firebase db = new Firebase();
     PresenterCalendarUtils PresCal;
+
+    ArrayList<Asignatura> asignaturas;
 
 
     public WeekViewActivity() {
@@ -123,13 +126,15 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
     {
         // Vista semanal
         eventosV = new ArrayList<Event>();
+        asignaturas = new ArrayList<>();
         monthYearText.setText(PresCal.monthYearFromSelDay());
         ArrayList<LocalDate> days = PresCal.daysInWeekArray();
-        calendarAdapter = new CalendarAdapter(days, this, eventosV);
+        calendarAdapter = new CalendarAdapter(days, this, eventosV, asignaturas);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(requireContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
         EventVChangeListener();
+        AssigChangeListener();
 
         // Sublista
         eventosL = new ArrayList<Event>();
@@ -184,6 +189,27 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
                         }
                     }
                 });
+    }
+
+    private void AssigChangeListener() {
+        mFirestore.collection("Asignaturas").whereEqualTo("idUser",db.getIdUser())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"));
+                                asignaturas.add(asignatura);
+                            }
+                            calendarAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
     }
 
     private void EventLChangeListener() {

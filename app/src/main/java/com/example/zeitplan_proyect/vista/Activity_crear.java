@@ -143,12 +143,12 @@ public class Activity_crear extends Fragment {
 
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 String date2 = (String) dc.getDocument().get("fecha_inicio");
-                                date = LocalDate.parse(date2, formatter);
+                                LocalDate date = LocalDate.parse(date2, formatter);
                                 eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
-                                timeIni = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
-                                eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
-                                timeFin = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
-                                eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
+                                LocalTime timeIn = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
+                                eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIn.format(formatterTime));
+                                LocalTime timeFi = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
+                                eventTimeTVFin.setText("  Hora Final:\n  " + timeFi.format(formatterTime));
                                 ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Editar Actividad");
 
                             }
@@ -164,14 +164,6 @@ public class Activity_crear extends Fragment {
             }
         }else{
             ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
-
-            timeIni = LocalTime.now();
-            timeFin = timeIni.plusHours(1);
-            date = PreCal.getSelectedDate();
-
-            eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
-            eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
-            eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         }
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
@@ -217,6 +209,14 @@ public class Activity_crear extends Fragment {
                    agregar(view);}
             }
         });
+
+        timeIni = LocalTime.now();
+        timeFin = timeIni.plusHours(1);
+        date = PreCal.getSelectedDate();
+
+        eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+        eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+        eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override

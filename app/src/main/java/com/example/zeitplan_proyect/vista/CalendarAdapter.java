@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.google.firebase.firestore.DocumentChange;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,13 +36,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     private final PresenterCalendarUtils PresCal;
 
     private final ArrayList<Event> eventos;
+    private final ArrayList<Asignatura> asignaturas;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener, ArrayList<Event> eventos) {
+    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener, ArrayList<Event> eventos, ArrayList<Asignatura> assignaturas) {
         this.days = days;
         this.onItemListener = onItemListener;
         this.PresCal = PresenterCalendarUtils.getInstance();
 
         this.eventos = eventos;
+        this.asignaturas = assignaturas;
     }
 
     @NonNull
@@ -65,7 +69,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 
         holder.dayMonth.setText(String.valueOf(date.getDayOfMonth()));
         if(date.equals(PresCal.getSelectedDate())){
-            holder.parentView.setBackgroundColor(Color.LTGRAY);
+           holder.parentView.setBackgroundColor(Color.LTGRAY);
         }
 
         if(date.getMonth().equals(PresCal.SelDateMonth())){
@@ -75,8 +79,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         }
 
         int nEvents = PresCal.numEvents(date, eventos);
+        int nEventsAssig = PresCal.numEventsAssig(date, asignaturas);
 
-        switch (nEvents){
+        switch (nEvents+nEventsAssig){
             default:
                 holder.casella1.setVisibility(View.INVISIBLE);
             case 1:
@@ -89,6 +94,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
                 break;
             case 5:
                 holder.casella4.setText("+");
+                break;
+        }
+
+        switch (nEventsAssig){
+            case 4:
+                holder.casella4.setBackgroundColor(Color.BLUE);
+            case 3:
+                holder.casella3.setBackgroundColor(Color.BLUE);
+            case 2:
+                holder.casella2.setBackgroundColor(Color.BLUE);
+            case 1:
+                holder.casella1.setBackgroundColor(Color.BLUE);
+            default:
                 break;
         }
 

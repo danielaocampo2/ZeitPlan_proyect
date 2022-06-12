@@ -4,14 +4,20 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.zeitplan_proyect.DataBase.ListaAsignaturaAdapter;
+import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.CalendarUtils;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.model.HourEvent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,4 +90,35 @@ public class PresenterCalendarUtils {
         return  numEvents;}
 
 
+    public int numEventsAssig(LocalDate date, ArrayList<Asignatura> asignaturas) {
+        int numEventsAssig = 0;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        try {
+            for(Asignatura asignatura : asignaturas)
+            {
+                LocalDate Fini = LocalDate.parse(formatter.format(formatter.parse(asignatura.getFecha_inicio())), formatterDate).minusDays(1);
+                LocalDate FFin = LocalDate.parse(formatter.format(formatter.parse(asignatura.getFecha_final())), formatterDate).plusDays(1);
+                if(date.isAfter(Fini) && date.isBefore(FFin)) {
+
+                    String dateDayofWeek = calendarUtils.DayOfWeek(date);
+                    ArrayList<String> DiasSemanaAss = asignatura.getDiasSemana();
+                    if(DiasSemanaAss!=null){
+                        for(String dayOfWeek : DiasSemanaAss){
+                            if(dayOfWeek.equals(dateDayofWeek)){
+                                numEventsAssig++;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+            catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numEventsAssig;
+    }
 }

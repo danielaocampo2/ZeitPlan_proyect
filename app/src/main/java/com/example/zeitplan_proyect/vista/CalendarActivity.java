@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
@@ -21,9 +22,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
+import com.example.zeitplan_proyect.DataBase.ListaAsignaturaAdapter;
 import com.example.zeitplan_proyect.DataBase.MyAdapter;
+import com.example.zeitplan_proyect.DataBase.MyItemTouchHelperCallback;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
+import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +51,8 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
     CalendarAdapter calendarAdapter;
     FirebaseFirestore mFirestore;
     Firebase db = new Firebase();
+
+    ArrayList<Asignatura> asignaturas;
 
 
     @Override
@@ -110,13 +116,15 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
     private void setMonthView()
     {
         eventosV = new ArrayList<Event>();
+        asignaturas = new ArrayList<>();
         monthYearText.setText(PresCal.monthYearFromSelDay());
         ArrayList<LocalDate> daysMonth = PresCal.daysInMonthArray();
-        calendarAdapter = new CalendarAdapter(daysMonth, this, eventosV);
+        calendarAdapter = new CalendarAdapter(daysMonth, this, eventosV, asignaturas);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(requireContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
         EventVChangeListener();
+        AssigChangeListener();
 
     }
 
@@ -151,6 +159,26 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
                 });
     }
 
+    private void AssigChangeListener() {
+        mFirestore.collection("Asignaturas").whereEqualTo("idUser",db.getIdUser())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"));
+                                asignaturas.add(asignatura);
+                            }
+                            calendarAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
+    }
     @Override
     public void onItemClick(int position, LocalDate date){
         if(date!=null){
