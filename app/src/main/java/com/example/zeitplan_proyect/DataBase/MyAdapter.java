@@ -1,9 +1,12 @@
 package com.example.zeitplan_proyect.DataBase;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +17,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
+import com.example.zeitplan_proyect.vista.Activity_add_asignatura;
+import com.example.zeitplan_proyect.vista.Activity_crear;
+import com.example.zeitplan_proyect.vista.LlistaEventsActivity;
+import com.example.zeitplan_proyect.vista.RegistroActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,14 +42,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     ArrayList<Event> eventoArrayList;
     Context context2;
     private FirebaseFirestore mFirestore =FirebaseFirestore.getInstance();
-
-
+    LlistaEventsActivity lista = new LlistaEventsActivity();
 
 
     public MyAdapter(Context context, ArrayList<Event> eventArrayList, Context nuevo) {
         this.context = context;
         this.eventoArrayList = eventArrayList;
         this.context2 =nuevo;
+
+
+        Log.i( "MyAdapter: ","context  "+context);
+        Log.i( "MyAdapter: ","nuevo   "+nuevo);
+
+
     }
 
     @NonNull
@@ -93,6 +110,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
 
+                //Crear bundle, que son los datos que pasaremos
+                Bundle datosAEnviar = new Bundle();
+// datos en formato clave, valor
+                String id=holder.tx_idEvento.getText().toString();
+                datosAEnviar.putString("id", id);
+//  más datos..
+               // datosAEnviar.putInt("edad", 21);
+               // datosAEnviar.putString("nombre", "Parzibyte");
+
+                FragmentActivity activity = (FragmentActivity) context2;
+                Activity_crear activity_crear = new Activity_crear();
+
+                activity_crear.setArguments(datosAEnviar);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                //getParentFragmentManager().setFragmentResult("requestKey", result);
+                fragmentTransaction.replace(R.id.fragment, activity_crear);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         holder.btn_ver.setOnClickListener(new View.OnClickListener() {

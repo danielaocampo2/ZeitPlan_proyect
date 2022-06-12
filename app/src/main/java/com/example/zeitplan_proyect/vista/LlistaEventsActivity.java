@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -84,7 +85,7 @@ public class LlistaEventsActivity extends Fragment {
         shareBtn.setVisibility(View.GONE);
 
         eventos = new ArrayList<Event>();
-        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos, getContext());
+        eAdapter = new MyAdapter(getActivity().getApplicationContext(), eventos,getContext());
         eventRV.setAdapter(eAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -166,4 +167,17 @@ public class LlistaEventsActivity extends Fragment {
 
     }
 
+    public void cambiarFragment() {
+        //Activity_crear activity_crear = new Activity_crear();
+        Log.i("cambiarFragment: ", "no funciona");
+        // Crea el nuevo fragmento y la transacción.
+        Fragment nuevoFragmento = new Activity_crear();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, nuevoFragmento);
+        transaction.addToBackStack(null);
+
+        // Commit a la transacción
+        transaction.commit();
+
+    }
 }

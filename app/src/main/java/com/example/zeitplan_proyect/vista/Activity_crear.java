@@ -2,6 +2,7 @@ package com.example.zeitplan_proyect.vista;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -31,16 +32,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Activity_crear extends Fragment {
@@ -65,6 +72,8 @@ public class Activity_crear extends Fragment {
     NavigationView navigationView;
     Button acpetar;
 
+    Firebase bd = new Firebase();
+
     DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -72,6 +81,8 @@ public class Activity_crear extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+
+
         final View view = inflater.inflate(R.layout.activity_crear, container, false);
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
@@ -98,6 +109,28 @@ public class Activity_crear extends Fragment {
 
         navigationView = ((MainActivity2) getActivity()).getNavigationView();
 
+        Bundle datosRecuperados = getArguments();
+        if (datosRecuperados != null) {
+            // No hay datos, manejar excepción
+            String id = datosRecuperados.getString("id");
+            Log.i(TAG, "id: "+id);
+            //eventNameET.setText(titulo);
+            bd.mFirestore.collection("evento").whereEqualTo("idUser",bd.getIdUser()).whereEqualTo("idEvento",id)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error!=null){
+                                Log.e("Firestore error", error.getMessage() );
+                                return;
+                            }
+                           // List datos= value.iterator();
+                            Log.i(TAG, " valores "+ value.getDocuments().get(0));
+
+                        }
+                    });
+
+
+        }
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
 
         this.PreCal = PresenterCalendarUtils.getInstance();

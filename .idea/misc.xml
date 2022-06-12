@@ -17,9 +17,21 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_registro.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/menu/menu_content.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/ic_action_name_2.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/drawable-anydpi/view.xml" value="0.173" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.11510416666666666" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_asignatura.xml" value="0.11510416666666666" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_calculadora.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_crear.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_edit_event.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_llista_events.xml" value="0.22" />
-        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.5" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/activity_recordar.xml" value="0.12447916666666667" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/fila_calculadora.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Desktop/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.18" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect.v2/app/src/main/res/layout/activity_main_2.xml" value="0.1" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_add_asignatura.xml" value="0.11820652173913043" />
         <entry key="..\:/Users/manu1/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_calendar.xml" value="0.11775362318840579" />
@@ -65,7 +77,6 @@
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/activity_week_view.xml" value="0.2" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/casella_calendari.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/event_cell.xml" value="0.151268115942029" />
-        <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/layout/view_event_single.xml" value="0.13179347826086957" />
         <entry key="..\:/Users/sfpol/AndroidStudioProjects/ZeitPlan_proyect/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/sfpol/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.2" />
         <entry key="app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.1805" />
