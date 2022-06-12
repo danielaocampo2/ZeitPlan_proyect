@@ -34,6 +34,40 @@ public class EventoBD {
     Firebase bd = new Firebase();
 
 
+    public void actualizaEvento(String eventName, String eventDescription, String date,
+                           String timeIni, String timeFin,int prioridad,  String tipoEven, Context mContext,String idEvento){
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("nombre", eventName);
+        map.put("descripcion", eventDescription);
+        map.put("fecha_inicio", date);
+        map.put("tiempoIni", timeIni);
+        map.put("tiempoFin", timeFin);
+        map.put("tipo", tipoEven);
+        map.put("prioridad", prioridad);
+        map.put("idUser", bd.getIdUser());
+        map.put("idEvento", idEvento);
+
+        bd.mFirestore.collection("evento").document(idEvento).update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(mContext, "Evento actualizado correctamente", Toast.LENGTH_SHORT).show();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto muestra un error
+
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mContext, "Error al guardar", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+
     public void creaEvento(String eventName, String eventDescription, String date,
                            String timeIni, String timeFin,int prioridad,  String tipoEven, Context mContext){
 

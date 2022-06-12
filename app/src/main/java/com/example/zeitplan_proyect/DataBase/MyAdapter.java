@@ -115,6 +115,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 // datos en formato clave, valor
                 String id=holder.tx_idEvento.getText().toString();
                 datosAEnviar.putString("id", id);
+                datosAEnviar.putString("funcion", "editar");
 //  más datos..
                // datosAEnviar.putInt("edad", 21);
                // datosAEnviar.putString("nombre", "Parzibyte");

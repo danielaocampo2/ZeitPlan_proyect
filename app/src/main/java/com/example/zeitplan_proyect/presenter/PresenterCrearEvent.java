@@ -30,5 +30,14 @@ public class PresenterCrearEvent {
 
 
     }
+    public void actualizarEvendoBD(String eventName, String eventDescription, String date,
+                                String timeIni, String timeFin, int prioridad,  String tipoEven, String idEvento){
+
+        bdEvent.actualizaEvento( eventName,  eventDescription,  date,
+                timeIni, timeFin, prioridad,   tipoEven, mContext, idEvento);
+
+
+
+    }
 
 }

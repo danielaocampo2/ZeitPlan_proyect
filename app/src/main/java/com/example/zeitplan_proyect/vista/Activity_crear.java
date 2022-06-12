@@ -5,12 +5,12 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,6 +39,7 @@ import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.example.zeitplan_proyect.presenter.PresenterCrearEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,8 +47,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Activity_crear extends Fragment {
@@ -56,7 +55,7 @@ public class Activity_crear extends Fragment {
     TextView eventDateTV, eventTimeTVIni, eventTimeTVFin;
     TimePickerDialog.OnTimeSetListener setListenerTimeEventIni, setListenerTimeEventFin;
     DatePickerDialog.OnDateSetListener setListenerDateEvent;
-
+    String funcion = "guardar";
     private LocalTime timeIni, timeFin;
     private LocalDate date;
     private int prioridad;
@@ -70,7 +69,8 @@ public class Activity_crear extends Fragment {
     TextView resultado_seekBar;
     CheckBox recuerdame_check;
     NavigationView navigationView;
-    Button acpetar;
+    Button aceptar;
+    String id;
 
     Firebase bd = new Firebase();
 
@@ -84,14 +84,13 @@ public class Activity_crear extends Fragment {
 
 
         final View view = inflater.inflate(R.layout.activity_crear, container, false);
-        ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
 
         spinner = (AutoCompleteTextView) view.findViewById(R.id.spinner_tipos);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        acpetar = view.findViewById(R.id.btn_guardar);
+        aceptar = view.findViewById(R.id.btn_guardar);
 
         eventNameET = (EditText) view.findViewById(R.id.editText_Titulo);
         eventDescrET = (EditText) view.findViewById(R.id.editText_descripcion);
@@ -112,7 +111,8 @@ public class Activity_crear extends Fragment {
         Bundle datosRecuperados = getArguments();
         if (datosRecuperados != null) {
             // No hay datos, manejar excepción
-            String id = datosRecuperados.getString("id");
+            funcion = datosRecuperados.getString("funcion");
+            id = datosRecuperados.getString("id");
             Log.i(TAG, "id: "+id);
             //eventNameET.setText(titulo);
             bd.mFirestore.collection("evento").whereEqualTo("idUser",bd.getIdUser()).whereEqualTo("idEvento",id)
@@ -124,11 +124,40 @@ public class Activity_crear extends Fragment {
                                 return;
                             }
                            // List datos= value.iterator();
-                            Log.i(TAG, " valores "+ value.getDocuments().get(0));
 
+                            for(DocumentChange dc: value.getDocumentChanges()) {
+
+
+                                eventNameET.setText((String) dc.getDocument().get("nombre"));
+                                eventDescrET.setText((String) dc.getDocument().get("descripcion"));
+                                Number priori=  (Number) dc.getDocument().get("prioridad");
+                               // Log.i(TAG, " valores " + priori.toString());
+                                resultado_seekBar.setText(priori.toString()+"%");
+                                seekBar.setProgress(priori.intValue());
+
+                                spinner.setText((String) dc.getDocument().get("tipo"));
+                                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
+                                spinner.setAdapter(adapter);
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                String date2 = (String) dc.getDocument().get("fecha_inicio");
+                                LocalDate dateBD = LocalDate.parse(date2, formatter);
+                                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(dateBD));
+                                LocalTime horaI = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
+                                eventTimeTVIni.setText("  Hora Inicial:\n  " + horaI.format(formatterTime));
+                                LocalTime horaF = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
+                                eventTimeTVFin.setText("  Hora Final:\n  " + horaF.format(formatterTime));
+                                ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Editar Actividad");
+
+                            }
                         }
                     });
 
+            if(funcion=="editar"){
+                aceptar.setText("Editar");
+            }
+        }else{
+            ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
 
         }
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
@@ -165,6 +194,12 @@ public class Activity_crear extends Fragment {
                 }
         );
 
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregar(view);
+            }
+        });
 
         timeIni = LocalTime.now();
         timeFin = timeIni.plusHours(1);
@@ -225,12 +260,7 @@ public class Activity_crear extends Fragment {
             }
         };
 
-        acpetar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                agregar(view);
-            }
-        });
+
 
         //Hide share button
         shareBtn.setVisibility(View.GONE);
@@ -249,9 +279,11 @@ public class Activity_crear extends Fragment {
             Log.i(TAG, "agregar: " +fecha);
 
             String tipoEven = spinner.getText().toString();
-
-            PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven);
-
+            if (funcion == "guardar") {
+                PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven);
+            }else{
+                PreCreEvent.actualizarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven, id);
+            }
 
             // llamar a metodo para guardar datos.
             Toast.makeText(getContext(), "Datos ingresados correctamente", Toast.LENGTH_SHORT).show();
@@ -263,8 +295,19 @@ public class Activity_crear extends Fragment {
                 intent.putExtra("descripcion", eventDescription);
                 startActivity(intent);
             }else{
-                Intent intent =new Intent(v.getContext(),MainActivity2.class);
-                startActivity(intent);
+                /*Intent intent =new Intent(v.getContext(),MainActivity2.class);
+                startActivity(intent);*/
+
+                LlistaEventsActivity llistaEventsActivity = new LlistaEventsActivity();
+
+                //activity_crear.setArguments(datosAEnviar);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                //getParentFragmentManager().setFragmentResult("requestKey", result);
+                fragmentTransaction.replace(R.id.fragment, llistaEventsActivity);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
 
         }
