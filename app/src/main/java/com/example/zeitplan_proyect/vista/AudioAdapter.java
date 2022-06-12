@@ -94,6 +94,7 @@ public class AudioAdapter  extends RecyclerView.Adapter<AudioViewHolder> {
                     player.setDataSource(fileName);
                     player.prepare();
                     player.start();
+                    Log.d("startPlaying", "Starting to play");
             } catch (
             IOException e) {
                     Log.d("startPlaying", "prepare() failed");
