@@ -80,7 +80,7 @@ public class Event extends EventoGeneral{
     private int prioridad;
     private String idUser;
     private String id;
-
+    private String idEvento;
     DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
     DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -88,13 +88,14 @@ public class Event extends EventoGeneral{
         super();
     }
 
-    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tiempoFin, String tipo) {
+    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tiempoFin, String tipo ,String idEvento) {
         super(fecha_inicio, fecha_inicio, nombre, descripcion);
         this.tiempoIni = tiempoIni;
         this.tiempoFi = tiempoFin;
         this.tipo = tipo;
         this.prioridad = prioridad;
         this.idUser = idUser;
+        this.idEvento=idEvento;
     }
 
 
@@ -115,6 +116,14 @@ public class Event extends EventoGeneral{
         this.tipo = tipo;
         this.prioridad = prioridad;
     }*/
+
+    public String getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(String idEvento) {
+        this.idEvento = idEvento;
+    }
 
     @Override
     public String getNombre() {

@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.Event;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -28,12 +28,16 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
     ArrayList<Event> eventoArrayList;
-    Context ensayo;
+    Context context2;
+    private FirebaseFirestore mFirestore =FirebaseFirestore.getInstance();
+
+
+
 
     public MyAdapter(Context context, ArrayList<Event> eventArrayList, Context nuevo) {
         this.context = context;
         this.eventoArrayList = eventArrayList;
-        this.ensayo=nuevo;
+        this.context2 =nuevo;
     }
 
     @NonNull
@@ -54,7 +58,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
         holder.tx_hora.setText(hora);
-        holder.tx_idEvento.setText("holi dani");
+        holder.tx_idEvento.setText(event.getIdEvento());
+
 
 
         holder.btn_eliminar.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +67,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public void onClick(View view) {
 
 
+
                 //Toast.makeText(context, "Debe elegir fecha y hora",Toast.LENGTH_LONG).show();
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(ensayo);
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context2);
                 dialogo1.setTitle("¿Está seguro que desea eliminarlo? ");
                // dialogo1.setMessage("Se eliminará "+ holder.titulo);
                 dialogo1.setCancelable(false);
@@ -71,7 +77,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     public void onClick(DialogInterface dialogo1, int id) {
                         // Elimar nota
                         Log.i("holi", "onClick: "+holder.tx_idEvento.getText());
-
+                        deleteEvent(holder.tx_idEvento.getText().toString());
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -96,6 +102,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             }
         });
 
+    }
+
+    public void deleteEvent(String id){
+        mFirestore.collection("evento").document(id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(context, "Eliminado correctamente", Toast.LENGTH_LONG).show();
+                //notifyDataSetChanged();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Error al eliminar", Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 
     @Override

@@ -83,7 +83,7 @@ public class EventoBD {
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
+                            if(dc.getType() == DocumentChange.Type.ADDED || dc.getType() == DocumentChange.Type.REMOVED){
                                 eventos.add(dc.getDocument().toObject(Event.class));
                             }
                             eAdapter.notifyDataSetChanged();
@@ -106,7 +106,7 @@ public class EventoBD {
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
+                            if(dc.getType() == DocumentChange.Type.ADDED ||dc.getType()==DocumentChange.Type.REMOVED){
                                 eventos.add(dc.getDocument().toObject(Event.class));
                             }
                             eAdapter.notifyDataSetChanged();
@@ -123,13 +123,18 @@ public class EventoBD {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
                         if(error != null ){
                             Log.e("Firestore error", error.getMessage() );
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
+
+                            if(dc.getType() == DocumentChange.Type.ADDED ){
                                 eventos.add(dc.getDocument().toObject(Event.class));
+                            }
+                            if(dc.getType()== DocumentChange.Type.REMOVED){
+                                eventos.remove(dc.getOldIndex());
                             }
                             eAdapter.notifyDataSetChanged();
                         }

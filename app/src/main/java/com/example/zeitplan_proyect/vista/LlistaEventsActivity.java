@@ -135,7 +135,7 @@ public class LlistaEventsActivity extends Fragment {
 
     private void mostarFiltro() {
         String orden = spinner.getSelectedItem().toString();
-        Log.i("filtro valor enviado", orden);
+        //Log.i("filtro valor enviado", orden);
         consulta.filtrarEvento(orden,eventos,eAdapter);
 
     }
