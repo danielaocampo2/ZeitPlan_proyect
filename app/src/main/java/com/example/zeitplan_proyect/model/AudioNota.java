@@ -1,10 +1,12 @@
 package com.example.zeitplan_proyect.model;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.presenter.PresenterAudioNotas;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -39,6 +41,13 @@ public class AudioNota {
 
         Log.d("saveAudioCard", "saveAudioCard-> saveDocument");
         db.saveDocumentWithFile(this.noteId, this.audioDesc, this.owner, this.address);
+    }
+    public void removeAudioNota(String id){
+        Bundle bundle = new Bundle();
+      //  ArrayList arrayList =  new ArrayList(bundle.getStringArrayList("id_values"));
+      //  String id = arrayList.get(idx).toString();
+        Log.d("deleteAudioNota","deleted note " + id);
+        db.removeDocument(id);
     }
 
     public AudioNota getCard() {

@@ -51,9 +51,11 @@ import java.util.Locale;
 public class AudioActivity extends Fragment implements AudioAdapter.playerInterface {
     private final String TAG = "AudioActivity";
     private Context parentContext;
+    private AudioActivity audioActivity;
     private AppCompatActivity mActivity;
     public AudioAdapter.playerInterface listener;
-
+    public ArrayList arrayList = new ArrayList<String>();
+    Bundle bundle = new Bundle();
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private final String [] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -61,6 +63,7 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
 
     private MediaRecorder recorder;
     private boolean isRecording = false;
+    private boolean isPlaying = false;
     String fileName;
 
     private AudioActivityViewModel audioActivityViewModel;
@@ -83,7 +86,6 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         setLiveDataObservers();
 
-
         // Floating button functionality
         ExtendedFloatingActionButton extendedFab = view.findViewById(R.id.extended_fab);
         extendedFab.setOnClickListener((v) -> {
@@ -104,7 +106,8 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
                 startRecording();
             }
         });
-      return view;
+        audioActivity = this;
+        return view;
     }
 
     public void setLiveDataObservers() {
@@ -114,7 +117,7 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
         final Observer<ArrayList<AudioNota>> observer = new Observer<ArrayList<AudioNota>>() {
             @Override
             public void onChanged(ArrayList<AudioNota> ac) {
-                AudioAdapter newAdapter = new AudioAdapter(parentContext, ac,(AudioAdapter.playerInterface) listener);
+                AudioAdapter newAdapter = new AudioAdapter(parentContext, ac,(AudioAdapter.playerInterface) listener, audioActivity);
                 mRecyclerView.swapAdapter(newAdapter, false);
                 newAdapter.notifyDataSetChanged();
             }
@@ -130,6 +133,7 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
         audioActivityViewModel.getAudioCards().observe(this, observer);
         audioActivityViewModel.getToast().observe(this, observerToast);
     }
+
 
     private void startRecording() {
         Log.d("startRecording", "startRecording");
@@ -157,6 +161,7 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
 
     private void stopRecording() {
         recorder.stop();
+        recorder.reset();
         recorder.release();
         recorder = null;
         isRecording = false;
@@ -166,10 +171,7 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
 
         try {
             MediaPlayer player = new MediaPlayer();
-            Bundle bundle = new Bundle();
-            recyclerItem = bundle.getInt("audio_pos");
             fileName = audioActivityViewModel.getAudioNote(recyclerItem).getAddress();
-            bundle.putString("audioFile",fileName);
             Log.d("startPlaying", fileName);
             player.setDataSource(fileName);
             player.prepare();
@@ -188,6 +190,12 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
         }
         if (!permissionToRecordAccepted );
     }
+    public void deleteNota(int recyclerItem){
+        Log.d("AudioActivity", "audioCard id:" + audioActivityViewModel.getAudioNote(recyclerItem).getNoteId());
+        audioActivityViewModel.removeAudioCard(recyclerItem);
+        Log.d("AudioActivity", "remove audioCard");
+
+    }
 
     public void showPopup(View anchorView) {
 
@@ -203,9 +211,11 @@ public class AudioActivity extends Fragment implements AudioAdapter.playerInterf
         saveButton.setOnClickListener((v) -> {
             String text = saveDescr.getEditText().getText().toString();
             audioActivityViewModel.addAudioCard(text, fileName, "");
+
             popupWindow.dismiss();
         });
     }
+
 
 }
 

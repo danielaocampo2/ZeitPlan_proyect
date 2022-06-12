@@ -3,6 +3,8 @@ package com.example.zeitplan_proyect.presenter;
 import android.app.Activity;
 import android.app.Application;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -37,6 +39,7 @@ public class PresenterAudioNotas {
 
     public static final String TAG = "PresenterNotasVoz";
     Firebase firebase = new Firebase();
+    ArrayList arrayList = new ArrayList<String>();
     public static vmInterface listener;
     private AppCompatActivity mActivity;
     PresenterAudioNotas presenterAudioNotas;
@@ -77,12 +80,38 @@ public class PresenterAudioNotas {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 retrieved_ac.add(new AudioNota( document.getString("description"), document.getString("url"), document.getString("userid")));
+                                Log.d(TAG, "Document ID: " + document.getId());
+                                String id = document.getId();
+                                arrayList.add(id);
+                                Log.d(TAG, id);
+
                             }
                             listener.setCollection(retrieved_ac);
+
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                    }
+                });
+        Bundle bundle = new Bundle();
+
+        bundle.putStringArrayList("id_values",arrayList);
+
+    }
+    public void removeDocument(String id){
+        firebase.mFirestore.collection("audioNotas").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted! " + id);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
                     }
                 });
     }
