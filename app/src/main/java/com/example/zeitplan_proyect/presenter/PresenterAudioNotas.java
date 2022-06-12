@@ -78,13 +78,14 @@ public class PresenterAudioNotas {
 
                             ArrayList<AudioNota> retrieved_ac = new ArrayList<AudioNota>() ;
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                retrieved_ac.add(new AudioNota( document.getString("description"), document.getString("url"), document.getString("userid")));
-                                Log.d(TAG, "Document ID: " + document.getId());
-                                String id = document.getId();
-                                arrayList.add(id);
-                                Log.d(TAG, id);
-
+                                if (document.getString("userid").equals(firebase.getIdUser())) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    retrieved_ac.add(new AudioNota(document.getString("description"), document.getString("url"), document.getString("userid")));
+                                    Log.d(TAG, "Document ID: " + document.getId());
+                                    String id = document.getId();
+                                    arrayList.add(id);
+                                    Log.d(TAG, id);
+                                }
                             }
                             listener.setCollection(retrieved_ac);
 
