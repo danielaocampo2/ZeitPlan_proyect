@@ -116,7 +116,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
             }
         });
 
-    return view;
+        return view;
     }
 
     private void setWeekView()
@@ -239,4 +239,5 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 }
