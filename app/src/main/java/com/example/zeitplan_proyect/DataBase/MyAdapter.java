@@ -136,7 +136,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.btn_ver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle datosAEnviar = new Bundle();
+                // datos en formato clave, valor
+                String id = holder.tx_idEvento.getText().toString();
+                datosAEnviar.putString("id", id);
+                datosAEnviar.putString("funcion", "ver");
+                //  más datos..
+                // datosAEnviar.putInt("edad", 21);
+                // datosAEnviar.putString("nombre", "Parzibyte");
 
+                FragmentActivity activity = (FragmentActivity) context2;
+                Activity_crear activity_crear = new Activity_crear();
+
+                activity_crear.setArguments(datosAEnviar);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                //getParentFragmentManager().setFragmentResult("requestKey", result);
+                fragmentTransaction.replace(R.id.fragment, activity_crear);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
