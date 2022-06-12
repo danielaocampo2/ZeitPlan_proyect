@@ -41,26 +41,28 @@ import java.util.HashSet;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class HourAdapter extends ArrayAdapter<HourEvent>
+public class HourAdapter extends ArrayAdapter<Integer>
 {
 
     PresenterCalendarUtils PresCal;
+    ArrayList<Event> events;
 
-    public HourAdapter(@NonNull Context context, List<HourEvent> hourEvents) {
-        super(context, 0, hourEvents);
-        this.PresCal = PresenterCalendarUtils.getInstance();
+    public HourAdapter(@NonNull Context context, ArrayList<Event> events, ArrayList<Integer> hours) {
+        super(context, 0, hours);
+        PresCal = PresenterCalendarUtils.getInstance();
+        this.events = events;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        HourEvent event = getItem(position);
+        int hour = getItem(position);
 
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.hour_cell,parent,false);
 
-        setHour(convertView, event.getTime());
-        setEvents(convertView, event.getEvents());
+        setHour(convertView, LocalTime.of(hour, 0));
+        setEvents(convertView, hour);
 
         return convertView;
     }
@@ -70,44 +72,54 @@ public class HourAdapter extends ArrayAdapter<HourEvent>
         timeTV.setText(PresCal.formattedShortTime(time));
     }
 
-    private void setEvents(View convertView, ArrayList<Event> events) {
+    private void setEvents(View convertView, int hour) {
         TextView event1= convertView.findViewById(R.id.event1);
         TextView event2= convertView.findViewById(R.id.event2);
         TextView event3= convertView.findViewById(R.id.event3);
 
-        switch (events.size()){
+
+        ArrayList<Event> eventsHour = new ArrayList<>();
+        for(Event event : events){
+            int eventHourIn = event.getTiempoIniLT().getHour();
+            int eventHourFi = 24;//event.getTiempoFiLTHour();
+            if (eventHourIn <= hour && hour <= eventHourFi) eventsHour.add(event);
+        }
+
+        switch (eventsHour.size()){
             case 0:
                 hideEvent(event1);
                 hideEvent(event2);
                 hideEvent(event3);
                 break;
             case 1:
-                setEvent(event1, events.get(0));
+                setEvent(event1, eventsHour.get(0));
                 hideEvent(event2);
                 hideEvent(event3);
                 break;
             case 2:
-                setEvent(event1, events.get(0));
-                setEvent(event2, events.get(1));
+                setEvent(event1, eventsHour.get(0));
+                setEvent(event2, eventsHour.get(1));
                 hideEvent(event3);
                 break;
             case 3:
-                setEvent(event1, events.get(0));
-                setEvent(event2, events.get(1));
-                setEvent(event3, events.get(2));
+                setEvent(event1, eventsHour.get(0));
+                setEvent(event2, eventsHour.get(1));
+                setEvent(event3, eventsHour.get(2));
                 break;
             default:
-                setEvent(event1, events.get(0));
-                setEvent(event2, events.get(1));
+                setEvent(event1, eventsHour.get(1));
+                setEvent(event2, eventsHour.get(2));
                 event3.setVisibility(View.VISIBLE);
                 event3.setText("+ events");
                 break;
         }
+
+
     }
 
     private void setEvent(TextView tv, Event event) {
-        tv.setText(event.getNombre());
-        tv.setVisibility(View.VISIBLE);
+            tv.setText(event.getNombre());
+            tv.setVisibility(View.VISIBLE);
     }
 
     private void hideEvent(TextView event) {

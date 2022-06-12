@@ -126,7 +126,7 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
         monthYearText.setText(PresCal.monthYearFromSelDay());
         ArrayList<LocalDate> days = PresCal.daysInWeekArray();
         calendarAdapter = new CalendarAdapter(days, this, eventosV);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(requireContext(), 7);
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
         EventVChangeListener();
@@ -203,7 +203,6 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
                                 eventosL.add(dc.getDocument().toObject(Event.class));
                             }
                             if(dc.getType() == DocumentChange.Type.REMOVED){
-
                                 eventosL.remove(dc.getOldIndex());
                             }
                             eAdapter.notifyDataSetChanged();

@@ -141,12 +141,12 @@ public class Activity_crear extends Fragment {
 
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 String date2 = (String) dc.getDocument().get("fecha_inicio");
-                                LocalDate dateBD = LocalDate.parse(date2, formatter);
-                                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(dateBD));
-                                LocalTime horaI = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
-                                eventTimeTVIni.setText("  Hora Inicial:\n  " + horaI.format(formatterTime));
-                                LocalTime horaF = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
-                                eventTimeTVFin.setText("  Hora Final:\n  " + horaF.format(formatterTime));
+                                date = LocalDate.parse(date2, formatter);
+                                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+                                timeIni = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
+                                eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+                                timeFin = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
+                                eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
                                 ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Editar Actividad");
 
                             }
@@ -158,6 +158,14 @@ public class Activity_crear extends Fragment {
             }
         }else{
             ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
+
+            timeIni = LocalTime.now();
+            timeFin = timeIni.plusHours(1);
+            date = PreCal.getSelectedDate();
+
+            eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+            eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+            eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         }
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
@@ -201,19 +209,11 @@ public class Activity_crear extends Fragment {
             }
         });
 
-        timeIni = LocalTime.now();
-        timeFin = timeIni.plusHours(1);
-        date = PreCal.getSelectedDate();
-
-        eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
-        eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
-        eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
-
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePicker = new DatePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue()-1, date.getDayOfMonth());
                 datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePicker.show();
             }
@@ -221,7 +221,7 @@ public class Activity_crear extends Fragment {
         setListenerDateEvent = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                date = LocalDate.of(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
                 eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
             }
         };

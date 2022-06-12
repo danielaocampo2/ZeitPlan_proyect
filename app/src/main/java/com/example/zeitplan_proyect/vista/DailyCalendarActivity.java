@@ -1,5 +1,6 @@
 package com.example.zeitplan_proyect.vista;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,22 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.zeitplan_proyect.DataBase.Firebase;
 import com.example.zeitplan_proyect.MainActivity2;
 import com.example.zeitplan_proyect.model.Event;
 import com.example.zeitplan_proyect.R;
 import com.example.zeitplan_proyect.model.HourEvent;
 import com.example.zeitplan_proyect.presenter.PresenterCalendarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.Instant;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -33,6 +43,11 @@ public class DailyCalendarActivity extends Fragment {
     private Button prevDayAction,nextDayAction, calendarAction, semanalAction, llistaAction;
 
     PresenterCalendarUtils PresCal;
+
+    ArrayList<Event> eventos;
+    HourAdapter hourAdapter;
+    FirebaseFirestore mFirestore;
+    Firebase db = new Firebase();
 
     public DailyCalendarActivity() {}
 
@@ -52,6 +67,8 @@ public class DailyCalendarActivity extends Fragment {
         PresCal = PresenterCalendarUtils.getInstance();
         FloatingActionButton shareBtn =  ((MainActivity2) getActivity()).findViewById(R.id.share);
         shareBtn.setVisibility(View.GONE);
+
+        mFirestore = FirebaseFirestore.getInstance();
 
         prevDayAction.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -103,22 +120,18 @@ public class DailyCalendarActivity extends Fragment {
 
 
     private void setHourAdapter() {
-        HourAdapter hourAdapter = new HourAdapter(getContext(), hourEventList());
+        eventos = new ArrayList<>();
+        hourAdapter = new HourAdapter(getContext(), eventos, hourList());
         hourListView.setAdapter(hourAdapter);
-
+        EventChangeListener();
     }
 
-    private ArrayList<HourEvent> hourEventList() {
-
-        ArrayList<HourEvent> list = new ArrayList<>();
-
+    private ArrayList<Integer> hourList() {
+        ArrayList<Integer> list = new ArrayList<>();
         for(int hour = 0; hour<24; hour++){
-            LocalTime time = LocalTime.of(hour, 0);
-            HourEvent hourEvent = PresCal.newHourEvent(time);
-            list.add(hourEvent);
+            list.add(hour);
         }
         return list;
-
     }
 
     public void prevDayAction(View view)
@@ -131,6 +144,32 @@ public class DailyCalendarActivity extends Fragment {
     {
         PresCal.SelDateMoveDay(1);
         setDayView();
+    }
+
+    private void EventChangeListener() {
+        // String orden = spinner.getSelectedItem().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String SelDate = PresCal.getSelectedDate().format(formatter);
+        mFirestore.collection("evento").whereEqualTo("idUser",db.getIdUser()).whereEqualTo("fecha_inicio",SelDate)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null ){
+                            Log.e("Firestore error", error.getMessage() );
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                eventos.add(dc.getDocument().toObject(Event.class));
+                            }
+                            if(dc.getType() == DocumentChange.Type.REMOVED){
+                                eventos.remove(dc.getOldIndex());
+                            }
+                            hourAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
     }
 
     public void calendarAction(View view) {
