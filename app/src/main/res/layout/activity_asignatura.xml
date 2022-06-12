@@ -11,9 +11,6 @@
         android:layout_height="match_parent"
         android:paddingBottom="27dp">
 
-
-
-
         <LinearLayout
             android:id="@+id/containerFilaAsignatura"
             android:layout_width="match_parent"

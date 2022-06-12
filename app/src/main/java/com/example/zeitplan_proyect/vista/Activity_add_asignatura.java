@@ -408,7 +408,6 @@ public class Activity_add_asignatura extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 int valor = presenterAsignatura.validarAs(lista_inicios, lista_finales, lista_checkbox, campo1, fehca_in, fecha_fin);
                 if(presenterAsignatura.validarNombre(campo1.getText().toString())){
                     Toast.makeText(getActivity().getApplicationContext(), "Ya existe una asignatura con ese nombre", Toast.LENGTH_SHORT).show();
@@ -421,7 +420,8 @@ public class Activity_add_asignatura extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "La fecha de inicio debe ser menor a la final", Toast.LENGTH_SHORT).show();
                 }else if (valor == 0){
                     presenterAsignatura.crearAsignatura(fehca_in.getText().toString(),fecha_fin.getText().toString(),campo1.getText().toString(),descripcion.getText().toString(),lista_checkbox,lista_inicios,lista_finales,view.getContext());
-                    getFragmentManager().popBackStack();
+                    Intent intent = new Intent(view.getContext(),MainActivity2.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -432,8 +432,6 @@ public class Activity_add_asignatura extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
-
-
 
         return view;
     }

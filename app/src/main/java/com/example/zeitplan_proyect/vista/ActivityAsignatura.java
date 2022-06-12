@@ -2,6 +2,7 @@ package com.example.zeitplan_proyect.vista;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +59,6 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
     ListaAsignaturaAdapter listaAsignaturaAdapter;
     FirebaseFirestore mFirestore;
     Firebase db = new Firebase();
-    ImageButton calculadora, eliminar;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -65,9 +66,6 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
         final View view = inflater.inflate(R.layout.activity_asignatura, container, false);
         ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Asignatura");
 
-
-        //calculadora = view.findViewById(R.id.acceder_calculadora);
-        eliminar = view.findViewById(R.id.configuracion);
         boton_add = view.findViewById(R.id.btn_addAsignatura);
         nombre = view.findViewById(R.id.textViewAsignaturaNombre);
 
@@ -79,12 +77,11 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
 
         mFirestore = FirebaseFirestore.getInstance();
         asignaturas = new ArrayList<>();
-        listaAsignaturaAdapter = new ListaAsignaturaAdapter(getActivity().getApplicationContext(), asignaturas);
+        listaAsignaturaAdapter = new ListaAsignaturaAdapter(getActivity().getApplicationContext(), asignaturas, getContext());
         recyclerView.setAdapter(listaAsignaturaAdapter);
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(this);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
-
         EventChangeListener();
 
         boton_add.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +111,7 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"), null);
+                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"));
                                 asignaturas.add(asignatura);
                             }
                             listaAsignaturaAdapter.notifyDataSetChanged();
@@ -138,33 +135,37 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
         final int deletedIndex = viewHolder.getAdapterPosition();
         listaAsignaturaAdapter.removeItem(viewHolder.getAdapterPosition());
 
-        Snackbar snackbar = Snackbar.make(layout, nombre+"-> Eliminado", Snackbar.LENGTH_LONG);
-
-        //Falta que se elimine de bd si no cancela
-
-        snackbar.setAction("Cancelar", new View.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("¿Esta seguro de que desea eliminar?");
+        builder.setTitle("Eliminar Asignatura");
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
+                db.mFirestore.collection("Asignaturas").document(nombre)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("TAG", "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("TAG", "Error deleting document", e);
+                            }
+                        });
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
                 listaAsignaturaAdapter.restoreItem(deleteItem, deletedIndex);
             }
         });
-        snackbar.setActionTextColor(Color.GREEN);
-        snackbar.show();
 
-        /*db.mFirestore.collection("Asignaturas").document(nombre)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error deleting document", e);
-                    }
-                });*/
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 }

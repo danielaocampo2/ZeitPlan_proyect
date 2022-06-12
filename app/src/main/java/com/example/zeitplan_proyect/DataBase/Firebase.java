@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.zeitplan_proyect.model.Asignatura;
 import com.example.zeitplan_proyect.model.AudioNota;
-import com.example.zeitplan_proyect.model.ListaAsignatura;
 import com.example.zeitplan_proyect.presenter.PresenterAsignatura;
 import com.example.zeitplan_proyect.presenter.PresenterAudioNotas;
 import com.google.android.gms.tasks.Continuation;
@@ -150,7 +149,7 @@ public class Firebase {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(mContext,"  Error al iniciar sesión",Toast.LENGTH_SHORT).show();
-              }
+            }
         });
 
     }
@@ -213,7 +212,7 @@ public class Firebase {
 
     }
 
-//Ensayo con implementacion en Main activity 2
+    //Ensayo con implementacion en Main activity 2
     public void cierraSession(Context mContext){
         configuraGSO( mContext);
 
@@ -228,7 +227,7 @@ public class Firebase {
                     ((MainActivity2)mContext).finish();
                 } else {
                     Toast.makeText(mContext, "no se puede cerrar sesión con google",
-                    Toast.LENGTH_LONG).show(); }
+                            Toast.LENGTH_LONG).show(); }
             }
         });
     }
@@ -259,7 +258,7 @@ public class Firebase {
                 }
             });
         }
-            userName.setText(usuario.name);
+        userName.setText(usuario.name);
 
         if (providerID.equals("google.com")) {
             //userName.setText(mAuth.getCurrentUser().getDisplayName());
@@ -283,5 +282,4 @@ public class Firebase {
 
 
 }
-
 
