@@ -111,7 +111,7 @@ public class ActivityAsignatura extends Fragment implements CallBackItemTouch {
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"));
+                                Asignatura asignatura = new Asignatura((String) dc.getDocument().get("Fecha inicio"), (String)dc.getDocument().get("Fecha final"), (String)dc.getDocument().get("Name"), (String)dc.getDocument().get("Descripcion"), (ArrayList<String>)dc.getDocument().get("Dias de la semana"), (ArrayList<String>) dc.getDocument().get("Horas de inicio"), (ArrayList<String>) dc.getDocument().get("Horas de Final"));
                                 asignaturas.add(asignatura);
                             }
                             listaAsignaturaAdapter.notifyDataSetChanged();

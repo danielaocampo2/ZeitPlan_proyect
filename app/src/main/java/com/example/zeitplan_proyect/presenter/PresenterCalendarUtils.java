@@ -1,6 +1,7 @@
 package com.example.zeitplan_proyect.presenter;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -93,6 +94,7 @@ public class PresenterCalendarUtils {
     public int numEventsAssig(LocalDate date, ArrayList<Asignatura> asignaturas) {
         int numEventsAssig = 0;
 
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -102,7 +104,6 @@ public class PresenterCalendarUtils {
                 LocalDate Fini = LocalDate.parse(formatter.format(formatter.parse(asignatura.getFecha_inicio())), formatterDate).minusDays(1);
                 LocalDate FFin = LocalDate.parse(formatter.format(formatter.parse(asignatura.getFecha_final())), formatterDate).plusDays(1);
                 if(date.isAfter(Fini) && date.isBefore(FFin)) {
-
                     String dateDayofWeek = calendarUtils.DayOfWeek(date);
                     ArrayList<String> DiasSemanaAss = asignatura.getDiasSemana();
                     if(DiasSemanaAss!=null){
