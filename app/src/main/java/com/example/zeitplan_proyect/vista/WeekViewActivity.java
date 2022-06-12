@@ -202,6 +202,10 @@ public class WeekViewActivity extends Fragment implements CalendarAdapter.OnItem
                             if(dc.getType() == DocumentChange.Type.ADDED){
                                 eventosL.add(dc.getDocument().toObject(Event.class));
                             }
+                            if(dc.getType() == DocumentChange.Type.REMOVED){
+
+                                eventosL.remove(dc.getOldIndex());
+                            }
                             eAdapter.notifyDataSetChanged();
                         }
                     }

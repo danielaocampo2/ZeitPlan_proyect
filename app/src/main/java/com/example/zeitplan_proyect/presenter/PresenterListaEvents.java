@@ -17,7 +17,7 @@ public class PresenterListaEvents {
     }*/
 
     public void filtrarEvento(String filtro, ArrayList<Event> eventos, MyAdapter eAdapter){
-        Log.i("filtro presenter", filtro);
+
 
             if(filtro.equals("Prioridad")) {
 
