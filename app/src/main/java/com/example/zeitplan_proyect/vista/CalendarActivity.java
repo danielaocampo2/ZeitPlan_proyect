@@ -117,6 +117,7 @@ public class CalendarActivity extends Fragment implements CalendarAdapter.OnItem
         calendarRV.setLayoutManager(layoutManager);
         calendarRV.setAdapter(calendarAdapter);
         EventVChangeListener();
+
     }
 
 

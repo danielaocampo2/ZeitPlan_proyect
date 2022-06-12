@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -72,15 +73,15 @@ public class PresenterCalendarUtils {
     public String formattedDate(LocalDate date){return calendarUtils.formattedDate(date);}
     public String formattedDateNum(LocalDate date){return calendarUtils.formattedDateNum(date);}
 
-    public HourEvent newHourEvent(LocalTime time) {
-        ArrayList<Event> events = Event.eventsForDateAndTime(calendarUtils.getSelectedDate(), time);
-        HourEvent hourEvent = new HourEvent(time, events);
-        return hourEvent;
-    }
+    public int numEvents(LocalDate date, ArrayList<Event> events) {
+        int numEvents = 0;
+        for(Event event : events)
+        {
+            if(event.getFechaIniLD().equals(date))
+                numEvents++;
+            if(numEvents==5) return 5;
+        }
+        return  numEvents;}
 
-    public int numEvents(LocalDate date, ArrayList<Event> events) { return Event.numEvents(date, events);}
 
-    public ArrayList<Event> eventosSelDate(ArrayList<Event> eventArrayList) {
-        return Event.eventListOfDate(getSelectedDate(), eventArrayList);
-    }
 }

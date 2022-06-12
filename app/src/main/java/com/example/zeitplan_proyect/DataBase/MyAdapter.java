@@ -70,7 +70,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         holder.titulo.setText(event.getNombre());
         String fecha = event.getFecha_inicio();
-        String hora = event.getTiempoIni() ;//+ " - " + event.getTiempoFi();
+        String hora = event.getTiempoIni();// + " - " + event.getTiempoFi();
         holder.fechaYHora.setText(fecha );//+ ", "+ hora);
         holder.tipo.setText(event.getTipo()); // holder.Age.setText(String.valueOf(user.age))
         holder.prioridad.setText(String.valueOf(event.getPrioridad())+"%");
@@ -112,11 +112,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                 //Crear bundle, que son los datos que pasaremos
                 Bundle datosAEnviar = new Bundle();
-// datos en formato clave, valor
-                String id=holder.tx_idEvento.getText().toString();
+                // datos en formato clave, valor
+                String id = holder.tx_idEvento.getText().toString();
                 datosAEnviar.putString("id", id);
                 datosAEnviar.putString("funcion", "editar");
-//  más datos..
+                //  más datos..
                // datosAEnviar.putInt("edad", 21);
                // datosAEnviar.putString("nombre", "Parzibyte");
 
@@ -136,7 +136,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.btn_ver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle datosAEnviar = new Bundle();
+                // datos en formato clave, valor
+                String id = holder.tx_idEvento.getText().toString();
+                datosAEnviar.putString("id", id);
+                datosAEnviar.putString("funcion", "ver");
+                //  más datos..
+                // datosAEnviar.putInt("edad", 21);
+                // datosAEnviar.putString("nombre", "Parzibyte");
 
+                FragmentActivity activity = (FragmentActivity) context2;
+                Activity_crear activity_crear = new Activity_crear();
+
+                activity_crear.setArguments(datosAEnviar);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                //getParentFragmentManager().setFragmentResult("requestKey", result);
+                fragmentTransaction.replace(R.id.fragment, activity_crear);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

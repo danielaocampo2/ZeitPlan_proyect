@@ -34,13 +34,10 @@ public class Asignatura extends EventoGeneral {
     ArrayList<String> inicios, finales;
     ArrayList<String> diasSemana;
     Fechas fechas;
-    Context mContext;
-    Firebase bd = new Firebase();
 
-    public Asignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<String> inicios, ArrayList<String> finales, Context mContext){
+    public Asignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<String> inicios, ArrayList<String> finales){
         super(fecha_inicio, fecha_final, nombre_as, descripcion);
         this.diasSemana = diasSemana;
-        this.mContext = mContext;
         this.inicios = inicios;
         this.finales = finales;
     }
@@ -83,35 +80,6 @@ public class Asignatura extends EventoGeneral {
     @Override
     public void setFecha_final(String fecha_final) {
         this.fecha_final = fecha_final;
-    }
-
-
-    public void addFireBaseAsignatura(String fecha_inicio, String fecha_final, String nombre_as, String descripcion, ArrayList<String> diasSemana,ArrayList<String> inicios, ArrayList<String> finales){
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("idUser", bd.getIdUser());
-        map.put("Fecha inicio", fecha_inicio);
-        map.put("Fecha final", fecha_final);
-        map.put("Dias de la semana", diasSemana);
-        map.put("Horas de inicio", inicios);
-        map.put("Horas de final", finales);
-        map.put("Name", nombre_as);
-        map.put("Descripcion", descripcion);
-
-        bd.mFirestore.collection("Asignaturas").document(nombre_as).set(map).addOnSuccessListener(
-                new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(mContext, "Asignatura guardada correctamente", Toast.LENGTH_SHORT).show();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() { // en caso de que no entre correcto muestra un error
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mContext, "Error al guardar", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
     /*

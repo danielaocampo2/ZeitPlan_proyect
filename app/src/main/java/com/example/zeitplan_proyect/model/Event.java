@@ -14,67 +14,6 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Event extends EventoGeneral{
 
-    Firebase bd = new Firebase();
-
-    public static ArrayList<Event> eventsList = new ArrayList<>();
-
-    public static ArrayList<Event> getEventsList(){
-        return eventsList;
-    }
-
-    /*public static ArrayList<Event> getEventsListSorted(String orden) {
-        ArrayList<Event> events = new ArrayList<>();
-        switch (orden){
-            case "Fecha":
-                //events = Event.getEventsListByDate();
-            case "Nombre":
-                //events = Event.getEventsListByName();
-            case "Prioridad":
-                //events = Event.getEventsListByPriority();
-            default:
-               return eventsList;
-        }
-        return events;
-    }*/
-    public static ArrayList<Event> eventListOfDate(LocalDate date, ArrayList<Event> eventArrayList) {
-        ArrayList<Event> events= new ArrayList<>();
-        for(Event event : eventArrayList)
-        {
-            if(event.getFechaIniLD().equals(date))
-                events.add(event);
-        }
-        return events;
-    }
-
-    public static int numEvents(LocalDate date, ArrayList<Event> events) {
-        int numEvents = 0;
-        for(Event event : events)
-        {
-            if(event.getFechaIniLD().equals(date))
-                numEvents++;
-                if(numEvents==5) return 5;
-        }
-        return  numEvents;
-    }
-
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time){
-
-        ArrayList<Event> events= new ArrayList<>();
-        for(Event event : eventsList)
-        {
-            int eventHourIn = event.getTiempoIniLT().getHour();
-            int eventHourFi = event.getTiempoFiLT().minusMinutes(1).getHour();
-            int cellHour = time.getHour();
-            for(int eventHour = eventHourIn; eventHour <= eventHourFi; eventHour++){
-                if(event.getFechaIniLD().equals(date) && eventHour == cellHour)
-                    events.add(event);
-            }
-
-        }
-        return  events;
-    }
-
-
     private String tiempoIni, tiempoFi;
     private String tipo;
     private int prioridad;
@@ -88,7 +27,7 @@ public class Event extends EventoGeneral{
         super();
     }
 
-    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoIni, String tiempoFin, String tipo ,String idEvento) {
+    public Event(String descripcion, String fecha_inicio, String idUser, String nombre, int prioridad, String tiempoFin, String tiempoIni, String tipo ,String idEvento) {
         super(fecha_inicio, fecha_inicio, nombre, descripcion);
         this.tiempoIni = tiempoIni;
         this.tiempoFi = tiempoFin;
@@ -97,25 +36,6 @@ public class Event extends EventoGeneral{
         this.idUser = idUser;
         this.idEvento=idEvento;
     }
-
-
-/*
-    public Event(String nombre, String descripcion, String fecha_inicio, String tiempoIni, String tipo, int prioridad, String idUser) {
-        super(fecha_inicio, fecha_inicio, nombre, descripcion);
-        this.tiempoIni = tiempoIni;
-        this.tiempoFi = LocalTime.parse(tiempoIni, formatterTime).plusHours(1).toString();
-        this.tipo = tipo;
-        this.prioridad = prioridad;
-        this.idUser = idUser;
-    }
-    public Event(String name, String description, LocalDate fecha, LocalTime tiempoIni, LocalTime tiempoFi, String tipo, int prioridad) {
-        super(fecha.toString(), fecha.toString(), name, description);
-        this.fecha = fecha;
-        this.tiempoIni = tiempoIni;
-        this.tiempoFi = tiempoFi;
-        this.tipo = tipo;
-        this.prioridad = prioridad;
-    }*/
 
     public String getIdEvento() {
         return idEvento;
@@ -187,6 +107,10 @@ public class Event extends EventoGeneral{
 
     public LocalTime getTiempoFiLT() {
         return LocalTime.parse(tiempoFi, formatterTime);
+    }
+
+    public int getTiempoFiLTHour() {
+        return LocalTime.parse(tiempoFi, formatterTime).getHour();
     }
 
     public String getTiempoFi() {

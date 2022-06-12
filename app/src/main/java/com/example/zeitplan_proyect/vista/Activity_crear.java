@@ -129,6 +129,7 @@ public class Activity_crear extends Fragment {
 
 
                                 eventNameET.setText((String) dc.getDocument().get("nombre"));
+
                                 eventDescrET.setText((String) dc.getDocument().get("descripcion"));
                                 Number priori=  (Number) dc.getDocument().get("prioridad");
                                // Log.i(TAG, " valores " + priori.toString());
@@ -136,17 +137,18 @@ public class Activity_crear extends Fragment {
                                 seekBar.setProgress(priori.intValue());
 
                                 spinner.setText((String) dc.getDocument().get("tipo"));
-                                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
-                                spinner.setAdapter(adapter);
+                                if(datosRecuperados.getString("funcion")!="ver"){
+                                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.TipoEventos, android.R.layout.simple_spinner_item);
+                                    spinner.setAdapter(adapter);}
 
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                 String date2 = (String) dc.getDocument().get("fecha_inicio");
-                                LocalDate dateBD = LocalDate.parse(date2, formatter);
-                                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(dateBD));
-                                LocalTime horaI = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
-                                eventTimeTVIni.setText("  Hora Inicial:\n  " + horaI.format(formatterTime));
-                                LocalTime horaF = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
-                                eventTimeTVFin.setText("  Hora Final:\n  " + horaF.format(formatterTime));
+                                date = LocalDate.parse(date2, formatter);
+                                eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+                                timeIni = LocalTime.parse((String) dc.getDocument().get("tiempoIni"));
+                                eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+                                timeFin = LocalTime.parse((String) dc.getDocument().get("tiempoFin"));
+                                eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
                                 ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Editar Actividad");
 
                             }
@@ -155,9 +157,21 @@ public class Activity_crear extends Fragment {
 
             if(funcion=="editar"){
                 aceptar.setText("Editar");
+            }else{
+                funcion="ver";
+                aceptar.setText("VOLVER");
+
             }
         }else{
             ((MainActivity2) getActivity()).getSupportActionBar().setTitle("Añadir Actividad");
+
+            timeIni = LocalTime.now();
+            timeFin = timeIni.plusHours(1);
+            date = PreCal.getSelectedDate();
+
+            eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
+            eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
+            eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         }
         ((MainActivity2) getActivity()).setupNavigationDrawerContent(navigationView);
@@ -197,23 +211,18 @@ public class Activity_crear extends Fragment {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                agregar(view);
+                if(funcion=="ver"){
+                    volverFragment();
+                }else{
+                   agregar(view);}
             }
         });
-
-        timeIni = LocalTime.now();
-        timeFin = timeIni.plusHours(1);
-        date = PreCal.getSelectedDate();
-
-        eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
-        eventTimeTVIni.setText("  Hora Inicial:\n  " + timeIni.format(formatterTime));
-        eventTimeTVFin.setText("  Hora Final:\n  " + timeFin.format(formatterTime));
 
         eventDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePicker = new DatePickerDialog(
-                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+                        getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, setListenerDateEvent, date.getYear(), date.getMonthValue()-1, date.getDayOfMonth());
                 datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePicker.show();
             }
@@ -221,7 +230,7 @@ public class Activity_crear extends Fragment {
         setListenerDateEvent = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                date = LocalDate.of(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                date = LocalDate.of(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
                 eventDateTV.setText("  Fecha:\n  " + PreCal.formattedDate(date));
             }
         };
@@ -260,28 +269,49 @@ public class Activity_crear extends Fragment {
             }
         };
 
+        if(funcion=="ver"){
 
+            eventNameET.setKeyListener(null);
+            eventDescrET.setKeyListener(null);
+            eventDateTV.setKeyListener(null);
+          //  recuerdame_check.setOnClickListener(null);
+            seekBar.setOnSeekBarChangeListener(null);
+            eventTimeTVIni.setOnClickListener(null);
+            eventTimeTVFin.setOnClickListener(null);
+            recuerdame_check.setEnabled(false);
+
+            //spinner.setAdapter(null);
+            spinner.setOnClickListener(null);
+
+
+        }
 
         //Hide share button
         shareBtn.setVisibility(View.GONE);
     return view;
+
+
+
+
+
     }
 
     //Falta que vuelva el boton a la ultima vista visitada
 
     public void agregar(View v){
-        if(validar()){
+
+        if(validar()) {
             String eventName = eventNameET.getText().toString();
             String eventDescription = eventDescrET.getText().toString();
             String fecha = date.format(formatterDate);
             String horaIni = timeIni.format(formatterTime);
             String horaFin = timeFin.format(formatterTime);
-            Log.i(TAG, "agregar: " +fecha);
+            Log.i(TAG, "agregar: " + fecha);
 
             String tipoEven = spinner.getText().toString();
             if (funcion == "guardar") {
                 PreCreEvent.guardarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven);
-            }else{
+            } else {
                 PreCreEvent.actualizarEvendoBD(eventName, eventDescription, fecha, horaIni, horaFin, prioridad, tipoEven, id);
             }
 
@@ -295,22 +325,23 @@ public class Activity_crear extends Fragment {
                 intent.putExtra("descripcion", eventDescription);
                 startActivity(intent);
             }else{
-                /*Intent intent =new Intent(v.getContext(),MainActivity2.class);
-                startActivity(intent);*/
-
-                LlistaEventsActivity llistaEventsActivity = new LlistaEventsActivity();
-
-                //activity_crear.setArguments(datosAEnviar);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                //getParentFragmentManager().setFragmentResult("requestKey", result);
-                fragmentTransaction.replace(R.id.fragment, llistaEventsActivity);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                volverFragment();
             }
 
         }
+    }
+
+    public void volverFragment(){
+        LlistaEventsActivity llistaEventsActivity = new LlistaEventsActivity();
+
+        //activity_crear.setArguments(datosAEnviar);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //getParentFragmentManager().setFragmentResult("requestKey", result);
+        fragmentTransaction.replace(R.id.fragment, llistaEventsActivity);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public boolean validar(){
