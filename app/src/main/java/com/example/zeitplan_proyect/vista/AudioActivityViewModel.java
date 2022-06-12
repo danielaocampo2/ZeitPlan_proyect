@@ -1,6 +1,7 @@
 package com.example.zeitplan_proyect.vista;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -48,7 +49,14 @@ public class AudioActivityViewModel extends AndroidViewModel implements Presente
         }
     }
     public void removeAudioCard(int idx){
+       // mAudioNotas.getValue().get(idx).removeAudioNota();
+        String id = mAudioNotas.getValue().get(idx).getNoteId();
+        Log.d("ViewModle", "id: "+ id );
+        mAudioNotas.getValue().remove(idx);
+        mAudioNotas.getValue().get(idx).removeAudioNota(id);
 
+        //inform Observer
+        mAudioNotas.setValue(mAudioNotas.getValue());
     }
 
     public LiveData<String> getToast(){
